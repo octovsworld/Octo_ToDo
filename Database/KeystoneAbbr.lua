@@ -1,6 +1,23 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_KeystoneAbbr = {
+	-- https://www.wowhead.com/ru/spells/uncategorized/name:%D0%9F%D1%83%D1%82%D1%8C?filter=28;1;9#50
+	-- https://www.wowhead.com/spells/uncategorized/name:Path?filter=28;1;9#50
+	-- https://www.wowhead.com/ptr-2/spells/uncategorized/name:Path?filter=28;1;9#50
+
+
+	-- 1239155 Manaforge Omega
+	-- 467546 Cinderbrew Meadery
+	-- 1226482 Liberation of Undermine
+	-- 373190 Castle Nathria
+	-- 373191 Sanctum of Domination
+	-- 1254557 Skyreach (Небесный Путь) (Путь королевского шпиля)
+	-- 432257 Aberrus, the Shadowed Crucible
+	-- 432254 Vault of the Incarnates
+	-- 373192 Sepulcher of the First Ones
+	-- 432258 Amirdrassil, the Dream's Hope
+
+
 	-- Wrath of the Lich King
 	[556] = {abbreviation = "POS", portal = 1254555}, -- Pit of Saron
 	-- Cataclysm
@@ -10,35 +27,35 @@ E.OctoTable_KeystoneAbbr = {
 	-- Mists of Pandaria
 	[2] = {abbreviation = "TJS", portal = 131204}, -- Temple of the Jade Serpent
 	-- Warlords of Draenor
-	[161] = {abbreviation = "SR", portal = 159898}, -- Skyreach XXX 1254557 seems incorrect
+	[161] = {abbreviation = "SR", portal = 159898}, -- Skyreach (1254557) Путь Небес
 	[165] = {abbreviation = "SBG", portal = 159899}, -- Shadowmoon Burial Grounds
 	[166] = {abbreviation = "GD", portal = 159900}, -- Grimrail Depot
 	[168] = {abbreviation = "EB", portal = 159901}, -- "TE"}, -- The Everbloom
 	[169] = {abbreviation = "ID", portal = 159896}, -- Iron Docks
 	-- Legion
-	[197] = {abbreviation = "EoA", portal = 000000}, -- Eye of Azshara
+	[197] = {abbreviation = "EoA", portal = 0}, -- Eye of Azshara
 	[198] = {abbreviation = "DHT", portal = 424163}, -- Darkheart Thicket
 	[199] = {abbreviation = "BRH", portal = 424153}, -- Black Rook Hold
 	[200] = {abbreviation = "HOV", portal = 393764}, -- Halls of Valor
 	[206] = {abbreviation = "NL", portal = 410078}, -- Neltharion's Lair
-	[207] = {abbreviation = "VotW", portal = 000000}, -- Vault of the Wardens
-	[208] = {abbreviation = "MoS", portal = 000000}, -- Maw of Souls
-	[209] = {abbreviation = "TA", portal = 000000}, -- The Arcway
+	[207] = {abbreviation = "VotW", portal = 0}, -- Vault of the Wardens
+	[208] = {abbreviation = "MoS", portal = 0}, -- Maw of Souls
+	[209] = {abbreviation = "TA", portal = 0}, -- The Arcway
 	[210] = {abbreviation = "CoS", portal = 393766}, -- Court of Stars
 	[227] = {abbreviation = "RtKL", portal = 373262}, -- Return to Karazhan: Lower
-	[233] = {abbreviation = "CoEN", portal = 000000}, -- Cathedral of Eternal Night
+	[233] = {abbreviation = "CoEN", portal = 0}, -- Cathedral of Eternal Night
 	[234] = {abbreviation = "RtKU", portal = 373262}, -- Return to Karazhan: Upper
 	[239] = {abbreviation = "SotT", portal = 1254551}, -- Seat of the Triumvirate
 	-- Battle for Azeroth
 	[244] = {abbreviation = "AD", portal = 424187}, -- Atal'Dazar
 	[245] = {abbreviation = "FH", portal = 410071}, -- Freehold
-	[246] = {abbreviation = "TD", portal = 000000}, -- Tol Dagor
+	[246] = {abbreviation = "TD", portal = 0}, -- Tol Dagor
 	[247] = {abbreviation = "ML", Horde = 467555, Alliance = 467553,}, -- The MOTHERLODE!!
 	[248] = {abbreviation = "WM", portal = 424167}, -- Waycrest Manor
-	[249] = {abbreviation = "KR", portal = 000000}, -- Kings' Rest
-	[250] = {abbreviation = "ToS", portal = 000000}, -- Temple of Sethraliss
+	[249] = {abbreviation = "KR", portal = 0}, -- Kings' Rest
+	[250] = {abbreviation = "ToS", portal = 0}, -- Temple of Sethraliss
 	[251] = {abbreviation = "UNDR", portal = 410074}, -- The Underrot
-	[252] = {abbreviation = "SOTS", portal = 000000}, -- Shrine of the Storm
+	[252] = {abbreviation = "SOTS", portal = 0}, -- Shrine of the Storm
 	[353] = {abbreviation = "SIEGE", Horde = 464256, Alliance = 445418,}, -- Siege of Boralus
 	[369] = {abbreviation = "OMJ", portal = 373274}, -- Operation: Mechagon - Junkyard
 	[370] = {abbreviation = "OMW", portal = 373274}, -- Operation: Mechagon - Workshop
@@ -94,8 +111,9 @@ E.OctoTable_KeystoneAbbr = {
 	[558] = {abbreviation = "MT", portal = 1254572}, -- Magisters' Terrace
 	[559] = {abbreviation = "NPX", portal = 1254563}, -- Nexus-Point Xenas
 	[560] = {abbreviation = "MC", portal = 1254559}, -- Maisara Caverns
-	[583] = {abbreviation = "SotT", portal = 000000}, -- "Seat of the Triumvirate"
-	[541] = {abbreviation = "TS?", portal = 000000}, -- "The Stonecore"
+
+	[583] = {abbreviation = "SotT", portal = 0}, -- "Seat of the Triumvirate"
+	[541] = {abbreviation = "TS?", portal = 0}, -- "The Stonecore"
 
 	[586] = {abbreviation = "DoN?", portal = 0,}, -- "Den of Nalorakk" "Берлога Налоракка"
 	[588] = {abbreviation = "AoF?", portal = 0,}, -- "Altar of Fangs" "Алтарь Клыков"
