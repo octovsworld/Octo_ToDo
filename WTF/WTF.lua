@@ -781,7 +781,7 @@ end
 ----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
 	-- ИНИЦИАЛИЗАЦИЯ КОМПОНЕНТОВ
-	E.func_InitActivities_GreatVault()
+	-- E.func_InitActivities_GreatVault()
 	E.func_INIT_Components() -- E.Components
 	-- ИНИЦИАЛИЗАЦИЯ ПРОФИЛЕЙ И ПРОЧЕГО
 	E.WTF_func_CheckAll()

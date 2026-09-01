@@ -20,8 +20,8 @@ E.Components[categoryKey] = function()
 	local Currencies = {
 
 
-		{id = 3513, defS = true, AddedInPatch = "12.1.0", }, -- Nebulous Voidcore (Season 2)
-		{id = 3418, defS = true, AddedInPatch = "12.0.5.67088", RemovedInPatch = "12.1.0",}, -- Nebulous Voidcore (Season 1)
+		{id = 3513, defS = false, AddedInPatch = "12.1.0", }, -- Nebulous Voidcore (Season 2) USELESS??
+		{id = 3418, defS = true, AddedInPatch = "12.0.5.67088", }, -- Nebulous Voidcore (Season 1) -- RemovedInPatch = "12.1.0",
 
 		{id = 3465, defS = true, AddedInPatch = "12.1.0.69189", }, -- Venomblight Manaflux (CATALYST Season 2)
 		{id = 3378, defS = false, AddedInPatch = "12.0.0.65390", }, -- Dawnlight Manaflux ---------> (CATALYST Season 1)

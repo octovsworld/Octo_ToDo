@@ -43,6 +43,8 @@ function E.func_InitActivities_GreatVault()
 	local priority = {
 		[3] = 1, -- RAID
 		[1] = 2, -- DUNGEONS
+		[6] = 3, -- WORLD
+		[2] = 4, -- PVP
 	}
 	E.func_SortRecords(E.Enum_Activities_table, function(a, b)
 			local pa = priority[a] or 99
