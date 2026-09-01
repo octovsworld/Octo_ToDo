@@ -8,33 +8,67 @@ if not E.Is_MN_available then return end;
 local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 12
-local expansionID = 12
 ----------------------------------------------------------------
-local function tempFunction()
+E.Components[categoryKey] = function()
 	local OctoTables_Vibor = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].defs = false
-	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color .. E.OctoTable_Expansions[expansionID].nameBlizzard
-	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[categoryKey].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color .. E.OctoTable_Expansions[categoryKey].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	local Currencies = {
-		{id = 3418, defS = true, AddedInPatch = "12.0.5.67088", }, -- Nebulous Voidcore (12.0.5 "Midnight") (3513 same, but useless)
-		{id = 3405, defS = true, AddedInPatch = "12.0.5.67088", }, -- Field Accolade
+
+
+		{id = 3513, defS = true, AddedInPatch = "12.1.0", }, -- Nebulous Voidcore (Season 2)
+		{id = 3418, defS = true, AddedInPatch = "12.0.5.67088", RemovedInPatch = "12.1.0",}, -- Nebulous Voidcore (Season 1)
+
+		{id = 3465, defS = true, AddedInPatch = "12.1.0.69189", }, -- Venomblight Manaflux (CATALYST Season 2)
+		{id = 3378, defS = false, AddedInPatch = "12.0.0.65390", }, -- Dawnlight Manaflux ---------> (CATALYST Season 1)
+
+
+
+		{id = 3446, defS = true, AddedInPatch = "12.1.0.68209", }, -- Myth Mistcrest
+		{id = 3445, defS = true, AddedInPatch = "12.1.0.68209", }, -- Hero Mistcrest
+		{id = 3444, defS = true, AddedInPatch = "12.1.0.68209", }, -- Champion Mistcrest
+		{id = 3443, defS = true, AddedInPatch = "12.1.0.68209", }, -- Veteran Mistcrest
+		{id = 3442, defS = true, AddedInPatch = "12.1.0.68209", }, -- Adventurer Mistcrest
+
+		--[[
+			-- https://www.wowhead.com/currencies/season-1#0+1+3
+			{id = 3347, defS = false, AddedInPatch = "12.0.0.65390", }, -- Myth Dawncrest (Midnight Season 1 up to item levels 276-289)
+			{id = 3345, defS = false, AddedInPatch = "12.0.0.65390", }, -- Hero Dawncrest (Midnight Season 1 up to item levels 263-276)
+			{id = 3343, defS = false, AddedInPatch = "12.0.0.65390", }, -- Champion Dawncrest (Midnight Season 1 up to item levels 250-263)
+			{id = 3341, defS = false, AddedInPatch = "12.0.0.65390", }, -- Veteran Dawncrest (Midnight Season 1 up to item levels 237-250)
+			{id = 3383, defS = false, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (Midnight Season 1 up to item levels 224-237)
+			-- {id = 3391, defS = false, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (UNUSED)
+		]]
+
+
+
+
+		-- {id = 3310, defs = true,}, -- "delve"
+		-- {id = 3356, defs = true,}, --  "delve"
+
+
+
+
+
+		-- SPARK
+		{id = 3509, defS = false, AddedInPatch = "12.1.0.69189", }, -- Tidal Spark Dust (spark Season 2)
+		{id = 3212, defS = false, AddedInPatch = "12.0.0.65390", }, -- Radiant Spark Dust (Midnight Season 1)
+
+		-- DELVE
+		{id = 3028, defS = false, AddedInPatch = "12.0.0.65390", }, -- Restored Coffer Key (Midnight Season 1) (delve)
+		{id = 3310, defS = false, AddedInPatch = "11.2.0.62253", }, -- Coffer Key Shards
+		{id = 3356, defS = false, AddedInPatch = "11.2.0.62253", }, -- Untainted Mana-Crystals
+
+
+
 		-- фиол
+		{id = 3405, defS = true, AddedInPatch = "12.0.5.67088", }, -- Field Accolade
 		{id = 3400, defS = false, AddedInPatch = "12.0.0.65390", }, -- Uncontaminated Void Sample
 		{id = 3379, defS = false, AddedInPatch = "12.0.0.65390", }, -- Brimming Arcana
-		{id = 3378, defS = true, AddedInPatch = "12.0.0.65390", }, -- Dawnlight Manaflux ---------> (CATALYST)
-		{id = 3212, defS = false, AddedInPatch = "12.0.0.65390", }, -- Radiant Spark Dust (Midnight Season 1)
-		{id = 3028, defS = false, AddedInPatch = "12.0.0.65390", }, -- Restored Coffer Key (Midnight Season 1)
-		{id = 3310, defS = false, AddedInPatch = "11.2.0.62253", }, -- Coffer Key Shards
-		-- https://www.wowhead.com/currencies/season-1#0+1+3
-		{id = 3347, defS = true, AddedInPatch = "12.0.0.65390", }, -- Myth Dawncrest (Midnight Season 1 up to item levels 276-289)
-		{id = 3345, defS = true, AddedInPatch = "12.0.0.65390", }, -- Hero Dawncrest (Midnight Season 1 up to item levels 263-276)
-		{id = 3343, defS = true, AddedInPatch = "12.0.0.65390", }, -- Champion Dawncrest (Midnight Season 1 up to item levels 250-263)
-		{id = 3341, defS = true, AddedInPatch = "12.0.0.65390", }, -- Veteran Dawncrest (Midnight Season 1 up to item levels 237-250)
-		{id = 3383, defS = true, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (Midnight Season 1 up to item levels 224-237)
-		-- {id = 3391, defS = false, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (UNUSED)
 		-- синий
 		{id = 3392, defS = false, AddedInPatch = "12.0.0.65390", }, -- Remnant of Anguish
 		{id = 3376, defS = false, AddedInPatch = "12.0.0.65390", }, -- Shard of Dundun
@@ -49,7 +83,6 @@ local function tempFunction()
 		{id = 3393, defS = false, AddedInPatch = "12.0.5.67088", }, -- Illusionary Coin
 		-- {id = 3349, defS = false, AddedInPatch = "12.0.0.65390", }, -- [DNT] [PH] Evergreen Initiative Currency
 		{id = 3319, defS = false, AddedInPatch = "12.0.0.65390", RemovedInPatch = "12.0.1",}, -- Twilight's Blade Insignia -- MIDNIGHT PREPATCH (REMOVED)
-		-- {id = 3356, defS = false, AddedInPatch = "11.2.0.62253", }, -- Untainted Mana-Crystals
 		-- {id = 2803, defS = false, AddedInPatch = "11.0.0.55793", }, -- Undercoin
 		-- проф
 		-- {id = 3266, defS = false, AddedInPatch = "12.0.0.65390", }, -- Artisan Tailor's Moxie
@@ -75,10 +108,12 @@ local function tempFunction()
 		-- Raid
 		{id = 3004, defS = true, AddedInPatch = "12.1.0",}, -- The Venomous Abyss
 		{id = 2987, defS = true, AddedInPatch = "12.1.0",}, -- The Tidebound Grotto
-		{id = 1592, defS = true, AddedInPatch = "12.0.7",}, -- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
-		{id = 2913, defS = true, AddedInPatch = "12.0.0.65390",}, -- March on Quel'Danas
-		{id = 2912, defS = true, AddedInPatch = "12.0.0.65390",}, -- The Voidspire
-		{id = 2939, defS = true, AddedInPatch = "12.0.0.65390",}, -- The Dreamrift
+
+
+		{id = 1592, defS = false, AddedInPatch = "12.0.7",}, -- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
+		{id = 2913, defS = false, AddedInPatch = "12.0.0.65390",}, -- March on Quel'Danas
+		{id = 2912, defS = false, AddedInPatch = "12.0.0.65390",}, -- The Voidspire
+		{id = 2939, defS = false, AddedInPatch = "12.0.0.65390",}, -- The Dreamrift
 
 		-- {id = 2805, defS = true,}, -- Windrunner Spire
 		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
@@ -95,6 +130,18 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	local Reputations = {
+
+
+		-- {id = 2776, defS = false,},
+		-- {id = 2771, defS = false,},
+		-- {id = 2808, defS = false,},
+		-- {id = 2793, defS = false,},
+		-- {id = 2775, defS = false,},
+		-- {id = 2839, defS = false,},
+		{id = 2772, defS = false,},
+		{id = 2773, defS = false,},
+
+
 		{id = 2792, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2792].AddedInPatch}, -- Места првоедения Ритуалов
 		{id = 2710, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2710].AddedInPatch}, -- Silvermoon Court (Двор Луносвета)
 		{id = 2696, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2696].AddedInPatch}, -- Amani Tribe (Племя Амани)
@@ -106,6 +153,7 @@ local function tempFunction()
 		{id = 2712, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2712].AddedInPatch}, -- Blood Knights
 		{id = 2711, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2711].AddedInPatch}, -- Magisters
 		{id = 2713, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2713].AddedInPatch}, -- Farstriders
+		{id = 2796, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2796].AddedInPatch}, -- Delves: Season 2 (C_DelvesUI.GetDelvesFactionForSeason())
 		{id = 2742, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2742].AddedInPatch}, -- Delves: Season 1 (C_DelvesUI.GetDelvesFactionForSeason())
 		{id = 2764, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2764].AddedInPatch}, -- Prey: Season 1
 		-- {id = 2722, defS = true, AddedInPatch = E.OctoTable_Reputations_DB[2722].AddedInPatch}, -- C_DelvesUI.GetDelvesFactionForSeason() для миднайта криво работает
@@ -130,7 +178,7 @@ local function tempFunction()
 				return L["RAID_INFO_WORLD_BOSS"]
 			end,
 			name_save = "WorldBoss",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			questpools = {
@@ -182,7 +230,7 @@ local function tempFunction()
 				return E.func_GetName("map", E.MapID_Silvermoon) ..": " .. L["Weekend Event"]
 			end,
 			name_save = "ArchmageAethasSunreaver", -- https://www.wowhead.com/npc=256212/archmage-aethas-sunreaver
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -268,7 +316,7 @@ local function tempFunction()
 		-- return E.func_GetName("map", E.MapID_Voidstorm) .. ": " .. E.func_GetName("currency", 3418, E.COLOR_WHITE) -- A Nightmarish Task
 		-- end,
 		-- name_save = "NebulousVoidcoresCoins",
-		-- defS = true,
+		-- defS = false,
 		-- reset = "Weekly",
 		-- desc = categoryKey,
 		-- quests = {
@@ -340,7 +388,7 @@ local function tempFunction()
 		-- return L["DELVES_LABEL"] .. ": " .. E.func_GetName("quest", 93595)
 		-- end,
 		-- name_save = "ACalltoDelves",
-		-- defS = true,
+		-- defS = false,
 		-- reset = "Weekly",
 		-- desc = categoryKey,
 		-- quests = {
@@ -366,22 +414,22 @@ local function tempFunction()
 				-- TWW S2: 233071 (Клад участника вылазки) L["Delver's Bounty"]
 				-- TWW S3: 248142 (Клад участника вылазки) L["Delver's Bounty"] -- This item can be fished in Excavation Site 9
 				-- Mid S1: 252415 (Трофей охотника за сокровищами)
-				return L["DELVES_LABEL"] .. ": " .. E.func_GetName("item", 252415, 1)
+				-- Mid S2: 274374 (Трофей охотника за сокровищами)
+				return L["DELVES_LABEL"] .. ": " .. E.func_GetName("item", 274374, 1)
 			end,
-			name_save = "DelversBountySeason1",
+			name_save = "DelversBountySeason2",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				-- {86371, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 252415)) .. E.func_GetName("item", 252415)},},
-				{86371, forcedText = {itemID = 252415}, addText = {text = E.COLOR_GREEN .. " (" .. format(L["EXPANSION_SEASON_NAME"], "Midnight", 1) .. ")|r"} },
+				{86371, forcedText = {itemID = 274374}, addText = {text = E.COLOR_GREEN .. " (" .. format(L["EXPANSION_SEASON_NAME"], "Midnight", 2) .. ")|r"} },
 			},
 			rewards = {
 				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
 				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
 				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
 				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				{rewID = 252415, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+				{rewID = 274374, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 2)
 				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
 			},
 			forcedMaxQuest = 1,
@@ -397,7 +445,7 @@ local function tempFunction()
 				return L["Void Assaults"]
 			end,
 			name_save = "VoidAssaults",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -505,7 +553,7 @@ local function tempFunction()
 				return E.func_GetName("map", E.MapID_Naigtal) .. ": " .. E.func_GetName("quest", 96717) -- Showdown on Naigtal
 			end,
 			name_save = "ShowdownonNaigtal",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			-- questpools = {
@@ -1316,7 +1364,5 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion(Reputations)
 	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = E.FilterByVersion(AdditionallyBOTTOM)
 	-- OctoTables_DataOtrisovka[categoryKey].Maps = E.FilterByVersion(Maps)
-
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-table.insert(E.Components, tempFunction)

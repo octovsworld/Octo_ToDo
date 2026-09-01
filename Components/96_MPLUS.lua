@@ -6,7 +6,7 @@ if not enable then return end
 ----------------------------------------------------------------
 local categoryKey = 96
 ----------------------------------------------------------------
-local function tempFunction()
+E.Components[categoryKey] = function()
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -41,10 +41,9 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 
-	for i = 1, 3 do
+	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
 		table.insert(OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP, {id = "GreatVault"..i, defS = false,})
 	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-table.insert(E.Components, tempFunction)

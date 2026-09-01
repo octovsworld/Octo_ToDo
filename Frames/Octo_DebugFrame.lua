@@ -160,7 +160,7 @@ local function CreateMyAddonEditFrameTemplate()
 			self:ClearFocus()
 		end
 	)
-	if Octo_ToDo_DB_Variables then
+	if Octo_ToDo_DB_Variables and Octo_ToDo_DB_Variables.CONFIG and Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_FONTSIZE then
 		editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_FONTSIZE, "")
 	else
 		editBox:SetFont(E.Octo_font, 11, "")
@@ -348,8 +348,8 @@ local function dumpEdit(indent, msg, tables)
 	if indent == 0 then
 		LibIndentation.enable(
 			Octo_editFrame_scrollFrame:GetEditBox(),
-			E.func_createColorScheme(Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"),
-			Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_TABSPACES
+			E.func_createColorScheme(Octo_ToDo_DB_Variables and Octo_ToDo_DB_Variables.CONFIG and Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"),
+			Octo_ToDo_DB_Variables and Octo_ToDo_DB_Variables.CONFIG and Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_TABSPACES or 4
 		)
 		Octo_editFrame_scrollFrame:SetText(str)
 		LibIndentation.indentEditbox(Octo_editFrame_scrollFrame:GetEditBox())

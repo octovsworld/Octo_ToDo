@@ -2,7 +2,6 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 -- local funcName = GlobalAddonName.."WTF"
 local L = E.L
-local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
@@ -141,21 +140,6 @@ function EventFrame:func_CacheGameData()
 	end
 	-- opde(E.UniversalQuestMap)
 	----------------------------------------------------------------
-	-- Асинхронная загрузка
-	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
-	promise:AddItemsByKey(E.ALL_Items)
-	:ThenForAllWithCached(function(_, ID, TYPE)
-			E.func_GetName(TYPE, ID)
-			-- if TYPE == "item" then
-			-- E.func_GetItemQualityByID(ID)
-			-- end
-			-- if TYPE == "quest" then
-			-- E.func_GetName("quest", ID)
-			-- elseif TYPE == "item" then
-			-- E.func_GetName("item", ID)
-			-- -- E.func_GetItemQualityByID(ID)
-			-- end
-	end)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -423,13 +407,14 @@ function E.func_UpdateGlobalNSforProfiles()
 	end
 end
 function E.func_INIT_Components()
+
 	-- E.DEBUG_START()
 	----------------------------------------------------------------
 	E.OctoTables_Vibor = {}
 	E.OctoTables_DataOtrisovka = {}
 	E.OctoTables_Vibor_ORDER = {}
 	----------------------------------------------------------------
-	for i, componentFunc in next, (E.Components) do
+	for categoryKey, componentFunc in next, (E.Components) do
 		local OctoTables_Vibor, OctoTables_DataOtrisovka = componentFunc()
 		for key, value in next, (OctoTables_Vibor) do
 			if E.OctoTables_Vibor[key] == nil then
@@ -756,6 +741,21 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+function E.WTF_func_CheckAll()
+	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
+	EventFrame:func_DatabaseClear()
+	E.init_Octo_ToDo_DB_Levels()
+	E.init_Octo_Todo_DB_Profiles()
+	E.func_RemoveDuplicateCharacters()
+	E.Init_Octo_Cache_DB()
+	E.init_Octo_ToDo_DB_AccountData()
+	E.init_Octo_ToDo_DB_Variables()
+	E.func_setOldChanges()
+	E.func_UpdateGlobals()
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
@@ -773,29 +773,19 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.WTF_func_CheckAll()
-	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
-	EventFrame:func_DatabaseClear()
-	E.init_Octo_ToDo_DB_Levels()
-	E.init_Octo_Todo_DB_Profiles()
-	E.func_RemoveDuplicateCharacters()
-	E.Init_Octo_Cache_DB()
-	E.init_Octo_ToDo_DB_AccountData()
-	E.init_Octo_ToDo_DB_Variables()
-	E.func_setOldChanges()
-	E.func_UpdateGlobals()
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 function EventFrame:VARIABLES_LOADED()
-	E.func_INIT_Components() -- E.Components
 	E.WTF_func_CheckAll()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
+	-- ИНИЦИАЛИЗАЦИЯ КОМПОНЕНТОВ
+	E.func_InitActivities_GreatVault()
+	E.func_INIT_Components() -- E.Components
+	-- ИНИЦИАЛИЗАЦИЯ ПРОФИЛЕЙ И ПРОЧЕГО
+	E.WTF_func_CheckAll()
+
 	EventFrame:func_CacheGameData() -- E.Components
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()

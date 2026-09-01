@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-E.Enum_Activities_table = {}
 E.GW_INIT = true
 ----------------------------------------------------------------
 E.name_activities = setmetatable({
@@ -26,12 +25,19 @@ E.name_activities = setmetatable({
 ----------------------------------------------------------------
 -- InitActivities ----------------------------------------------
 ----------------------------------------------------------------
-local function InitActivities()
+function E.func_InitActivities_GreatVault()
 	if not E.GW_INIT then return end
 	for _, ID in next, Enum.WeeklyRewardChestThresholdType do
-		local activities = E.func_GetActivities(ID)
-		if activities and activities[1] then
-			E.Enum_Activities_table[#E.Enum_Activities_table + 1] = ID
+		local activityInfo = E.func_GetActivities(ID)
+		if activityInfo and #activityInfo > 1 then
+
+			local lastInfo = activityInfo[#activityInfo]
+			local required = lastInfo.threshold or lastInfo.requiredCount or 0
+
+			if required > 0 then
+				E.Enum_Activities_table[#E.Enum_Activities_table + 1] = ID
+			end
+
 		end
 	end
 	local priority = {
@@ -152,7 +158,7 @@ end
 ----------------------------------------------------------------
 local function Collect_GreatVault()
 	E.MythicPlus_seasonID = E.func_GetCurrentSeason()
-	InitActivities()
+	E.func_InitActivities_GreatVault()
 	if not E.func_CanCollectData() then return end
 	local db = Octo_ToDo_DB_Levels[E.curGUID]
 	E.func_OnUIInteract()

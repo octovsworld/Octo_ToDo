@@ -9,7 +9,7 @@ E.DEBUG_NAME = false
 E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
 E.REFRESH_CACHE = true
-E.SPAM_TIME = 2
+E.SPAM_TIME = 3
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
@@ -50,6 +50,8 @@ E.ENABLE_EXPANSIONCOLOR = true
 ----------------------------------------------------------------
 E.REVERSE = true -- по убыванию (E.DESCENDING = true) (E.ASCENDING  = false   -- по возрастанию)
 ----------------------------------------------------------------
+E.Components = {}
+E.Enum_Activities_table = {}
 E.HIDEFRAMES = {}
 E.Octo_Table_SI_IDS = {}
 E.SavedInstanceID_to_EJInstance = {}
@@ -90,7 +92,6 @@ E.Octo_ProfessionsskillLine_Other = {}
 E.Third_Option = {}
 E.Timers = {}
 E.OctoTable_ALL_Mounts = {}
-E.Components = {}
 E.OctoTable_CurrencyMountForFuncCurName = {}
 E._spamLocks = {}
 E._inCombats = {}

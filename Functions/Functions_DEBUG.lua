@@ -138,7 +138,7 @@ end
 
 
 function E.func_RequestUIUpdate(event_name)
-	if Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EVENTS then
+	if Octo_ToDo_DB_Variables and Octo_ToDo_DB_Variables.CONFIG and Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EVENTS then
 		local MAIN_FRAME = E.FRAMES[E.MAIN_FRAME_NAME]
 		local isMainFrameVisible = MAIN_FRAME and MAIN_FRAME:IsShown()
 		if isMainFrameVisible then

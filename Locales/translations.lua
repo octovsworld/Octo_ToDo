@@ -13,6 +13,18 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 E.translations = {
+	["Weekly total"] = {
+		["ruRU"] = "Всего за неделю",
+		["deDE"] = "Wöchentliche Gesamtsumme",
+		["esES"] = "Total semanal",
+		["esMX"] = "Total semanal",
+		["frFR"] = "Total hebdomadaire",
+		["itIT"] = "Totale settimanale",
+		["ptBR"] = "Total semanal",
+		["koKR"] = "주간 합계",
+		["zhCN"] = "每周总计",
+		["zhTW"] = "每週總計",
+	},
 	["Changelog"] = {
 		["ruRU"] = "Список изменений",
 		["deDE"] = "Änderungsprotokoll",
@@ -711,7 +723,7 @@ E.translations = {
 	["REWARD"] = REWARD,
 	["REWARDS"] = REWARDS,
 	["STAT_AVERAGE_ITEM_LEVEL"] = STAT_AVERAGE_ITEM_LEVEL, -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT Уровень предметов
-
+	["MYTHIC_PLUS_WEEKLY_BEST"] = MYTHIC_PLUS_WEEKLY_BEST, -- Недельный рекорд
 	["TOTAL"] = TOTAL,
 	["UNKNOWN"] = UNKNOWN,
 	["WEEKLY"] = WEEKLY,

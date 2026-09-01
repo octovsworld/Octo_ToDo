@@ -3,7 +3,7 @@ local L = E.L
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function GetVaultProgress(vaultMin, max3)
+function E.func_GetVaultProgress(vaultMin, max3)
 	if max3 == 0 then
 		return E.COLOR_GRAY, vaultMin .. "/" .. max3
 	end
@@ -65,7 +65,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 		if total > 0 and total ~= itemCount_Bags then
 			tooltip[#tooltip+1] = {" ",L["TOTAL"] .. ": " .. E.func_CompactFormatNumber(total)}
-			tooltip[#tooltip+1] = {" "," "}
+			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {L["BAG_NAME_BACKPACK"], E.func_CompactFormatNumber(itemCount_Bags)}
 			if itemCount_Bank > 0 then
 				tooltip[#tooltip+1] = {L["BANK"], E.func_CompactFormatNumber(itemCount_Bank)}
@@ -260,7 +260,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				if totalRuns > 0 then
 					local runsByDungeon = {}
 					tooltip[#tooltip+1] = {E.SEPARATOR_KEY}
-					tooltip[#tooltip+1] = {L["TOTAL"]..":", totalRuns}
+					tooltip[#tooltip+1] = {L["Weekly total"]..":", totalRuns}
 					for index = 1, totalRuns do
 						local run = runHistory[index]
 						local mapChallengeModeID = run.mapChallengeModeID -- 402,
@@ -318,8 +318,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			-- L["REWARD"]
 			tooltip[#tooltip+1] = {E.COLOR_BLUE .. ">" .. L["REWARD"] .."<|r"} -- L["WEEKLY_REWARDS_RETURN_TO_CLAIM"]
 		end
-		for j = 1, #E.Enum_Activities_table do
-			local ID = E.Enum_Activities_table[j]
+		for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
+			local ID = E.Enum_Activities_table[i]
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
 			local rewards = vaultData and vaultData.rewards or {}
 			local activities = E.func_GetActivities(ID)
@@ -358,7 +358,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 
 	-- Новый блок для GreatVault1, GreatVault2, GreatVault3
-	for i = 1, 3 do
+	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
 		if id == "GreatVault" .. i then
 
 			local ID = E.Enum_Activities_table[i]
@@ -373,7 +373,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 			local vaultMin = Safe(vaultData.min)
 
-			local color, progressText = GetVaultProgress(vaultMin, max3)
+			local color, progressText = E.func_GetVaultProgress(vaultMin, max3)
 			progressText = color .. progressText .. "|r"
 
 			local reward1 = rewards[1] and (E.COLOR_WHITE .. rewards[1] .. "|r") or (E.COLOR_GRAY .. vaultMin .. "/" .. max1 .. "|r")

@@ -45,7 +45,7 @@ E.OctoTable_KeystoneAbbr = {
 	[227] = {abbreviation = "RtKL", portal = 373262}, -- Return to Karazhan: Lower
 	[233] = {abbreviation = "CoEN", portal = 0}, -- Cathedral of Eternal Night
 	[234] = {abbreviation = "RtKU", portal = 373262}, -- Return to Karazhan: Upper
-	[239] = {abbreviation = "SotT", portal = 1254551}, -- Seat of the Triumvirate
+	[239] = {abbreviation = "SotT", portal = 1254551}, -- (SEAT) Seat of the Triumvirate
 	-- Battle for Azeroth
 	[244] = {abbreviation = "AD", portal = 424187}, -- Atal'Dazar
 	[245] = {abbreviation = "FH", portal = 410071}, -- Freehold
@@ -53,7 +53,7 @@ E.OctoTable_KeystoneAbbr = {
 	[247] = {abbreviation = "ML", Horde = 467555, Alliance = 467553,}, -- The MOTHERLODE!!
 	[248] = {abbreviation = "WM", portal = 424167}, -- Waycrest Manor
 	[249] = {abbreviation = "KR", portal = 0}, -- Kings' Rest
-	[250] = {abbreviation = "ToS", portal = 0}, -- Temple of Sethraliss
+	[250] = {abbreviation = "TOS", portal = 0}, -- Temple of Sethraliss
 	[251] = {abbreviation = "UNDR", portal = 410074}, -- The Underrot
 	[252] = {abbreviation = "SOTS", portal = 0}, -- Shrine of the Storm
 	[353] = {abbreviation = "SIEGE", Horde = 464256, Alliance = 445418,}, -- Siege of Boralus
@@ -113,13 +113,13 @@ E.OctoTable_KeystoneAbbr = {
 	[560] = {abbreviation = "MC", portal = 1254559}, -- Maisara Caverns
 
 	[583] = {abbreviation = "SotT", portal = 0}, -- "Seat of the Triumvirate"
-	[541] = {abbreviation = "TS?", portal = 0}, -- "The Stonecore"
+	[541] = {abbreviation = "TS", portal = 0}, -- "The Stonecore" ??????????
 
-	[586] = {abbreviation = "DoN?", portal = 0,}, -- "Den of Nalorakk" "Берлога Налоракка"
-	[588] = {abbreviation = "AoF?", portal = 0,}, -- "Altar of Fangs" "Алтарь Клыков"
-	[585] = {abbreviation = "VA?", portal = 0,}, -- "Voidscar Arena" "Арена Шрама Бездны"
-	[587] = {abbreviation = "MR?", portal = 0,}, -- "Murder Row" "Закоулок душегубов"
-	[584] = {abbreviation = "TBV?", portal = 0,}, -- "The Blinding Vale" "Слепящая долина"
+	[586] = {abbreviation = "DON", portal = 0,}, -- "Den of Nalorakk" "Берлога Налоракка"
+	[588] = {abbreviation = "AOF", portal = 0,}, -- "Altar of Fangs" "Алтарь Клыков"
+	[585] = {abbreviation = "VSA", portal = 0,}, -- "Voidscar Arena" "Арена Шрама Бездны"
+	[587] = {abbreviation = "MR", portal = 0,}, -- "Murder Row" "Закоулок душегубов"
+	[584] = {abbreviation = "BV", portal = 0,}, -- "The Blinding Vale" "Слепящая долина"
 
 	-- RAIDS:
 	-- MN Tier 1 (VS / DR / MQD)

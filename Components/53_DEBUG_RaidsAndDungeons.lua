@@ -5,7 +5,7 @@ if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 53
 ----------------------------------------------------------------
-local function tempFunction()
+E.Components[categoryKey] = function()
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -55,4 +55,3 @@ local function tempFunction()
 	end
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-table.insert(E.Components, tempFunction)

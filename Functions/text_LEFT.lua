@@ -102,7 +102,7 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 
 
 
-	for i = 1, 3 do
+	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
 		if id == "GreatVault"..i then
 			local ID = E.Enum_Activities_table[i]
 			TextLeft = E.name_activities[ID] or "?"

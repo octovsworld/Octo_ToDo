@@ -517,8 +517,8 @@ local function func_GreatVaultTooltipLeft(tbl, visible_GUID, id)
 
 	-- header активности
 	local header_ids_tbl = {}
-	for j = 1, #E.Enum_Activities_table do
-		header_ids_tbl[j] = E.Enum_Activities_table[j]
+	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
+		header_ids_tbl[i] = E.Enum_Activities_table[i]
 	end
 
 	for GUID, CharInfo in next, (tbl) do
@@ -530,8 +530,8 @@ local function func_GreatVaultTooltipLeft(tbl, visible_GUID, id)
 		local progress = {}
 		local rewards = {}
 
-		for j = 1, #E.Enum_Activities_table do
-			local ID = E.Enum_Activities_table[j]
+		for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
+			local ID = E.Enum_Activities_table[i]
 
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
 			local rewardData = vaultData and vaultData.rewards or {}
@@ -546,7 +546,7 @@ local function func_GreatVaultTooltipLeft(tbl, visible_GUID, id)
 
 			-- прогресс
 			if max == 0 then
-				progress[j] = E.COLOR_GRAY  ..  "-|r"
+				progress[i] = E.COLOR_GRAY  ..  "-|r"
 			else
 				local color
 				if vaultMin >= max then
@@ -557,11 +557,11 @@ local function func_GreatVaultTooltipLeft(tbl, visible_GUID, id)
 					color = E.COLOR_GRAY
 				end
 
-				progress[j] = color  ..  vaultMin  ..  "/"  ..  max  ..  "|r"
+				progress[i] = color  ..  vaultMin  ..  "/"  ..  max  ..  "|r"
 			end
 
 			-- 3 награды отдельно
-			rewards[j] = {
+			rewards[i] = {
 				rewardData[1] and E.COLOR_WHITE  ..  rewardData[1]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
 				rewardData[2] and E.COLOR_WHITE  ..  rewardData[2]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
 				rewardData[3] and E.COLOR_WHITE  ..  rewardData[3]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
@@ -946,7 +946,7 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		tooltip = func_ItemsTooltipLeft(tbl, visible_GUID, id)
 	end
 
-	for i = 1, 3 do
+	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
 		if SettingsType == "AdditionallyTOP#GreatVault" .. i then
 			tooltip = func_GreatVaultSingleTooltipLeft(tbl, visible_GUID, i)
 			break

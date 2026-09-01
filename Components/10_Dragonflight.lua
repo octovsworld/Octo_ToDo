@@ -8,17 +8,16 @@ if not E.Is_DF_available then return end;
 local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 10
-local expansionID = 10
 ----------------------------------------------------------------
-local function tempFunction()
+E.Components[categoryKey] = function()
 	local OctoTables_Vibor = {}
 	local OctoTables_DataOtrisovka = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].defs = false
-	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[categoryKey].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 2594, defS = false,}, -- Added in patch 10.1.5 "Fractures in Time"
@@ -1140,4 +1139,3 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-table.insert(E.Components, tempFunction)

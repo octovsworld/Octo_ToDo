@@ -472,20 +472,31 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 			-- DUNGEON
 			if activityID == 1 then
 				local activities = vaultData and vaultData.activities or {}
+				local rewards = vaultData and vaultData.rewards or {}
 				local parts, hasData = {}, false
 				for slot = 1, 3 do
 					local level = activities[slot] and activities[slot].level
 					local text, color
-					if not level or level == 0 then
-						text, color = "-", E.COLOR_GRAY
-					else
-						text = tostring(level)
-						-- цвет в зависимости от того, открыт ли слот (есть ли награда)
-						local rewards = vaultData and vaultData.rewards or {}
-						color = rewards[slot] and E.COLOR_WHITE or E.COLOR_GRAY
-					end
-					if text ~= "-" then
+					if rewards[slot] then
+						-- Есть награда, слот открыт
+						if not level or level == 0 then
+							-- Нет уровня ключа (таймволк, м+0 и т.п.)
+							text, color = "+", E.COLOR_GREEN
+						else
+							-- Есть уровень ключа
+							text, color = tostring(level), E.COLOR_WHITE
+						end
 						hasData = true
+					else
+						-- Нет награды
+						if not level or level == 0 then
+							text, color = "-", E.COLOR_GRAY
+						else
+							text, color = tostring(level), E.COLOR_GRAY
+						end
+						if text ~= "-" then
+							hasData = true
+						end
 					end
 					parts[slot] = color .. text .. "|r"
 				end
@@ -497,8 +508,8 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 				local current = vaultData and vaultData.min or 0
 				local required = activities and activities[3] and activities[3].threshold or 0
 				if current > 0 and required > 0 then
-					local color = (current >= required) and E.COLOR_WHITE or E.COLOR_YELLOW
-					TextCenter = color .. current .. "/" .. required .. "|r"
+					local color, text = E.func_GetVaultProgress(current, required)
+					TextCenter = color .. text .. "|r"
 				else
 					TextCenter = ""
 				end
