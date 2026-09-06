@@ -33,6 +33,14 @@ local func_DataProviderData do
 		local Version_120005 = formatterstr("12.0.5") -- .. E.func_NumberToVersion(120005) -- , versionColor(120005)
 		local tbl = {
 			{
+				addonVersion = 116.4,
+				date = formatterstr("06.09.2026"),
+				wowVersion = Version_120100,
+				text = {
+					"LibSFDropDown v41",
+				}
+			},
+			{
 				addonVersion = 116.3,
 				date = formatterstr("06.09.2026"),
 				wowVersion = Version_120100,
