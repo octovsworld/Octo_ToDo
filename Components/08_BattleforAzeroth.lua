@@ -10,6 +10,8 @@ local L = E.L
 local categoryKey = 8
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -19,722 +21,733 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1560, defS = true,},
-		{id = 1721, defS = true,},
-		{id = 1803, defS = true,},
-		{id = 1755, defS = true,},
-		{id = 1719, defS = true,},
-		{id = 1710, defS = true,},
-		{id = 1716, defS = true,},
-		{id = 1717, defS = true,},
-		{id = 1718, defS = false,},
-		{id = 1580, defS = false,},
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
+		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
+			{id = 1560, defS = true,},
+			{id = 1721, defS = true,},
+			{id = 1803, defS = true,},
+			{id = 1755, defS = true,},
+			{id = 1719, defS = true,},
+			{id = 1710, defS = true,},
+			{id = 1716, defS = true,},
+			{id = 1717, defS = true,},
+			{id = 1718, defS = false,},
+			{id = 1580, defS = false,},
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		-- Raid
-		{id = 2217, defS = true,}, -- Ny'alotha, the Waking City
-		{id = 2164, defS = true,}, -- The Eternal Palace
-		{id = 2096, defS = true,}, -- Crucible of Storms
-		{id = 2070, defS = true,}, -- Battle of Dazar'alor
-		{id = 1861, defS = true,}, -- Uldir
-		-- Dungeon
-		-- {id = 1771, defS = true,}, -- Tol Dagor
-		-- {id = 1877, defS = true,}, -- Temple of Sethraliss
-		-- {id = 2097, defS = true,}, -- Operation: Mechagon
-		-- {id = 1754, defS = true,}, -- Freehold
-		-- {id = 1862, defS = true,}, -- Waycrest Manor
-		-- {id = 1822, defS = true,}, -- Siege of Boralus
-		-- {id = 1841, defS = true,}, -- The Underrot
-		-- {id = 1762, defS = true,}, -- Kings' Rest
-		-- {id = 1594, defS = true,}, -- The MOTHERLODE!!
-		-- {id = 1763, defS = true,}, -- Atal'Dazar
-		-- {id = 1864, defS = true,}, -- Shrine of the Storm
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then
+		OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion({
+			-- Raid
+			{id = 2217, defS = true,}, -- Ny'alotha, the Waking City
+			{id = 2164, defS = true,}, -- The Eternal Palace
+			{id = 2096, defS = true,}, -- Crucible of Storms
+			{id = 2070, defS = true,}, -- Battle of Dazar'alor
+			{id = 1861, defS = true,}, -- Uldir
+			-- Dungeon
+			-- {id = 1771, defS = true,}, -- Tol Dagor
+			-- {id = 1877, defS = true,}, -- Temple of Sethraliss
+			-- {id = 2097, defS = true,}, -- Operation: Mechagon
+			-- {id = 1754, defS = true,}, -- Freehold
+			-- {id = 1862, defS = true,}, -- Waycrest Manor
+			-- {id = 1822, defS = true,}, -- Siege of Boralus
+			-- {id = 1841, defS = true,}, -- The Underrot
+			-- {id = 1762, defS = true,}, -- Kings' Rest
+			-- {id = 1594, defS = true,}, -- The MOTHERLODE!!
+			-- {id = 1763, defS = true,}, -- Atal'Dazar
+			-- {id = 1864, defS = true,}, -- Shrine of the Storm
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
-		-- ["Battle for Azeroth"] = {
-		{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-		{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-		{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-		{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-		{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-		{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-		{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
-		{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
-		{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
-		{id = 2103, defS = false,}, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
-		{id = 2156, defS = false,}, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
-		-- {id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
-		-- {id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-		{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
-		{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
-		{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
-		{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
-		{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
-		{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
-		{id = 2162, defS = false,}, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
-		{id = 2161, defS = false,}, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
-		{id = 2395, defS = false,}, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
-		{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
-		{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
-		{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-		{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
-		{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
-		{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
+		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
+			-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
+			-- ["Battle for Azeroth"] = {
+			{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+			{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+			{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+			{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+			{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+			{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+			{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
+			{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
+			{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
+			{id = 2103, defS = false,}, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
+			{id = 2156, defS = false,}, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
+			-- {id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
+			-- {id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
+			{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+			{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+			{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+			{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
+			{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
+			{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
+			{id = 2162, defS = false,}, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
+			{id = 2161, defS = false,}, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
+			{id = 2395, defS = false,}, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
+			{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
+			{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
+			{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
+			{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+			{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+			{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-    {
-        sorted = true,
-        showTooltip = true,
-        TextLeft = function()
-            return L["RAID_INFO_WORLD_BOSS"]
-        end,
-        name_save = "WorldBoss",
-        defS = true,
-        reset = "Weekly",
-        desc = categoryKey,
-        questpools = {
-            {
-                {
-                    52196, -- Занесенные песком кости (Вол'дун)
-                    addText = {mapID = E.MapID_Voldun},
-                },
-                {
-                    52169, -- Матриарх (Дикие земли)
-                    addText = {mapID = E.MapID_Zuldazar},
-                },
-                {
-                    52181, -- Дым и тени (Назмир)
-                    addText = {mapID = E.MapID_Nazmir},
-                },
-                {
-                    52166, -- Безликий глашатай (Долина Штормов)
-                    addText = {mapID = E.MapID_StormsongValley},
-                },
-                {
-                    52163, -- Крылатый тайфун (Тирагардское поморье)
-                    addText = {mapID = E.MapID_TiragardeSound},
-                },
-                {
-                    52157, -- Леденящая встреча (Друствар)
-                    addText = {mapID = E.MapID_Drustvar},
-                },
-            },
-            {
-                {
-                    52848, -- "Львиный рык" (Нагорье Арати)
-                    addText = {mapID = E.MapID_ArathiHighlands},
-                    FactionOrClass = {Horde = true},
-                },
-                {
-                    52847, -- "Гибельный вой" (Нагорье Арати)
-                    addText = {mapID = E.MapID_ArathiHighlands},
-                    FactionOrClass = {Alliance = true},
-                },
-                {
-                    54896, -- Ивус Лесной Властелин (Темные берега)
-                    addText = {mapID = E.MapID_Darkshore},
-                    FactionOrClass = {Horde = true},
-                },
-                {
-                    54895, -- Ивус Трухлявый (Темные берега)
-                    addText = {mapID = E.MapID_Darkshore},
-                    FactionOrClass = {Alliance = true},
-                },
-            },
-            {
-                {
-                    58705, -- Великая императрица Шек'зара (Вечноцветущий дол)
-                    addText = {mapID = E.MapID_ValeofEternalBlossoms},
-                },
-                {
-                    55466, -- Вук'лаз Землелом (Ульдум)
-                    addText = {mapID = E.MapID_Uldum_BFA},
-                },
-            },
-            {
-                {
-                    56057, -- Страж душ (Назжатар)
-                    addText = {mapID = E.MapID_Nazjatar},
-                    forcedText = {npcID = 152697},
-                },
-                {
-                    56056, -- Глубинный ужас (Назжатар)
-                    addText = {mapID = E.MapID_Nazjatar},
-                },
-            },
-        },
-    },
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.FACTION_CURRENT == "Horde" and 53435 or 53436), false)
-			end,
-			name_save = "AzeriteForTheFaction",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
-				{53435, FactionOrClass = {Horde = true,},},
-				{53436, FactionOrClass = {Alliance = true,},},
-			},
-			-- forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.Timers.BfA_Invasion()
-			end,
-			name_save = "InvasionQuests",
-			defS = true,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{54134},
-				{54136},
-				{53711},
-				{53701},
-				{54138},
-				{51982},
-				{53883},
-				{54137},
-				{53885},
-				{53939},
-				{54135},
-				{54132},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.Timers.BfA_Assault()..WORLD_MAP_THREATS
-			end,
-			name_save = "bfa-nzoth-assault",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{57157}, -- _Uldum
-				{56308}, -- _Uldum
-				{55350}, -- _Uldum
-				{56064}, -- Vale of Eternal Blossoms
-				{57728}, -- Vale of Eternal Blossoms
-				{57008}, -- Vale of Eternal Blossoms
-			},
-			forcedMaxQuest = 2,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return L["Lesser Visions of N'Zoth"]
-			end,
-			name_save = "miniVision",
-			defS = true,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{58168},
-				{58155},
-				{58151},
-				{58167},
-				{58156},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = SPLASH_BATTLEFORAZEROTH_8_3_0_FEATURE1_TITLE,
-			name_save = "Horrific Vision",
-			defS = true,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{57848, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 5 Masks"},},
-				{57844, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 4 Masks"},},
-				{57847, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 3 Masks"},},
-				{57843, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 2 Masks"},},
-				{57846, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 1 Masks"},},
-				{57842, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear No Masks"},},
-				{57845, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss + 2 Bonus Objectives"},},
-				{57841, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss Only"},},
-			},
-			-- forcedMaxQuest = 1,
-		},
-		{
-			-- sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Warfront"]
-			end,
-			name_save = "Warfront",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{53416, FactionOrClass = {Horde = true,}},
-				{53414, FactionOrClass = {Alliance = true,}},
-				{53955, FactionOrClass = {Horde = true,}},
-				{53992, FactionOrClass = {Alliance = true,}},
-				{56137, FactionOrClass = {Horde = true,}},
-				{57959, FactionOrClass = {Horde = true,}},
-				{56136, FactionOrClass = {Alliance = true,}},
-				{57960, FactionOrClass = {Alliance = true,}},
-			},
-			-- forcedMaxQuest = 1,
-		},
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion({
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Darkshore)..": ".."Rares"
+				return L["RAID_INFO_WORLD_BOSS"]
 			end,
-			name_save = "DarkshoreRares",
-			defS = false,
-			reset = "Daily",
+			name_save = "WorldBoss",
+			defS = true,
+			reset = "Weekly",
 			desc = categoryKey,
-			quests = {
-				-- Alash'anir
-				{54695, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148787},},
-				{54696, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148787},},
-				-- Aman
-				{54405, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147966},},
-				{54406, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147966},},
-				-- Amberclaw
-				{54285, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147744},},
-				{54286, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147744},},
-				-- Athrikus Narassin
-				{54278, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147708},},
-				{54279, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147708},},
-				-- Commander Ral'esh
-				{54426, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148025},},
-				{54427, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148025},},
-				-- Conflagros
-				{54232, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147260},},
-				{54233, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147260},},
-				-- Cyclarus
-				{54229, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147241},},
-				{54230, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147241},},
-				-- Glimmerspine
-				{54884, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149654},},
-				{54885, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149654},},
-				-- Granokk
-				{54234, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147261},},
-				{54235, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147261},},
-				-- Gren Tornfur
-				{54428, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148031},},
-				{54429, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148031},},
-				-- Hydrath
-				{54227, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147240},},
-				{54228, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147240},},
-				-- Madfeather
-				{54887, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149657},},
-				{54888, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149657},},
-				-- Mrggr'marr
-				{54408, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147970},},
-				{54409, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147970},},
-				-- Scalefiend
-				{54893, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149665},},
-				{54894, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149665},},
-				-- Shattershard
-				{54289, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147751},},
-				{54290, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147751},},
-				-- Soggoth the Slitherer
-				{54320, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147897},},
-				{54321, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147897},},
-				-- Stonebinder Ssra'vess
-				{54247, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147332},},
-				{54248, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147332},},
-				-- Twilight Prophet Graemeа
-				{54397, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147942},},
-				{54398, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147942},},
-				-- Athil Dewfire
-				{54431, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
-				-- Blackpaw
-				{54890, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149660},}, -- УБИЛ ОРДОЙ
-				-- Grimhorn
-				{54891, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149662},},
-				-- Onu
-				{54291, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147758},}, -- УБИЛ ОРДОЙ 54892
-				-- Sapper Odette
-				{54452, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148103},}, -- УБИЛ ОРДОЙ 54892
-				-- Shadowclaw
-				{54892, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149663},}, -- УБИЛ ОРДОЙ 54892
-				-- Thelar Moonstrike
-				{54252, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147435},},
-				-- Agathe Wyrmwood
-				{54883, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149517},},
-				-- Burninator Mark V
-				{54768, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149141},},
-				-- Commander Drald
-				{54309, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147845},},
-				-- Croz Bloodrage
-				{54886, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149655},},
-				-- Moxo the Beheader
-				{54277, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147701},},
-				-- Orwell Stevenson
-				{54889, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149659},}, -- 149664
-				-- Zim'kaga
-				{54274, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147664},},
+			questpools = {
+				{
+					{
+						52196, -- Занесенные песком кости (Вол'дун)
+						addText = {mapID = E.MapID_Voldun},
+					},
+					{
+						52169, -- Матриарх (Дикие земли)
+						addText = {mapID = E.MapID_Zuldazar},
+					},
+					{
+						52181, -- Дым и тени (Назмир)
+						addText = {mapID = E.MapID_Nazmir},
+					},
+					{
+						52166, -- Безликий глашатай (Долина Штормов)
+						addText = {mapID = E.MapID_StormsongValley},
+					},
+					{
+						52163, -- Крылатый тайфун (Тирагардское поморье)
+						addText = {mapID = E.MapID_TiragardeSound},
+					},
+					{
+						52157, -- Леденящая встреча (Друствар)
+						addText = {mapID = E.MapID_Drustvar},
+					},
+				},
+				{
+					{
+						52848, -- "Львиный рык" (Нагорье Арати)
+						addText = {mapID = E.MapID_ArathiHighlands},
+						FactionOrClass = {Horde = true},
+					},
+					{
+						52847, -- "Гибельный вой" (Нагорье Арати)
+						addText = {mapID = E.MapID_ArathiHighlands},
+						FactionOrClass = {Alliance = true},
+					},
+					{
+						54896, -- Ивус Лесной Властелин (Темные берега)
+						addText = {mapID = E.MapID_Darkshore},
+						FactionOrClass = {Horde = true},
+					},
+					{
+						54895, -- Ивус Трухлявый (Темные берега)
+						addText = {mapID = E.MapID_Darkshore},
+						FactionOrClass = {Alliance = true},
+					},
+				},
+				{
+					{
+						58705, -- Великая императрица Шек'зара (Вечноцветущий дол)
+						addText = {mapID = E.MapID_ValeofEternalBlossoms},
+					},
+					{
+						55466, -- Вук'лаз Землелом (Ульдум)
+						addText = {mapID = E.MapID_Uldum_BFA},
+					},
+				},
+				{
+					{
+						56057, -- Страж душ (Назжатар)
+						addText = {mapID = E.MapID_Nazjatar},
+						forcedText = {npcID = 152697},
+					},
+					{
+						56056, -- Глубинный ужас (Назжатар)
+						addText = {mapID = E.MapID_Nazjatar},
+					},
+				},
 			},
-			-- forcedMaxQuest = 25,
 		},
-		-- {
-		--     sorted = false,
-		--     showTooltip = true,
-		-- TextLeft = function()
-		--     return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("quest", 54088, false)
-		-- end,
-		--     name_save = "TheMechagonianThreat",
-		-- defS = true,
-		--     reset = "Normal",
-		--     desc = categoryKey,
-		--     quests = {
-		--         -- Только для Альянса
-		--         {54088, FactionOrClass = {Alliance = true,}},
-		--         {55040, FactionOrClass = {Alliance = true,}},
-		--         {54945, FactionOrClass = {Alliance = true,}},
-		--         {54087, FactionOrClass = {Alliance = true,}},
-		--         {54946, FactionOrClass = {Alliance = true,}},
-		--         {54947, FactionOrClass = {Alliance = true,}},
-		--         {54992, FactionOrClass = {Alliance = true,}},
-		--         {55645, FactionOrClass = {Alliance = true,}},
-		--         -- Только для Орды
-		--         {55646, FactionOrClass = {Horde = true,}},
-		--         {55647, FactionOrClass = {Horde = true,}},
-		--         {55648, FactionOrClass = {Horde = true,}},
-		--         {55630, FactionOrClass = {Horde = true,}},
-		--         {55632, FactionOrClass = {Horde = true,}},
-		--         {55649, FactionOrClass = {Horde = true,}},
-		--         {55650, FactionOrClass = {Horde = true,}},
-		--         {55651, FactionOrClass = {Horde = true,}},
-		--         {55652, FactionOrClass = {Horde = true,}},
-		--         {55685, FactionOrClass = {Horde = true,}},
-		--         -- Общие квесты
-		--         {55730},
-		--         {55731},
-		--         {55995},
-		--         {55734},
-		--         {55096},
-		--         {55736},
-		--         -- {55609}, -- Операция мехагон
-		--     },
-		-- },
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": Rares"
-			end,
-			name_save = "MechagonRares",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{55512, forcedText = {npcID = 151934}, addText = {mount = 1229},}, -- RARE ELITE 154342 -- MOUNT
-				{55539, forcedText = {npcID = 151308},},
-				{55857, forcedText = {npcID = 153200},},
-				{55537, forcedText = {npcID = 152001},},
-				{56368, forcedText = {npcID = 154739},},
-				{55812, forcedText = {npcID = 149847},}, -- 152569
-				{55514, forcedText = {npcID = 151569},},
-				{55814, forcedText = {npcID = 150342},},
-				{56207, forcedText = {npcID = 154153},},
-				{55513, forcedText = {npcID = 151202},},
-				{55367, forcedText = {npcID = 151884},},
-				{55852, forcedText = {npcID = 153228},},
-				{55855, forcedText = {npcID = 153205},},
-				{56367, forcedText = {npcID = 154701},},
-				{55399, forcedText = {npcID = 151684},},
-				{55369, forcedText = {npcID = 152007},},
-				{55544, forcedText = {npcID = 151933},},
-				{55207, forcedText = {npcID = 151124},},
-				{55386, forcedText = {npcID = 151672},},
-				{55859, forcedText = {npcID = 151627},},
-				{55853, forcedText = {npcID = 153206},}, -- RARE
-				{55515, forcedText = {npcID = 151296},}, -- +QUEST 55918
-				{55856, forcedText = {npcID = 152764},},
-				{55405, forcedText = {npcID = 151702},},
-				{55368, forcedText = {npcID = 150575},},
-				{55811, forcedText = {npcID = 152182}, addText = {mount = 1248},}, -- MOUNT
-				{56737, forcedText = {npcID = 155583},},
-				{55545, forcedText = {npcID = 150937},},
-				{55810, forcedText = {npcID = 153000},},
-				{55854, forcedText = {npcID = 153226},},
-				{56419, forcedText = {npcID = 155060},},
-				{55858, forcedText = {npcID = 152113},},
-				{56182, forcedText = {npcID = 154225},},
-				{55364, forcedText = {npcID = 151623},}, -- 151625
-				{55538, forcedText = {npcID = 151940},},
-				{55546, forcedText = {npcID = 150394},}, -- 154968
-				{56298, forcedText = {npcID = 152290}, addText = {mount = 1257},}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("quest", C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.FACTION_CURRENT == "Horde" and 53435 or 53436), false)
+				end,
+				name_save = "AzeriteForTheFaction",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
+					{53435, FactionOrClass = {Horde = true,},},
+					{53436, FactionOrClass = {Alliance = true,},},
+				},
+				-- forcedMaxQuest = 1,
 			},
-			-- forcedMaxQuest = 36+1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": Treasures"
-			end,
-			name_save = "MechagonTREASURE",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{55547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-				{55548, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-				{55549, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-				{55550, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-				{55551, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-				{55552, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-				{55553, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-				{55554, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-				{55555, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-				{55556, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.Timers.BfA_Invasion()
+				end,
+				name_save = "InvasionQuests",
+				defS = true,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{54134},
+					{54136},
+					{53711},
+					{53701},
+					{54138},
+					{51982},
+					{53883},
+					{54137},
+					{53885},
+					{53939},
+					{54135},
+					{54132},
+				},
+				forcedMaxQuest = 1,
 			},
-			forcedMaxQuest = 10,
-		},
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = "MechagonTREASURE_MISCELLANEOUS",
-		-- name_save = "MechagonTREASURE_MISCELLANEOUS",
-		-- defS = true,
-		-- reset = "Daily",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {55743},
-		-- {56117},
-		-- {57134},
-		-- },
-		-- forcedMaxQuest = 3,
-		-- },
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = "MechagonLOCKED_CHESTS1",
-		-- name_save = "MechagonLOCKED_CHESTS1",
-		-- defS = true,
-		-- reset = "Daily",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {56907},
-		-- },
-		-- forcedMaxQuest = 1,
-		-- },
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = "MechagonLOCKED_CHESTS2",
-		-- name_save = "MechagonLOCKED_CHESTS2",
-		-- defS = true,
-		-- reset = "Daily",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {57133},
-		-- },
-		-- forcedMaxQuest = 1,
-		-- },
-		-- {
-		-- sorted = false,
-		-- showTooltip = true,
-		-- TextLeft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
-		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
-		-- defS = true,
-		-- reset = "Normal",
-		-- desc = categoryKey,
-		-- -- forcedMaxQuest = "all",
-		-- quests = {
-		-- {56031, FactionOrClass = {Alliance = true,}},
-		-- {56043, FactionOrClass = {Alliance = true,}},
-		-- {55095, FactionOrClass = {Alliance = true,}},
-		-- {54969, FactionOrClass = {Alliance = true,}},
-		-- {56640, FactionOrClass = {Alliance = true,}},
-		-- {56641, FactionOrClass = {Alliance = true,}},
-		-- {56642, FactionOrClass = {Alliance = true,}},
-		-- {56643, FactionOrClass = {Alliance = true,}},
-		-- {56644, FactionOrClass = {Alliance = true,}},
-		-- {55175, FactionOrClass = {Alliance = true,}},
-		-- {54972, FactionOrClass = {Alliance = true,}},
-		-- {56030, FactionOrClass = {Horde = true,}},
-		-- {56044, FactionOrClass = {Horde = true,}},
-		-- {55054, FactionOrClass = {Horde = true,}},
-		-- {54018, FactionOrClass = {Horde = true,}},
-		-- {54021, FactionOrClass = {Horde = true,}},
-		-- {54012, FactionOrClass = {Horde = true,}},
-		-- {55092, FactionOrClass = {Horde = true,}},
-		-- {56063, FactionOrClass = {Horde = true,}},
-		-- {54015, FactionOrClass = {Horde = true,}},
-		-- {56429, FactionOrClass = {Horde = true,}},
-		-- {55094, FactionOrClass = {Horde = true,}},
-		-- {55053, FactionOrClass = {Horde = true,}},
-		-- },
-		-- },
-		-- {
-		-- sorted = false,
-		-- showTooltip = true,
-		-- TextLeft = "UNLOCKING MECHAGON PART 2",
-		-- name_save = "UNLOCKING MECHAGON PART 2",
-		-- defS = true,
-		-- reset = "Normal",
-		-- desc = categoryKey,
-		-- -- forcedMaxQuest = "all",
-		-- quests = {
-		-- {55851},
-		-- {55533},
-		-- {55374},
-		-- {55400},
-		-- {55407},
-		-- {55425},
-		-- {55497},
-		-- {55618},
-		-- {57010},
-		-- {56162, FactionOrClass = {Alliance = true,}},
-		-- {56350, FactionOrClass = {Alliance = true,}},
-		-- {55361, FactionOrClass = {Alliance = true,}},
-		-- {55363, FactionOrClass = {Alliance = true,}},
-		-- {56156, FactionOrClass = {Alliance = true,}},
-		-- {56161, FactionOrClass = {Horde = true,}},
-		-- {55481, FactionOrClass = {Horde = true,}},
-		-- {55384, FactionOrClass = {Horde = true,}},
-		-- {55385, FactionOrClass = {Horde = true,}},
-		-- {55500, FactionOrClass = {Horde = true,}},
-		-- },
-		-- -- forcedMaxQuest = "all",
-		-- },
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": Dailies Visitor Quests"
-			end,
-			name_save = "DAILY_VISITOR_QUESTS",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{55463},
-				{55658},
-				{55688}, -- https://www.wowhead.com/ru/quest=55658/
-				{55718},
-				{55765},
-				{55885},
-				{56053},
-				{55813},
-				{56301},
-				{56142},
-				{55528},
-				{56365},
-				{56552, FactionOrClass = {Horde = true,},},
-				{56558, FactionOrClass = {Alliance = true,}},
-				{56572},
-				{56501},
-				{56493},
-				{55575},
-				{55672}, -- https://www.wowhead.com/ru/quest=55658/
-				{55717}, -- https://www.wowhead.com/ru/quest=55658/
-				{56049}, -- https://www.wowhead.com/ru/quest=55658/
-				{56469},
-				{55816},
-				{55905},
-				{56184},
-				{56306},
-				{54090},
-				{56355},
-				{56523},
-				{56410},
-				{56508},
-				{56471},
-				{56405},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.Timers.BfA_Assault()..WORLD_MAP_THREATS
+				end,
+				name_save = "bfa-nzoth-assault",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{57157}, -- _Uldum
+					{56308}, -- _Uldum
+					{55350}, -- _Uldum
+					{56064}, -- Vale of Eternal Blossoms
+					{57728}, -- Vale of Eternal Blossoms
+					{57008}, -- Vale of Eternal Blossoms
+				},
+				forcedMaxQuest = 2,
 			},
-			-- forcedMaxQuest = 32,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": Daily WQ"
-			end,
-			name_save = "MechagonDAILYWQ",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{56139}, -- WQ
-				{56141}, -- WQ
-				{55901}, -- WQ
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return L["Lesser Visions of N'Zoth"]
+				end,
+				name_save = "miniVision",
+				defS = true,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{58168},
+					{58155},
+					{58151},
+					{58167},
+					{58156},
+				},
+				forcedMaxQuest = 1,
 			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13489)
-			end,
-			name_save = "MechagonSecretFish",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{55309},
-				{55299},
-				{55310},
-				{55306},
-				{55307},
-				{55313},
-				{55308},
-				{55312},
-				{55305},
-				{55311},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = SPLASH_BATTLEFORAZEROTH_8_3_0_FEATURE1_TITLE,
+				name_save = "Horrific Vision",
+				defS = true,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{57848, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 5 Masks"},},
+					{57844, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 4 Masks"},},
+					{57847, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 3 Masks"},},
+					{57843, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 2 Masks"},},
+					{57846, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 1 Masks"},},
+					{57842, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear No Masks"},},
+					{57845, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss + 2 Bonus Objectives"},},
+					{57841, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss Only"},},
+				},
+				-- forcedMaxQuest = 1,
 			},
-			forcedMaxQuest = 10,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13791)
-			end,
-			name_save = "MechagonMakingAMount",
-			defS = false,
-			reset = "Normal",
-			desc = categoryKey,
-			quests = {
-				{55608},
-				{54086},
-				{54929},
-				{55373},
-				{55697},
-				{54922},
-				{56168},
-				{54083},
-				{56175},
-				{55696},
-				{55753},
-				{55622},
+			{
+				-- sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["Warfront"]
+				end,
+				name_save = "Warfront",
+				defS = false,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{53416, FactionOrClass = {Horde = true,}},
+					{53414, FactionOrClass = {Alliance = true,}},
+					{53955, FactionOrClass = {Horde = true,}},
+					{53992, FactionOrClass = {Alliance = true,}},
+					{56137, FactionOrClass = {Horde = true,}},
+					{57959, FactionOrClass = {Horde = true,}},
+					{56136, FactionOrClass = {Alliance = true,}},
+					{57960, FactionOrClass = {Alliance = true,}},
+				},
+				-- forcedMaxQuest = 1,
 			},
-			-- forcedMaxQuest = 10,
-		},
-	}
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Darkshore)..": ".."Rares"
+				end,
+				name_save = "DarkshoreRares",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					-- Alash'anir
+					{54695, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148787},},
+					{54696, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148787},},
+					-- Aman
+					{54405, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147966},},
+					{54406, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147966},},
+					-- Amberclaw
+					{54285, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147744},},
+					{54286, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147744},},
+					-- Athrikus Narassin
+					{54278, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147708},},
+					{54279, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147708},},
+					-- Commander Ral'esh
+					{54426, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148025},},
+					{54427, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148025},},
+					-- Conflagros
+					{54232, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147260},},
+					{54233, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147260},},
+					-- Cyclarus
+					{54229, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147241},},
+					{54230, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147241},},
+					-- Glimmerspine
+					{54884, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149654},},
+					{54885, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149654},},
+					-- Granokk
+					{54234, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147261},},
+					{54235, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147261},},
+					-- Gren Tornfur
+					{54428, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148031},},
+					{54429, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148031},},
+					-- Hydrath
+					{54227, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147240},},
+					{54228, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147240},},
+					-- Madfeather
+					{54887, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149657},},
+					{54888, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149657},},
+					-- Mrggr'marr
+					{54408, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147970},},
+					{54409, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147970},},
+					-- Scalefiend
+					{54893, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149665},},
+					{54894, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149665},},
+					-- Shattershard
+					{54289, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147751},},
+					{54290, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147751},},
+					-- Soggoth the Slitherer
+					{54320, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147897},},
+					{54321, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147897},},
+					-- Stonebinder Ssra'vess
+					{54247, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147332},},
+					{54248, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147332},},
+					-- Twilight Prophet Graemeа
+					{54397, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147942},},
+					{54398, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147942},},
+					-- Athil Dewfire
+					{54431, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
+					-- Blackpaw
+					{54890, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149660},}, -- УБИЛ ОРДОЙ
+					-- Grimhorn
+					{54891, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149662},},
+					-- Onu
+					{54291, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147758},}, -- УБИЛ ОРДОЙ 54892
+					-- Sapper Odette
+					{54452, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148103},}, -- УБИЛ ОРДОЙ 54892
+					-- Shadowclaw
+					{54892, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149663},}, -- УБИЛ ОРДОЙ 54892
+					-- Thelar Moonstrike
+					{54252, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147435},},
+					-- Agathe Wyrmwood
+					{54883, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149517},},
+					-- Burninator Mark V
+					{54768, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149141},},
+					-- Commander Drald
+					{54309, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147845},},
+					-- Croz Bloodrage
+					{54886, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149655},},
+					-- Moxo the Beheader
+					{54277, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147701},},
+					-- Orwell Stevenson
+					{54889, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149659},}, -- 149664
+					-- Zim'kaga
+					{54274, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147664},},
+				},
+				-- forcedMaxQuest = 25,
+			},
+			-- {
+			--     sorted = false,
+			--     showTooltip = true,
+			-- TextLeft = function()
+			--     return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("quest", 54088, false)
+			-- end,
+			--     name_save = "TheMechagonianThreat",
+			-- defS = true,
+			--     reset = "Normal",
+			--     desc = categoryKey,
+			--     quests = {
+			--         -- Только для Альянса
+			--         {54088, FactionOrClass = {Alliance = true,}},
+			--         {55040, FactionOrClass = {Alliance = true,}},
+			--         {54945, FactionOrClass = {Alliance = true,}},
+			--         {54087, FactionOrClass = {Alliance = true,}},
+			--         {54946, FactionOrClass = {Alliance = true,}},
+			--         {54947, FactionOrClass = {Alliance = true,}},
+			--         {54992, FactionOrClass = {Alliance = true,}},
+			--         {55645, FactionOrClass = {Alliance = true,}},
+			--         -- Только для Орды
+			--         {55646, FactionOrClass = {Horde = true,}},
+			--         {55647, FactionOrClass = {Horde = true,}},
+			--         {55648, FactionOrClass = {Horde = true,}},
+			--         {55630, FactionOrClass = {Horde = true,}},
+			--         {55632, FactionOrClass = {Horde = true,}},
+			--         {55649, FactionOrClass = {Horde = true,}},
+			--         {55650, FactionOrClass = {Horde = true,}},
+			--         {55651, FactionOrClass = {Horde = true,}},
+			--         {55652, FactionOrClass = {Horde = true,}},
+			--         {55685, FactionOrClass = {Horde = true,}},
+			--         -- Общие квесты
+			--         {55730},
+			--         {55731},
+			--         {55995},
+			--         {55734},
+			--         {55096},
+			--         {55736},
+			--         -- {55609}, -- Операция мехагон
+			--     },
+			-- },
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": Rares"
+				end,
+				name_save = "MechagonRares",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{55512, forcedText = {npcID = 151934}, addText = {mount = 1229},}, -- RARE ELITE 154342 -- MOUNT
+					{55539, forcedText = {npcID = 151308},},
+					{55857, forcedText = {npcID = 153200},},
+					{55537, forcedText = {npcID = 152001},},
+					{56368, forcedText = {npcID = 154739},},
+					{55812, forcedText = {npcID = 149847},}, -- 152569
+					{55514, forcedText = {npcID = 151569},},
+					{55814, forcedText = {npcID = 150342},},
+					{56207, forcedText = {npcID = 154153},},
+					{55513, forcedText = {npcID = 151202},},
+					{55367, forcedText = {npcID = 151884},},
+					{55852, forcedText = {npcID = 153228},},
+					{55855, forcedText = {npcID = 153205},},
+					{56367, forcedText = {npcID = 154701},},
+					{55399, forcedText = {npcID = 151684},},
+					{55369, forcedText = {npcID = 152007},},
+					{55544, forcedText = {npcID = 151933},},
+					{55207, forcedText = {npcID = 151124},},
+					{55386, forcedText = {npcID = 151672},},
+					{55859, forcedText = {npcID = 151627},},
+					{55853, forcedText = {npcID = 153206},}, -- RARE
+					{55515, forcedText = {npcID = 151296},}, -- +QUEST 55918
+					{55856, forcedText = {npcID = 152764},},
+					{55405, forcedText = {npcID = 151702},},
+					{55368, forcedText = {npcID = 150575},},
+					{55811, forcedText = {npcID = 152182}, addText = {mount = 1248},}, -- MOUNT
+					{56737, forcedText = {npcID = 155583},},
+					{55545, forcedText = {npcID = 150937},},
+					{55810, forcedText = {npcID = 153000},},
+					{55854, forcedText = {npcID = 153226},},
+					{56419, forcedText = {npcID = 155060},},
+					{55858, forcedText = {npcID = 152113},},
+					{56182, forcedText = {npcID = 154225},},
+					{55364, forcedText = {npcID = 151623},}, -- 151625
+					{55538, forcedText = {npcID = 151940},},
+					{55546, forcedText = {npcID = 150394},}, -- 154968
+					{56298, forcedText = {npcID = 152290}, addText = {mount = 1257},}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
+				},
+				-- forcedMaxQuest = 36+1,
+			},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": Treasures"
+				end,
+				name_save = "MechagonTREASURE",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{55547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+					{55548, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+					{55549, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+					{55550, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+					{55551, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+					{55552, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+					{55553, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+					{55554, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+					{55555, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+					{55556, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				},
+				forcedMaxQuest = 10,
+			},
+			-- {
+			-- showTooltip = true,
+			-- TextLeft = "MechagonTREASURE_MISCELLANEOUS",
+			-- name_save = "MechagonTREASURE_MISCELLANEOUS",
+			-- defS = true,
+			-- reset = "Daily",
+			-- desc = categoryKey,
+			-- quests = {
+			-- {55743},
+			-- {56117},
+			-- {57134},
+			-- },
+			-- forcedMaxQuest = 3,
+			-- },
+			-- {
+			-- showTooltip = true,
+			-- TextLeft = "MechagonLOCKED_CHESTS1",
+			-- name_save = "MechagonLOCKED_CHESTS1",
+			-- defS = true,
+			-- reset = "Daily",
+			-- desc = categoryKey,
+			-- quests = {
+			-- {56907},
+			-- },
+			-- forcedMaxQuest = 1,
+			-- },
+			-- {
+			-- showTooltip = true,
+			-- TextLeft = "MechagonLOCKED_CHESTS2",
+			-- name_save = "MechagonLOCKED_CHESTS2",
+			-- defS = true,
+			-- reset = "Daily",
+			-- desc = categoryKey,
+			-- quests = {
+			-- {57133},
+			-- },
+			-- forcedMaxQuest = 1,
+			-- },
+			-- {
+			-- sorted = false,
+			-- showTooltip = true,
+			-- TextLeft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
+			-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
+			-- defS = true,
+			-- reset = "Normal",
+			-- desc = categoryKey,
+			-- -- forcedMaxQuest = "all",
+			-- quests = {
+			-- {56031, FactionOrClass = {Alliance = true,}},
+			-- {56043, FactionOrClass = {Alliance = true,}},
+			-- {55095, FactionOrClass = {Alliance = true,}},
+			-- {54969, FactionOrClass = {Alliance = true,}},
+			-- {56640, FactionOrClass = {Alliance = true,}},
+			-- {56641, FactionOrClass = {Alliance = true,}},
+			-- {56642, FactionOrClass = {Alliance = true,}},
+			-- {56643, FactionOrClass = {Alliance = true,}},
+			-- {56644, FactionOrClass = {Alliance = true,}},
+			-- {55175, FactionOrClass = {Alliance = true,}},
+			-- {54972, FactionOrClass = {Alliance = true,}},
+			-- {56030, FactionOrClass = {Horde = true,}},
+			-- {56044, FactionOrClass = {Horde = true,}},
+			-- {55054, FactionOrClass = {Horde = true,}},
+			-- {54018, FactionOrClass = {Horde = true,}},
+			-- {54021, FactionOrClass = {Horde = true,}},
+			-- {54012, FactionOrClass = {Horde = true,}},
+			-- {55092, FactionOrClass = {Horde = true,}},
+			-- {56063, FactionOrClass = {Horde = true,}},
+			-- {54015, FactionOrClass = {Horde = true,}},
+			-- {56429, FactionOrClass = {Horde = true,}},
+			-- {55094, FactionOrClass = {Horde = true,}},
+			-- {55053, FactionOrClass = {Horde = true,}},
+			-- },
+			-- },
+			-- {
+			-- sorted = false,
+			-- showTooltip = true,
+			-- TextLeft = "UNLOCKING MECHAGON PART 2",
+			-- name_save = "UNLOCKING MECHAGON PART 2",
+			-- defS = true,
+			-- reset = "Normal",
+			-- desc = categoryKey,
+			-- -- forcedMaxQuest = "all",
+			-- quests = {
+			-- {55851},
+			-- {55533},
+			-- {55374},
+			-- {55400},
+			-- {55407},
+			-- {55425},
+			-- {55497},
+			-- {55618},
+			-- {57010},
+			-- {56162, FactionOrClass = {Alliance = true,}},
+			-- {56350, FactionOrClass = {Alliance = true,}},
+			-- {55361, FactionOrClass = {Alliance = true,}},
+			-- {55363, FactionOrClass = {Alliance = true,}},
+			-- {56156, FactionOrClass = {Alliance = true,}},
+			-- {56161, FactionOrClass = {Horde = true,}},
+			-- {55481, FactionOrClass = {Horde = true,}},
+			-- {55384, FactionOrClass = {Horde = true,}},
+			-- {55385, FactionOrClass = {Horde = true,}},
+			-- {55500, FactionOrClass = {Horde = true,}},
+			-- },
+			-- -- forcedMaxQuest = "all",
+			-- },
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": Dailies Visitor Quests"
+				end,
+				name_save = "DAILY_VISITOR_QUESTS",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{55463},
+					{55658},
+					{55688}, -- https://www.wowhead.com/ru/quest=55658/
+					{55718},
+					{55765},
+					{55885},
+					{56053},
+					{55813},
+					{56301},
+					{56142},
+					{55528},
+					{56365},
+					{56552, FactionOrClass = {Horde = true,},},
+					{56558, FactionOrClass = {Alliance = true,}},
+					{56572},
+					{56501},
+					{56493},
+					{55575},
+					{55672}, -- https://www.wowhead.com/ru/quest=55658/
+					{55717}, -- https://www.wowhead.com/ru/quest=55658/
+					{56049}, -- https://www.wowhead.com/ru/quest=55658/
+					{56469},
+					{55816},
+					{55905},
+					{56184},
+					{56306},
+					{54090},
+					{56355},
+					{56523},
+					{56410},
+					{56508},
+					{56471},
+					{56405},
+				},
+				-- forcedMaxQuest = 32,
+			},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": Daily WQ"
+				end,
+				name_save = "MechagonDAILYWQ",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{56139}, -- WQ
+					{56141}, -- WQ
+					{55901}, -- WQ
+				},
+				forcedMaxQuest = 1,
+			},
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13489)
+				end,
+				name_save = "MechagonSecretFish",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					{55309},
+					{55299},
+					{55310},
+					{55306},
+					{55307},
+					{55313},
+					{55308},
+					{55312},
+					{55305},
+					{55311},
+				},
+				forcedMaxQuest = 10,
+			},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13791)
+				end,
+				name_save = "MechagonMakingAMount",
+				defS = false,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = {
+					{55608},
+					{54086},
+					{54929},
+					{55373},
+					{55697},
+					{54922},
+					{56168},
+					{54083},
+					{56175},
+					{55696},
+					{55753},
+					{55622},
+				},
+				-- forcedMaxQuest = 10,
+			},
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyCENTER = {
-		{id = "BountiesBattleforAzeroth", defS = true,},
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].AdditionallyCENTER = E.FilterByVersion({
+			{id = "BountiesBattleforAzeroth", defS = true,},
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-		{id = "HeartofAzeroth", defS = true,}, -- https://www.wowhead.com/item=158075/heart-of-azeroth
-		{id = "Ashjrakamas", defS = true,}, -- https://www.wowhead.com/item=169223/ashjrakamas-shroud-of-resolve
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = E.FilterByVersion({
+			{id = "HeartofAzeroth", defS = true,}, -- https://www.wowhead.com/item=158075/heart-of-azeroth
+			{id = "Ashjrakamas", defS = true,}, -- https://www.wowhead.com/item=169223/ashjrakamas-shroud-of-resolve
+		})
+	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

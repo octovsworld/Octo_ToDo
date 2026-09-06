@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 58
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -13,33 +15,9 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = "maps"
-	-- OctoTables_Vibor[categoryKey].name = L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] -- "MPLUS"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Maps = {
-		-- {id = 11, defS = true,},
-	}
+	OctoTables_DataOtrisovka[categoryKey].Maps = {}
 	----------------------------------------------------------------
 	for id = 2649, 1, -1 do
 		local name = E.func_GetName("map", id)

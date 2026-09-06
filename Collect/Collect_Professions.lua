@@ -5,6 +5,7 @@ local archaeology = {1, 2, 3, 4, 5, 6, 7, 8, 27, 29, 229, 231, 315, 350, 382, 40
 local prof34 = {2876, 2826, 2754, 2585, 2586, 2587, 2588, 2589, 2590, 2591, 2592, 2873, 2824, 2752, 2541, 2542, 2543, 2544, 2545, 2546, 2547, 2548, }
 ----------------------------------------------------------------
 local function Collect_Professions()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.MYTHICPLUS then return end
 	----------------------------------------------------------------
 	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
@@ -85,6 +86,7 @@ local function Collect_Professions()
 end
 ----------------------------------------------------------------
 function E.Collect_Professions()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.PROFESSIONS then return end
 	E.func_SpamBlock(Collect_Professions, false)
 end
 ----------------------------------------------------------------

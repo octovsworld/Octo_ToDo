@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 53
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -15,43 +17,25 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = "RaidsOrDungeons"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
-	----------------------------------------------------------------
 	local uniqueIDs = {}
 	for Field, Value in next, (Enum.CalendarEventType) do
-		-- if Value == 0 or Value == 1 then
 		for k, v in ipairs(C_Calendar.EventGetTextures(Value)) do
 			local mapId = v.mapId
-			uniqueIDs[mapId] = true
+			if mapId then
+				uniqueIDs[mapId] = true
+			end
 		end
-		-- end
 	end
 	local sorted = {}
 	for id in next,(uniqueIDs) do
 		tinsert(sorted, id)
 	end
 	E.func_SortRecords(sorted, true)
+
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {}
 	for i, id in ipairs(sorted) do
 		tinsert(OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons, {id = id, defS = true,})
 	end
+	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

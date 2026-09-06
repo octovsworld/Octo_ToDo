@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 57
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -15,36 +17,14 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = L["QUESTS_LABEL"]
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 
-
 	for _, dataType in ipairs(E.dataDisplayOrder) do
 		OctoTables_DataOtrisovka[categoryKey][dataType] = {}
 	end
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	-- }
-	-- ----------------------------------------------------------------
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Quests = {
 		{id = 94385, defS = true,}, -- Void Assaults: Eversong Woods
 		{id = 94386, defS = true,}, -- Void Assaults: Zul'Aman
 	}
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	-- }
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].Items = {
-	-- }
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	-- }
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	-- }
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	-- }
-	-- ----------------------------------------------------------------
-	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	-- }
 	----------------------------------------------------------------
 	local TYPE = "quest"
 	local sorted = {}
@@ -60,5 +40,6 @@ E.Components[categoryKey] = function()
 	for i, id in ipairs(sorted) do
 		tinsert(OctoTables_DataOtrisovka[categoryKey].Quests, {id = id, defS = true,})
 	end
+	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

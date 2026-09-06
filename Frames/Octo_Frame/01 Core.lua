@@ -224,7 +224,7 @@ function E.func_main_frame_toggle(frame)
 	end
 end
 ----------------------------------------------------------------
-function E.func_UPDATE_MAINFRAME(frameOrFrameName)
+function E.func_UPDATE_MAINFRAME(frameOrFrameName, forced)
 	if not frameOrFrameName then return end
 	local frame
 	if type(frameOrFrameName) == "string" then
@@ -234,7 +234,9 @@ function E.func_UPDATE_MAINFRAME(frameOrFrameName)
 	end
 	if not frame then return end
 	if frame and frame:IsShown() then
-		if (Octo_TooltipFrame and not Octo_TooltipFrame:IsShown()) then
+		if forced then
+			E.func_MAIN_CreateDataProvider(frame)
+		elseif (Octo_TooltipFrame and not Octo_TooltipFrame:IsShown()) then
 			E.func_MAIN_CreateDataProvider(frame)
 		end
 	end

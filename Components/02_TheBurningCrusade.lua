@@ -10,6 +10,8 @@ local L = E.L
 local categoryKey = 2
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -19,138 +21,115 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
+		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-		{id = 23572, defS = true,},
-		{id = 30183, defS = true,},
-		{id = 32428, defS = true,},
-		{id = 34664, defS = true,},
-		{id = 24581, defS = true,}, -- HORDE
-		{id = 24579, defS = true,}, -- ALLIANCE
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion({
+			{id = 23572, defS = true,},
+			{id = 30183, defS = true,},
+			{id = 32428, defS = true,},
+			{id = 34664, defS = true,},
+			{id = 24581, defS = true,}, -- HORDE
+			{id = 24579, defS = true,}, -- ALLIANCE
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		-- Raid
-		{id = 580, defS = true,}, -- The Sunwell
-		{id = 564, defS = true,}, -- Black Temple
-		{id = 534, defS = true,}, -- The Battle for Mount Hyjal
-		{id = 550, defS = true,}, -- Tempest Keep
-		{id = 548, defS = true,}, -- Coilfang: Serpentshrine Cavern
-		{id = 544, defS = true,}, -- Magtheridon's Lair
-		{id = 565, defS = true,}, -- Gruul's Lair
-		{id = 532, defS = true,}, -- Karazhan
-		-- Dungeon
-		-- {id = 555, defS = true,}, -- Auchindoun: Shadow Labyrinth
-		-- {id = 545, defS = true,}, -- Coilfang: The Steamvault
-		-- {id = 552, defS = true,}, -- Tempest Keep: The Arcatraz
-		-- {id = 554, defS = true,}, -- Tempest Keep: The Mechanar
-		-- {id = 556, defS = true,}, -- Auchindoun: Sethekk Halls
-		-- {id = 543, defS = true,}, -- Hellfire Citadel: Ramparts
-		-- {id = 560, defS = true,}, -- The Escape from Durnholde
-		-- {id = 547, defS = true,}, -- Coilfang: The Slave Pens
-		-- {id = 540, defS = true,}, -- Hellfire Citadel: The Shattered Halls
-		-- {id = 269, defS = true,}, -- Opening of the Dark Portal
-		-- {id = 553, defS = true,}, -- Tempest Keep: The Botanica
-		-- {id = 585, defS = true,}, -- Magisters' Terrace
-		-- {id = 542, defS = true,}, -- Hellfire Citadel: The Blood Furnace
-		-- {id = 558, defS = true,}, -- Auchindoun: Auchenai Crypts
-		-- {id = 546, defS = true,}, -- Coilfang: The Underbog
-		-- {id = 557, defS = true,}, -- Auchindoun: Mana-Tombs
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then
+		OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion({
+			-- Raid
+			{id = 580, defS = true,}, -- The Sunwell
+			{id = 564, defS = true,}, -- Black Temple
+			{id = 534, defS = true,}, -- The Battle for Mount Hyjal
+			{id = 550, defS = true,}, -- Tempest Keep
+			{id = 548, defS = true,}, -- Coilfang: Serpentshrine Cavern
+			{id = 544, defS = true,}, -- Magtheridon's Lair
+			{id = 565, defS = true,}, -- Gruul's Lair
+			{id = 532, defS = true,}, -- Karazhan
+			-- Dungeon
+			-- {id = 555, defS = true,}, -- Auchindoun: Shadow Labyrinth
+			-- {id = 545, defS = true,}, -- Coilfang: The Steamvault
+			-- {id = 552, defS = true,}, -- Tempest Keep: The Arcatraz
+			-- {id = 554, defS = true,}, -- Tempest Keep: The Mechanar
+			-- {id = 556, defS = true,}, -- Auchindoun: Sethekk Halls
+			-- {id = 543, defS = true,}, -- Hellfire Citadel: Ramparts
+			-- {id = 560, defS = true,}, -- The Escape from Durnholde
+			-- {id = 547, defS = true,}, -- Coilfang: The Slave Pens
+			-- {id = 540, defS = true,}, -- Hellfire Citadel: The Shattered Halls
+			-- {id = 269, defS = true,}, -- Opening of the Dark Portal
+			-- {id = 553, defS = true,}, -- Tempest Keep: The Botanica
+			-- {id = 585, defS = true,}, -- Magisters' Terrace
+			-- {id = 542, defS = true,}, -- Hellfire Citadel: The Blood Furnace
+			-- {id = 558, defS = true,}, -- Auchindoun: Auchenai Crypts
+			-- {id = 546, defS = true,}, -- Coilfang: The Underbog
+			-- {id = 557, defS = true,}, -- Auchindoun: Mana-Tombs
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1038, defS = true,}, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
-		{id = 1015, defS = true,}, --name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", }, --[faction=1015]
-		{id = 1012, defS = true,}, --name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", }, --[faction=1012]
-		{id = 990, defS = true,}, --name = "Песчаная Чешуя", side = "-", category = "The Burning Crusade", }, --[faction=990]
-		{id = 989, defS = true,}, --name = "Хранители Времени", side = "-", category = "The Burning Crusade", }, --[faction=989]
-		{id = 970, defS = true,}, --name = "Спореггар", side = "-", category = "The Burning Crusade", }, --[faction=970]
-		{id = 967, defS = true,}, --name = "Аметистовое Око", side = "-", category = "The Burning Crusade", }, --[faction=967]
-		{id = 942, defS = true,}, --name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", }, --[faction=942]
-		{id = 933, defS = true,}, --name = "Консорциум", side = "-", category = "The Burning Crusade", }, --[faction=933]
-		{id = 922, defS = true,}, --name = "Транквиллион", side = "-", category = "The Burning Crusade", }, --[faction=922]
-		----------------------------------------------------------------
-		{id = 936, defS = true,}, --name = "Город Шаттрат", side = "-", category = "The Burning Crusade", }, --[faction=936]
-		----------------------------------------------------------------
-		{id = 1077, defS = true,}, --name = "Армия Расколотого Солнца", side = "-", category = "Город Шаттрат", }, --[faction=1077]
-		{id = 1031, defS = true,}, --name = "Стражи небес Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=1031]
-		{id = 1011, defS = true,}, --name = "Нижний Город", side = "-", category = "Город Шаттрат", }, --[faction=1011]
-		{id = 935, defS = true,}, --name = "Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=935]
-		{id = 934, defS = true,}, --name = "Провидцы", side = "-", category = "Город Шаттрат", }, --[faction=934]
-		{id = 932, defS = true,}, --name = "Алдоры", side = "-", category = "Город Шаттрат", }, --[faction=932]
-		----------------------------------------------------------------
-		{id = 947, defS = true,}, --name = "Траллмар", side = "-", category = "The Burning Crusade", }, --[faction=947] -- ОРДА
-		{id = 941, defS = true,}, --name = "Маг'хары", side = "-", category = "The Burning Crusade", }, --[faction=941] -- ОРДА
-		----------------------------------------------------------------
-		{id = 946, defS = true,}, --name = "Оплот Чести", side = "-", category = "The Burning Crusade", }, --[faction=946] -- АЛЬЯНС
-		{id = 978, defS = true,}, --name = "Куренай", side = "-", category = "The Burning Crusade", }, --[faction=978] -- АЛЬЯНС
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
+		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
+			{id = 1038, defS = true,}, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
+			{id = 1015, defS = true,}, --name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", }, --[faction=1015]
+			{id = 1012, defS = true,}, --name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", }, --[faction=1012]
+			{id = 990, defS = true,}, --name = "Песчаная Чешуя", side = "-", category = "The Burning Crusade", }, --[faction=990]
+			{id = 989, defS = true,}, --name = "Хранители Времени", side = "-", category = "The Burning Crusade", }, --[faction=989]
+			{id = 970, defS = true,}, --name = "Спореггар", side = "-", category = "The Burning Crusade", }, --[faction=970]
+			{id = 967, defS = true,}, --name = "Аметистовое Око", side = "-", category = "The Burning Crusade", }, --[faction=967]
+			{id = 942, defS = true,}, --name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", }, --[faction=942]
+			{id = 933, defS = true,}, --name = "Консорциум", side = "-", category = "The Burning Crusade", }, --[faction=933]
+			{id = 922, defS = true,}, --name = "Транквиллион", side = "-", category = "The Burning Crusade", }, --[faction=922]
+			----------------------------------------------------------------
+			{id = 936, defS = true,}, --name = "Город Шаттрат", side = "-", category = "The Burning Crusade", }, --[faction=936]
+			----------------------------------------------------------------
+			{id = 1077, defS = true,}, --name = "Армия Расколотого Солнца", side = "-", category = "Город Шаттрат", }, --[faction=1077]
+			{id = 1031, defS = true,}, --name = "Стражи небес Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=1031]
+			{id = 1011, defS = true,}, --name = "Нижний Город", side = "-", category = "Город Шаттрат", }, --[faction=1011]
+			{id = 935, defS = true,}, --name = "Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=935]
+			{id = 934, defS = true,}, --name = "Провидцы", side = "-", category = "Город Шаттрат", }, --[faction=934]
+			{id = 932, defS = true,}, --name = "Алдоры", side = "-", category = "Город Шаттрат", }, --[faction=932]
+			----------------------------------------------------------------
+			{id = 947, defS = true,}, --name = "Траллмар", side = "-", category = "The Burning Crusade", }, --[faction=947] -- ОРДА
+			{id = 941, defS = true,}, --name = "Маг'хары", side = "-", category = "The Burning Crusade", }, --[faction=941] -- ОРДА
+			----------------------------------------------------------------
+			{id = 946, defS = true,}, --name = "Оплот Чести", side = "-", category = "The Burning Crusade", }, --[faction=946] -- АЛЬЯНС
+			{id = 978, defS = true,}, --name = "Куренай", side = "-", category = "The Burning Crusade", }, --[faction=978] -- АЛЬЯНС
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			isAccount = false,
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return L["The Ring of Blood"]
-			end,
-			name_save = "TheRingofBlood",
-			defS = true,
-			reset = "Normal",
-			desc = categoryKey,
-			-- questpools = {
-			-- 	{
-			-- 		{9962,},
-			-- 	},
-			-- 	{
-			-- 		{9967,},
-			-- 	},
-			-- 	{
-			-- 		{9970,},
-			-- 	},
-			-- 	{
-			-- 		{9972,},
-			-- 	},
-			-- 	{
-			-- 		{9973,},
-			-- 	},
-			-- 	{
-			-- 		{9977,},
-			-- 	},
-
-			-- },
-
-			quests = {
-				{9962}, -- the-ring-of-blood-brokentoe
-				{9967}, -- the-ring-of-blood-the-blue-brothers
-				{9970}, -- the-ring-of-blood-rokdar-the-sundered-lord
-				{9972}, -- the-ring-of-blood-skragath
-				{9973}, -- the-ring-of-blood-the-warmaul-champion
-				{9977}, -- the-ring-of-blood-the-final-challenge
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion({
+			{
+				isAccount = false,
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return L["The Ring of Blood"]
+				end,
+				name_save = "TheRingofBlood",
+				defS = true,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = {
+					{9962}, -- the-ring-of-blood-brokentoe
+					{9967}, -- the-ring-of-blood-the-blue-brothers
+					{9970}, -- the-ring-of-blood-rokdar-the-sundered-lord
+					{9972}, -- the-ring-of-blood-skragath
+					{9973}, -- the-ring-of-blood-the-warmaul-champion
+					{9977}, -- the-ring-of-blood-the-final-challenge
+				},
+				rewards = {
+					{rewID = 25759, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 25760, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 25761, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 25762, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 25763, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 25764, rewTYPE = "item", rewSIZE = 1,},
+				},
 			},
-			rewards = {
-				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				{rewID = 25759, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 25760, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 25761, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 25762, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 25763, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 25764, rewTYPE = "item", rewSIZE = 1,}, --
-				-- {rewID = 157980, rewTYPE = "spell", rewSIZE = 1500,}, --
-			},
-			-- forcedMaxQuest = 1, -- any
-		},
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+		})
+	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

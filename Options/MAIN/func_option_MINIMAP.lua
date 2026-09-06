@@ -6,7 +6,7 @@ function E.func_option_MINIMAP(category, layout)
 	----------------------------------------------------------------
 	E.func_Header(layout, L["MINIMAP_LABEL"])
 	----------------------------------------------------------------
-	-- 3. E.func_GetProfile_SETTINGS_CURRENT().CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER -----------------
+	-- 3. OctoEngine.func_GetProfile_SETTINGS_CURRENT().CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER -----------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER"
@@ -23,7 +23,7 @@ function E.func_option_MINIMAP(category, layout)
 		local variableKey = "CONFIG_HOVER_SHOW_DURATION"
 		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
-		local name = L["Hide Delay (sec.)"] -- L["Show on hover"]
+		local name = L["Hide Delay (sec.)"]
 		local minValue = 0
 		local maxValue = 10
 		if E.DEBUG then maxValue = 100 end

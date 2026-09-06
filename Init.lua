@@ -4,12 +4,15 @@ local L = E.L
 _G.OctoEngine = E
 ----------------------------------------------------------------
 E.DEBUG = false
+E.DEBUG_QUESTS = false
 E.DEBUG_CHANGELOG = false
 E.DEBUG_NAME = false
 E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
 E.REFRESH_CACHE = true
 E.SPAM_TIME = 3
+E.QUEST_BATCH_SIZE = 10
+E.UNIVERSAL_BATCH_SIZE = 3
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
@@ -50,6 +53,7 @@ E.ENABLE_EXPANSIONCOLOR = true
 ----------------------------------------------------------------
 E.REVERSE = true -- по убыванию (E.DESCENDING = true) (E.ASCENDING  = false   -- по возрастанию)
 ----------------------------------------------------------------
+E.OctoTable_Difficulties = {}
 E.Components = {}
 E.Enum_Activities_table = {}
 E.HIDEFRAMES = {}
@@ -61,11 +65,9 @@ E.OctoTable_ColoredTooltips = {}
 E.OctoTables_Vibor = {}
 E.OctoTables_Vibor_ORDER = {}
 E.ALL_Currencies = {}
-E.ALL_Items = {}
 E.ALL_UniversalQuests = {}
 E.ALL_AdditionallyCENTER = {}
 E.ALL_AdditionallyBOTTOM = {}
-E.ALL_Quests = {}
 E.ALL_Reputations = {}
 E.UniversalQuestMap = {}
 E.First_Option = {}
@@ -777,3 +779,123 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+----------------------------------------------------------------
+-- StaticPopup -------------------------------------------------
+----------------------------------------------------------------
+do
+	local function func_MergeTables(table1, table2)
+		for k, v in next, (table2) do
+			table1[k] = v
+		end
+		return table1
+	end
+	E.StaticPopupDialogs_SIMPLE = {
+		timeout = 0,
+		whileDead = true,
+		hideOnEscape = true,
+		preferredIndex = 3,
+	}
+	E.StaticPopupDialogs_EDITBOX_STRING = {
+		hasEditBox = true,
+		editBoxWidth = 260,
+		maxLetters = 30,
+		-- hasWideEditBox = true,
+		OnShow = function(dialog)
+			local editBox = dialog.EditBox or dialog.editBox
+			if editBox then
+				editBox:SetNumeric(false)
+				editBox:SetText("")
+				editBox:SetFocus()
+				editBox:HighlightText()
+			end
+		end,
+		OnHide = function(dialog)
+			local editBox = dialog.EditBox or dialog.editBox
+			if editBox then
+				editBox:SetNumeric(false)
+			end
+		end,
+	}
+	E.StaticPopupDialogs_EDITBOX_NUMBER = {
+		hasEditBox = true,
+		editBoxWidth = 260,
+		maxLetters = 30,
+		-- hasWideEditBox = true,
+		OnShow = function(dialog)
+			local editBox = dialog.EditBox or dialog.editBox
+			if editBox then
+				editBox:SetNumeric(true)
+				editBox:SetMaxLetters(20)
+				editBox:SetFocus()
+				editBox:HighlightText()
+			end
+		end,
+		OnHide = function(dialog)
+			local editBox = dialog.EditBox or dialog.editBox
+			if editBox then
+				editBox:SetNumeric(false)
+			end
+		end,
+	}
+
+	-- Все поля опциональны, кроме text, button1, button2 и обычно OnAccept.
+	E.StaticPopupDialogs_EXAMPLE = {
+		-- Обязательные и часто используемые поля
+		text                 = "Основной текст диалога",
+		button1              = "Текст на кнопке принятия (OK / Да / Удалить)",
+		button2              = "Текст на кнопке отмены (Отмена / Нет)",
+		OnAccept             = function(self) end, -- выполняется при нажатии button1
+		OnCancel             = function(self) end, -- выполняется при нажатии button2 или закрытии
+		OnShow               = function(self) end, -- вызывается при показе диалога
+		OnHide               = function(self) end, -- вызывается при скрытии диалога
+
+		-- Настройки поведения и отображения
+		timeout              = 0,      -- время автозакрытия в секундах (0 = не закрывать)
+		whileDead            = true,   -- показывать, даже если персонаж мёртв
+		hideOnEscape         = true,   -- закрывать по нажатию Escape
+		preferredIndex       = 3,      -- приоритет в очереди StaticPopup. Если уже показан диалог с более высоким приоритетом (больше число), он перекроет предыдущий. Обычно ставят 3 (стандартные диалоги). У системных диалогов бывает 1 или 2.
+		exclusive            = false,  -- если true, то ни один другой StaticPopup не сможет перекрыть этот диалог, пока он не будет закрыт (даже с более высоким preferredIndex).
+		sound                = nil,    -- можно указать звук, который проигрывается при открытии. Например, "Interface\\AddOns\\MyAddon\\sounds\\popup.ogg" или SOUNDKIT.IG_MAINMENU_OPEN.
+		showAlert            = false,  -- показать системное предупреждение (мигание кнопки меню)
+
+		-- Поле ввода (EditBox)
+		hasEditBox           = true,   -- при true автоматически добавляет поле ввода и включает обработку Enter/Escape. Твои шаблоны E.StaticPopupDialogs_EDITBOX_STRING уже содержат всё необходимое для диалогов с вводом.
+		editBoxWidth         = 260,    -- ширина поля ввода
+		editBoxText          = nil,    -- если задать строку, она появится в поле ввода. Если задать функцию, то её результат (строка) будет использоваться каждый раз при показе диалога (удобно для динамического текста).
+		maxLetters           = 30,     -- 0 означает без ограничения (но лучше указывать число, чтобы не ломать верстку).
+		EditBoxOnEnterPressed = function(self) end, -- вызывается при нажатии Enter в поле ввода
+		EditBoxOnEscapePressed = function(self) end, -- вызывается при нажатии Escape в поле ввода
+		OnEditFocusLost      = function(self) end, -- вызывается при потере фокуса полем ввода
+
+		-- Прочее
+		-- hasWideEditBox    = true,   -- (недокументировано) делает поле ввода на всю ширину
+		-- hasMoneyInput     = true,   -- специальное поле для ввода золота (используется редко)
+	}
+	func_MergeTables(E.StaticPopupDialogs_EDITBOX_STRING, E.StaticPopupDialogs_SIMPLE)
+	func_MergeTables(E.StaticPopupDialogs_EDITBOX_NUMBER, E.StaticPopupDialogs_SIMPLE)
+	E.popupName = GlobalAddonName .. "_popupName"
+end
+----------------------------------------------------------------
+
+
+
+
+
+
+
+if NumyFunctionProfiler then
+
+	-- wrap all functions in self
+	NumyFunctionProfiler:WrapModules(GlobalAddonName, 'Octo_ModuleName', E);
+
+	-- wrap only self.functionName
+	-- NumyFunctionProfiler:WrapInPlace(GlobalAddonName, 'Octo_ModuleName', self, 'functionName');
+
+	-- wrap a single function, useful for e.g. local functions
+	-- someLocalFunction = NumyFunctionProfiler:Wrap(GlobalAddonName, 'Octo_ModuleName', 'someLocalFunction', someLocalFunction);
+
+	-- wrap all functions in self and 1 layer of down (e.g. self.SomeModule.SomeFunction)
+	-- NumyFunctionProfiler:WrapModules(GlobalAddonName, 'Octo_ModuleName', self, 2);
+
+end

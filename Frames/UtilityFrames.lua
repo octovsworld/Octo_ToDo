@@ -182,17 +182,7 @@ local function CreateGreatVaultButton(frame, anchor)
 		end
 		return { { E.classColorHexCurrent .. L["RATED_PVP_WEEKLY_VAULT"] .. "|r" } }
 	end
- 	local clickFunc = function()
-		if InCombatLockdown() then
-			return
-		end
-		if not E.func_IsAddOnLoaded("Blizzard_WeeklyRewards") then
-			E.func_LoadAddOn("Blizzard_WeeklyRewards")
-		end
-		if WeeklyRewards_ShowUI then
-			WeeklyRewards_ShowUI()
-		end
- 	end
+ 	local clickFunc = E.func_ToggleGreatVault
 	local isToggle = nil
 	local frameName = nil
 	----------------

@@ -10,6 +10,8 @@ local L = E.L
 local categoryKey = 13
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -19,20 +21,30 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
+		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then
+		OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
+		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
 	}

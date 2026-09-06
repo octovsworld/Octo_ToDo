@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 54
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -14,18 +16,6 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = "TEST_UNIVERSAL"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
@@ -56,7 +46,6 @@ E.Components[categoryKey] = function()
 				{92362, addText = {IconVignette = "VignetteLoot", coords = 35343007, }, forcedText = {text = L["Treasure"].." 15"}, },
 				{92363, addText = {IconVignette = "VignetteLoot", coords = 68055216, }, forcedText = {text = L["Treasure"].." 16"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------ THE SHADOW ENCLAVE -----------------------------
@@ -65,7 +54,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_ShadowEnclave)..": "..L["Treasures"] -- The Shadow Enclave
+				return E.func_GetName("map", E.MapID_ShadowEnclave)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2502_Treasures",
 			defS = true,
@@ -77,7 +66,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10002000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------- PARHELION PLAZA -------------------------------
@@ -98,7 +86,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		----------------------------- COLLEGIATE CALAMITY -----------------------------
@@ -119,7 +106,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		--------------------------------- THE DARKWAY ---------------------------------
@@ -140,7 +126,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------- TWILIGHT CRYPTS -------------------------------
@@ -161,7 +146,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		-------------------------------- THE GRUDGE PIT -------------------------------
@@ -182,7 +166,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------ THE GULF OF MEMORY -----------------------------
@@ -203,7 +186,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------ SUNKILLER SANCTUM ------------------------------
@@ -224,7 +206,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		------------------------------ SHADOWGUARD POINT ------------------------------
@@ -245,7 +226,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		---------------------------------- ATAL'AMAN ----------------------------------
@@ -254,7 +234,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_AtalAman)..": "..L["Treasures"] -- Placeholder map for Atal'Aman
+				return E.func_GetName("map", E.MapID_AtalAman)..": "..L["Treasures"]
 			end,
 			name_save = "atalaman_Treasures",
 			defS = true,
@@ -266,7 +246,6 @@ E.Components[categoryKey] = function()
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10003000, }, forcedText = {text = L["Treasure"].." 3"}, },
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10004000, }, forcedText = {text = L["Treasure"].." 4"}, },
 			},
-			-- forcedMaxQuest = 19,
 		},
 		-------------------------------------------------------------------------------
 		--------------------------------- RARES SECTION -------------------------------
@@ -275,7 +254,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Rares"] -- Eversong Woods
+				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Rares"]
 			end,
 			name_save = "eversong_woods_Rares",
 			defS = true,
@@ -303,7 +282,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Rares"] -- Harandar
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Rares"]
 			end,
 			name_save = "harandar_Rares",
 			defS = true,
@@ -331,7 +310,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Rares"] -- Voidstorm
+				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Rares"]
 			end,
 			name_save = "voidstorm_Rares",
 			defS = true,
@@ -358,7 +337,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Rares"] -- Zul'Aman
+				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Rares"]
 			end,
 			name_save = "zulaman_Rares",
 			defS = true,
@@ -389,7 +368,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Treasures"] -- Eversong Woods Treasures
+				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Treasures"]
 			end,
 			name_save = "eversong_woods_Treasures",
 			defS = true,
@@ -412,7 +391,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Treasures"] -- Harandar Treasures
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Treasures"]
 			end,
 			name_save = "harandar_Treasures",
 			defS = true,
@@ -434,7 +413,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Treasures"] -- Voidstorm Treasures
+				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Treasures"]
 			end,
 			name_save = "voidstorm_Treasures",
 			defS = true,
@@ -460,7 +439,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Treasures"] -- Zul'Aman Treasures
+				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Treasures"]
 			end,
 			name_save = "zulaman_Treasures",
 			defS = true,
@@ -505,7 +484,7 @@ E.Components[categoryKey] = function()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Glowing Moths"] -- Harandar
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Glowing Moths"]
 			end,
 			name_save = "harandar_GlowingMoths",
 			defS = true,
@@ -576,12 +555,6 @@ E.Components[categoryKey] = function()
 				{92307, addText = {IconVignette = "VignetteLoot", coords = 48545535, }, forcedText = {text = L["Glowing Moth"].." 62"}, },
 			},
 		},
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

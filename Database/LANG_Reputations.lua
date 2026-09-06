@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+
+
 ----------------------------------------------------------------
 local ICON_KYRIAN = E.ICON_KYRIAN -- = 3641395
 local ICON_NECROLORD = E.ICON_NECROLORD -- = 3752259 -- 3641396
@@ -3176,11 +3178,6 @@ for reputationID, data in next, (E.OctoTable_Reputations_DB) do
 	local paragonQuest = data.paragonQuest
 	if paragonQuest then
 		E.TBL_paragonQuests[paragonQuest] = true
-		E.ALL_Quests[paragonQuest] = true
-	end
-	local itemCache = data.itemCache
-	if itemCache then
-		E.ALL_Items[itemCache] = true
 	end
 	if paragonQuest and itemCache then
 		E.OctoTable_Reputations_Paragon_Data[paragonQuest] = {

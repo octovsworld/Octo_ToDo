@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 52
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -15,30 +17,6 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = L["REPUTATION"]
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
-	----------------------------------------------------------------
-
-
-
 	local sorted = {}
 	local test = {}
 	local allReputations = {}
@@ -69,29 +47,20 @@ E.Components[categoryKey] = function()
 		end
 	end
 
-
 	E.func_SortRecords(sorted, true)
 	E.func_SortRecords(missingReputations, true)
 	E.func_PrintMessage(#sorted, #test, "INIT")
 
-
 	local missingWithNames = {}
 	for _, id in ipairs(missingReputations) do
-		-- E.OctoTable_Reputations_DB[id] = E.OctoTable_Reputations_DB[id] or {}
 		local name = E.func_GetName(TYPE, id)
 		missingWithNames[id] = name
 	end
 
-
-
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {}
 	for i, id in ipairs(sorted) do
-	-- for i, id in ipairs(missingReputations) do
 		tinsert(OctoTables_DataOtrisovka[categoryKey].Reputations, {id = id, defS = true,})
 	end
-
-
-
-
-
+	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

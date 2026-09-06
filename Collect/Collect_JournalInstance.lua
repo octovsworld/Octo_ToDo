@@ -92,6 +92,7 @@ local function Collect_JournalInstance()
 end
 ----------------------------------------------------------------
 function E.Collect_JournalInstance()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then return end
 	E.func_SpamBlock(Collect_JournalInstance, false)
 end
 ----------------------------------------------------------------

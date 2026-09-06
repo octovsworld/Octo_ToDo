@@ -90,6 +90,7 @@ local function Collect_Bounties()
 end
 ----------------------------------------------------------------
 function E.Collect_Bounties()
+    if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	E.func_SpamBlock(Collect_Bounties, true)
 end
 ----------------------------------------------------------------

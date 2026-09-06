@@ -173,6 +173,7 @@ local function Collect_GreatVault()
 end
 ----------------------------------------------------------------
 function E.Collect_GreatVault()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.MYTHICPLUS then return end
 	E.func_SpamBlock(Collect_GreatVault, true, 5)
 end
 ----------------------------------------------------------------

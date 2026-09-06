@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 56
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -15,28 +17,12 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = "PLAYER_INVENTORY"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-		{id = "PlayerInventory", defS = true,},
-		{id = "PlayerBANK", defS = true,},
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+			{id = "PlayerInventory", defS = true,},
+			{id = "PlayerBANK", defS = true,},
+		}
+	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

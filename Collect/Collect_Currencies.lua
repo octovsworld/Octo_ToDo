@@ -153,6 +153,7 @@ local function Collect_Currencies_Account()
 end
 ----------------------------------------------------------------
 function E.Collect_TARGET_Currency(currencyID)
+    if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	if not E.cm then return end
 	E.cm.Currency = E.cm.Currency or {}
 	local info = E.func_GetCurrencyInfo(currencyID)
@@ -174,10 +175,12 @@ function E.Collect_TARGET_Currency(currencyID)
 end
 ----------------------------------------------------------------
 function E.Collect_Currencies()
+    if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	E.func_SpamBlock(Collect_Currencies, true)
 end
 ----------------------------------------------------------------
 function E.Collect_Currencies_Account()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	E.func_SpamBlock(Collect_Currencies_Account, true)
 end
 ----------------------------------------------------------------
@@ -202,6 +205,7 @@ local function GetRaceIDByEnglishRace(englishRace)
 end
 ----------------------------------------------------------------
 function E.func_DEBUG_CURRENCY_TRANSFER()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	if not E.DEBUG then return end
 	local foundNewCharacter = false
 	for currencyID in next, (E.ALL_Currencies) do

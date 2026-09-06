@@ -74,87 +74,99 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
+	-- DATACOLLECTION ----------------------------------------------
+	----------------------------------------------------------------
+	do
+		local enable = true
+		if enable then
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, L["Data Collection"])
+			if E.func_option_DATACOLLECTION then
+				E.func_option_DATACOLLECTION(category, layout)
+			end
+		end
+	end
+	----------------------------------------------------------------
 	-- CURRENCY ----------------------------------------------------
 	----------------------------------------------------------------
 	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		-- local iconID = E.func_texturefromIcon(E.func_GetIcon("currency", 1166))
-	-- 		local tabName = L["CURRENCY"]
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- CURRENCY
-	-- 		if E.func_option_CURRENCY_ICONS then
-	-- 			E.func_option_CURRENCY_ICONS(category, layout)
-	-- 		end
-	-- 		if E.func_option_CURRENCY_COLORS then
-	-- 			E.func_option_CURRENCY_COLORS(category, layout)
-	-- 		end
-	-- 		if E.func_option_CURRENCY_OTHER then
-	-- 			E.func_option_CURRENCY_OTHER(category, layout)
-	-- 		end
-	-- 		if E.func_option_CURRENCY_TOOLTIP then
-	-- 			E.func_option_CURRENCY_TOOLTIP(category, layout)
-	-- 		end
-	-- 	end
+	--     local enable = true
+	--     if enable then
+	--         -- local iconID = E.func_texturefromIcon(E.func_GetIcon("currency", 1166))
+	--         local tabName = L["CURRENCY"]
+	--         local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- CURRENCY
+	--         if E.func_option_CURRENCY_ICONS then
+	--             E.func_option_CURRENCY_ICONS(category, layout)
+	--         end
+	--         if E.func_option_CURRENCY_COLORS then
+	--             E.func_option_CURRENCY_COLORS(category, layout)
+	--         end
+	--         if E.func_option_CURRENCY_OTHER then
+	--             E.func_option_CURRENCY_OTHER(category, layout)
+	--         end
+	--         if E.func_option_CURRENCY_TOOLTIP then
+	--             E.func_option_CURRENCY_TOOLTIP(category, layout)
+	--         end
+	--     end
 	-- end
 	----------------------------------------------------------------
 	-- ITEMS -------------------------------------------------------
 	----------------------------------------------------------------
 	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081)) -- (49778 sword) (2362 shield)
-	-- 		local tabName = L["ITEMS"]
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
-	-- 		if E.func_option_ITEMS_ICONS then
-	-- 			E.func_option_ITEMS_ICONS(category, layout)
-	-- 		end
-	-- 		if E.func_option_ITEMS_COLORS then
-	-- 			E.func_option_ITEMS_COLORS(category, layout)
-	-- 		end
-	-- 	end
+	--     local enable = true
+	--     if enable then
+	--         -- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081)) -- (49778 sword) (2362 shield)
+	--         local tabName = L["ITEMS"]
+	--         local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
+	--         if E.func_option_ITEMS_ICONS then
+	--             E.func_option_ITEMS_ICONS(category, layout)
+	--         end
+	--         if E.func_option_ITEMS_COLORS then
+	--             E.func_option_ITEMS_COLORS(category, layout)
+	--         end
+	--     end
 	-- end
 	----------------------------------------------------------------
 	-- REPUTATION --------------------------------------------------
 	----------------------------------------------------------------
 	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		-- local iconID = E.func_texturefromIcon(E.ICON_TABARD)
-	-- 		local tabName = L["REPUTATION"]
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- REPUTATION
-	-- 		if E.func_option_REPUTATION_ICONS then
-	-- 			E.func_option_REPUTATION_ICONS(category, layout)
-	-- 		end
-	-- 		if E.func_option_REPUTATION_PARAGON then
-	-- 			E.func_option_REPUTATION_PARAGON(category, layout)
-	-- 		end
-	-- 		if E.func_option_REPUTATION_MAJOR then
-	-- 			E.func_option_REPUTATION_MAJOR(category, layout)
-	-- 		end
-	-- 		if E.func_option_REPUTATION_FRIEND then
-	-- 			E.func_option_REPUTATION_FRIEND(category, layout)
-	-- 		end
-	-- 		if E.func_option_REPUTATION_SIMPLE then
-	-- 			E.func_option_REPUTATION_SIMPLE(category, layout)
-	-- 		end
-	-- 	end
+	--     local enable = true
+	--     if enable then
+	--         -- local iconID = E.func_texturefromIcon(E.ICON_TABARD)
+	--         local tabName = L["REPUTATION"]
+	--         local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- REPUTATION
+	--         if E.func_option_REPUTATION_ICONS then
+	--             E.func_option_REPUTATION_ICONS(category, layout)
+	--         end
+	--         if E.func_option_REPUTATION_PARAGON then
+	--             E.func_option_REPUTATION_PARAGON(category, layout)
+	--         end
+	--         if E.func_option_REPUTATION_MAJOR then
+	--             E.func_option_REPUTATION_MAJOR(category, layout)
+	--         end
+	--         if E.func_option_REPUTATION_FRIEND then
+	--             E.func_option_REPUTATION_FRIEND(category, layout)
+	--         end
+	--         if E.func_option_REPUTATION_SIMPLE then
+	--             E.func_option_REPUTATION_SIMPLE(category, layout)
+	--         end
+	--     end
 	-- end
 	----------------------------------------------------------------
 	-- RAIDS -------------------------------------------------------
 	----------------------------------------------------------------
 	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		-- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
-	-- 		local tabName = L["RAIDS"]
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
-	-- 		if E.func_option_RAIDS_ICONS then
-	-- 			E.func_option_RAIDS_ICONS(category, layout)
-	-- 		end
-	-- 		if E.func_option_RAIDS_TOOLTIP then
-	-- 			E.func_option_RAIDS_TOOLTIP(category, layout)
-	-- 		end
-	-- 	end
+	--     local enable = true
+	--     if enable then
+	--         -- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
+	--         local tabName = L["RAIDS"]
+	--         local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+	--         if E.func_option_RAIDS_ICONS then
+	--             E.func_option_RAIDS_ICONS(category, layout)
+	--         end
+	--         if E.func_option_RAIDS_TOOLTIP then
+	--             E.func_option_RAIDS_TOOLTIP(category, layout)
+	--         end
+	--     end
 	-- end
 	----------------------------------------------------------------
 	-- MPLUS -------------------------------------------------------
@@ -178,20 +190,20 @@ function EventFrame:PLAYER_LOGIN()
 	-- COLORS ------------------------------------------------------
 	----------------------------------------------------------------
 	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		local width = E.FOURTH_WIDTH
-	-- 		-- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
-	-- 		-- E.func_option_COLOR_PROFILE(category, layout)
-	-- 		-- E.func_option_COLOR_MAIN(category, layout)
-	-- 		if width and E.func_option_COLORS then
-	-- 			local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
-	-- 			local leftText = L["COLORS"]
-	-- 			local rightText = L["COLORS"]
-	-- 			AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLORS(width, rightText))
-	-- 			AceConfigDialog:AddToBlizOptions(leftText, leftText, main_category:GetID())
-	-- 		end
-	-- 	end
+	--     local enable = true
+	--     if enable then
+	--         local width = E.FOURTH_WIDTH
+	--         -- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
+	--         -- E.func_option_COLOR_PROFILE(category, layout)
+	--         -- E.func_option_COLOR_MAIN(category, layout)
+	--         if width and E.func_option_COLORS then
+	--             local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
+	--             local leftText = L["COLORS"]
+	--             local rightText = L["COLORS"]
+	--             AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLORS(width, rightText))
+	--             AceConfigDialog:AddToBlizOptions(leftText, leftText, main_category:GetID())
+	--         end
+	--     end
 	-- end
 
 	----------------------------------------------------------------

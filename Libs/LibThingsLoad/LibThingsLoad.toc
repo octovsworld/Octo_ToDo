@@ -1,0 +1,18 @@
+## Interface: 120100, 50504, 20506, 11509
+## Title: LibThingsLoad
+## Author: sfmict
+## Version: r25
+## Notes: Library for load quests, items and spells
+## Category: Libraries
+## Category-deDE: Bibliotheken
+## Category-esES: Bibliotecas
+## Category-esMX: Bibliotecas
+## Category-frFR: Bibliothèques
+## Category-ptBR: Bibliotecas
+## Category-ruRU: Библиотеки
+## Category-zhCN: 函数库
+## Category-zhTW: 函式庫
+## LoadOnDemand: 1
+## OptionalDeps: LibStub
+libs\LibStub\LibStub.lua
+LibThingsLoad.xml

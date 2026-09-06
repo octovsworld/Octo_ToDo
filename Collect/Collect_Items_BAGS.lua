@@ -12,6 +12,12 @@ local function Collect_Items_BAGS()
 	E.cm.Items = E.cm.Items or {}
 	E.cm.Items.Bags = {}
 	E.cm.Items.Bags_FULL = {}
+
+
+	E.cm.Items.Bank = E.cm.Items.Bank or {}
+	E.cm.Items.Bank_FULL = E.cm.Items.Bank_FULL or {}
+
+
 	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
 	-- local seenSlots = {}
 	for _, bagID in next, (OctoTable_PlayerBags) do
@@ -114,6 +120,7 @@ local function Collect_Items_BAGS()
 end
 ----------------------------------------------------------------
 function E.Collect_Items_BAGS()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then return end
 	E.func_SpamBlock(Collect_Items_BAGS, true)
 end
 ----------------------------------------------------------------

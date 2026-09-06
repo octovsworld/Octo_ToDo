@@ -8,9 +8,12 @@ local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
-	-- E.DEBUG_START()
+	E.ALL_Currencies = {}
+	E.ALL_Reputations = {}
+	E.ALL_UniversalQuests = {}
+	E.UniversalQuestMap = {}
 	----------------------------------------------------------------
-	local ALL_Currencies = E.ALL_Currencies
+	-- E.DEBUG_START()
 	----------------------------------------------------------------
 	-- Сливаем таблицы предметов и квестов
 	local itemTables = {
@@ -21,77 +24,6 @@ function EventFrame:func_CacheGameData()
 		E.OctoTable_itemID_Cataloged_Research,
 		Octo_Cache_DB and Octo_Cache_DB.AllItems,
 	}
-	-- Проход по предметам и квестам из таблиц
-	for i = 1, #itemTables do
-		local tbl = itemTables[i]
-		if tbl then
-			for id in next, tbl do
-				E.ALL_Items[id] = true
-			end
-		end
-	end
-	for questID in next, (E.OctoTable_QuestID) do
-		E.ALL_Quests[questID] = true
-	end
-	-- QuestLog квесты
-	local numShownEntries = E.func_GetNumQuestLogEntries()
-	for i = 1, numShownEntries do
-		local info = E.func_GetInfo(i)
-		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
-			E.ALL_Quests[info.questID] = true
-		end
-	end
-	-- Проход по персонажам и их инвентарю/квестам
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo then
-			local pd = CharInfo.PlayerData
-			local cm = CharInfo.MASLENGO
-			if cm and cm.ListOfQuests then
-				for qid in next, cm.ListOfQuests do
-					E.ALL_Quests[qid] = true
-				end
-			end
-			if cm and cm.InventoryType then
-				local inv = cm.InventoryType
-				for slotID in next, (E.OctoTable_SlotMapping) do
-					local slot = inv[slotID]
-					if slot and slot.ItemID then
-						E.ALL_Items[slot.ItemID] = true
-					end
-				end
-			end
-			if cm and cm.Items then
-				if cm.Items.Bags then
-					for itemID in next,(cm.Items.Bags) do
-						if itemID then
-							E.ALL_Items[itemID] = true
-						end
-					end
-				end
-				if cm.Items.Bags_FULL then
-					for itemID in next,(cm.Items.Bags_FULL) do
-						if itemID then
-							E.ALL_Items[itemID] = true
-						end
-					end
-				end
-				if cm.Items.Bank then
-					for itemID in next,(cm.Items.Bank) do
-						if itemID then
-							E.ALL_Items[itemID] = true
-						end
-					end
-				end
-				if cm.Items.Bank_FULL then
-					for itemID in next,(cm.Items.Bank_FULL) do
-						if itemID then
-							E.ALL_Items[itemID] = true
-						end
-					end
-				end
-			end
-		end
-	end
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_CacheGameData")
 	----------------------------------------------------------------
@@ -124,12 +56,6 @@ function EventFrame:func_CacheGameData()
 			end
 			-- if dataType == "RaidsOrDungeons" then
 			-- end
-			if dataType == "Items" then
-				for i, v in next, (dataEntries) do
-					local itemID = v.id
-					E.ALL_Items[itemID] = true
-				end
-			end
 			-- if dataType == "AdditionallyTOP" then
 			-- end
 			-- if dataType == "AdditionallyBOTTOM" then
@@ -407,23 +333,25 @@ function E.func_UpdateGlobalNSforProfiles()
 	end
 end
 function E.func_INIT_Components()
-
 	-- E.DEBUG_START()
 	----------------------------------------------------------------
 	E.OctoTables_Vibor = {}
 	E.OctoTables_DataOtrisovka = {}
 	E.OctoTables_Vibor_ORDER = {}
+	E.ALL_UniversalQuests = {}
 	----------------------------------------------------------------
 	for categoryKey, componentFunc in next, (E.Components) do
 		local OctoTables_Vibor, OctoTables_DataOtrisovka = componentFunc()
-		for key, value in next, (OctoTables_Vibor) do
-			if E.OctoTables_Vibor[key] == nil then
-				E.OctoTables_Vibor[key] = value
+		if OctoTables_Vibor and OctoTables_DataOtrisovka then
+			for key, value in next, (OctoTables_Vibor) do
+				if E.OctoTables_Vibor[key] == nil then
+					E.OctoTables_Vibor[key] = value
+				end
 			end
-		end
-		for key, value in next, (OctoTables_DataOtrisovka) do
-			if E.OctoTables_DataOtrisovka[key] == nil then
-				E.OctoTables_DataOtrisovka[key] = value
+			for key, value in next, (OctoTables_DataOtrisovka) do
+				if E.OctoTables_DataOtrisovka[key] == nil then
+					E.OctoTables_DataOtrisovka[key] = value
+				end
 			end
 		end
 	end
@@ -432,6 +360,9 @@ function E.func_INIT_Components()
 		table.insert(E.OctoTables_Vibor_ORDER, key)
 	end
 	table.sort(E.OctoTables_Vibor_ORDER)
+
+
+	EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_INIT_Components")
 end
@@ -648,6 +579,48 @@ E.Octo_ToDo_DB_Variables_defaultOptions = {
 		},
 	},
 	-- CONFIG_DEBUG_EDITBOX_EDITORTHEME = "Twilight", -- for name in next, E.editorThemes do
+	["DATACOLLECTION"] = {
+		{
+			name = E.func_GetName("difficulty", E.ID_MYTHIC, nil, fullDifficultyName) .. "+",
+			variableKey = "MYTHICPLUS",
+			defaultValue = true,
+		},
+		{
+			name = L["CURRENCY"],
+			variableKey = "CURRENCY",
+			defaultValue = true,
+		},
+		{
+			name = L["ITEMS"],
+			variableKey = "ITEMS",
+			defaultValue = true,
+		},
+		{
+			name = L["QUESTS_LABEL"],
+			variableKey = "QUESTS",
+			defaultValue = true,
+		},
+		{
+			name = L["DUNGEONS"],
+			variableKey = "RAIDSORDUNGEONS",
+			defaultValue = true,
+		},
+		{
+			name = L["REPUTATION"],
+			variableKey = "REPUTATION",
+			defaultValue = true,
+		},
+		{
+			name = L["TRADE_SKILLS"],
+			variableKey = "PROFESSIONS",
+			defaultValue = true,
+		},
+		{
+			name = L["PVP"],
+			variableKey = "PVP",
+			defaultValue = true,
+		},
+	},
 }
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -659,12 +632,27 @@ function E.init_Octo_ToDo_DB_Variables()
 	Octo_ToDo_DB_Variables.dataprovider = Octo_ToDo_DB_Variables.dataprovider or {}
 	Octo_ToDo_DB_Variables.CONFIG = Octo_ToDo_DB_Variables.CONFIG or {}
 	Octo_ToDo_DB_Variables.Calendar = Octo_ToDo_DB_Variables.Calendar or {}
-	for _, headers in next,(E.Octo_ToDo_DB_Variables_defaultOptions) do
-		for _, tbl in ipairs(headers) do
-			local variableKey = tbl.variableKey
-			local defaultValue = tbl.defaultValue
-			E.func_InitField(Octo_ToDo_DB_Variables.CONFIG, variableKey, defaultValue)
-			-- E[variableKey] = Octo_ToDo_DB_Variables.CONFIG[variableKey] -- Копируем в глобальную таблицу
+	Octo_ToDo_DB_Variables.DATACOLLECTION = Octo_ToDo_DB_Variables.DATACOLLECTION or {}
+
+	-- Инициализируем CONFIG (все кроме DATACOLLECTION)
+	for sectionName, headers in next, E.Octo_ToDo_DB_Variables_defaultOptions do
+		if sectionName ~= "DATACOLLECTION" then
+			for _, tbl in ipairs(headers) do
+				E.func_InitField(Octo_ToDo_DB_Variables.CONFIG, tbl.variableKey, tbl.defaultValue)
+			end
+		end
+	end
+
+	-- Инициализируем DATACOLLECTION (настройки сбора данных)
+	for _, tbl in ipairs(E.Octo_ToDo_DB_Variables_defaultOptions.DATACOLLECTION) do
+		E.func_InitField(Octo_ToDo_DB_Variables.DATACOLLECTION, tbl.variableKey, tbl.defaultValue)
+	end
+
+	-- Инициализируем EXP (дополнения)
+	local CurrentExpansion = E.func_GetCurrentExpansion()
+	for expID, expData in ipairs(E.OctoTable_Expansions) do
+		if Octo_ToDo_DB_Variables.DATACOLLECTION[expID] == nil then
+			Octo_ToDo_DB_Variables.DATACOLLECTION[expID] = (expID == CurrentExpansion)
 		end
 	end
 end
@@ -783,10 +771,13 @@ function EventFrame:PLAYER_LOGIN()
 	-- ИНИЦИАЛИЗАЦИЯ КОМПОНЕНТОВ
 	-- E.func_InitActivities_GreatVault()
 	E.func_INIT_Components() -- E.Components
+	-- EventFrame:func_CacheGameData() -- E.Components
+
+
+
 	-- ИНИЦИАЛИЗАЦИЯ ПРОФИЛЕЙ И ПРОЧЕГО
 	E.WTF_func_CheckAll()
 
-	EventFrame:func_CacheGameData() -- E.Components
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
 	EventFrame:func_Daily_Reset()

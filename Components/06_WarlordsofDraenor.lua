@@ -10,6 +10,8 @@ local L = E.L
 local categoryKey = 6
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -19,463 +21,370 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 824, defS = true,},
-		{id = 1101, defS = true,},
-		{id = 823, defS = true,},
-		{id = 1129, defS = true,}, -- MONETKA
-		{id = 994, defS = true,}, -- MONETKA
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
+		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
+			{id = 824, defS = true,},
+			{id = 1101, defS = true,},
+			{id = 823, defS = true,},
+			{id = 1129, defS = true,}, -- MONETKA
+			{id = 994, defS = true,}, -- MONETKA
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion({
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		-- Raid
-		{id = 1448, defS = true,}, -- Hellfire Citadel
-		{id = 1205, defS = true,}, -- Blackrock Foundry
-		{id = 1228, defS = true,}, -- Highmaul
-		-- Dungeon
-		-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
-		-- {id = 1195, defS = true,}, -- Iron Docks
-		-- {id = 1279, defS = true,}, -- The Everbloom
-		-- {id = 1175, defS = true,}, -- Bloodmaul Slag Mines
-		-- {id = 1209, defS = true,}, -- Skyreach
-		-- {id = 1176, defS = true,}, -- Shadowmoon Burial Grounds
-		-- {id = 1208, defS = true,}, -- Grimrail Depot
-		-- {id = 1182, defS = true,}, -- Auchindoun
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then
+		OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion({
+			-- Raid
+			{id = 1448, defS = true,}, -- Hellfire Citadel
+			{id = 1205, defS = true,}, -- Blackrock Foundry
+			{id = 1228, defS = true,}, -- Highmaul
+			-- Dungeon
+			-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
+			-- {id = 1195, defS = true,}, -- Iron Docks
+			-- {id = 1279, defS = true,}, -- The Everbloom
+			-- {id = 1175, defS = true,}, -- Bloodmaul Slag Mines
+			-- {id = 1209, defS = true,}, -- Skyreach
+			-- {id = 1176, defS = true,}, -- Shadowmoon Burial Grounds
+			-- {id = 1208, defS = true,}, -- Grimrail Depot
+			-- {id = 1182, defS = true,}, -- Auchindoun
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
-		-- ["Warlords of Draenor"] = {
-		{id = 1850, defS = true,}, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
-		{id = 1849, defS = true,}, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
-		{id = 1711, defS = true,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
-		{id = 1515, defS = true,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
-		----------------------------------------------------------------
-		{id = 1708, defS = false,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
-		{id = 1445, defS = false,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
-		{id = 1848, defS = false,}, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
-		----------------------------------------------------------------
-		{id = 1731, defS = false,}, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
-		{id = 1710, defS = false,}, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
-		{id = 1847, defS = false,}, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
-		----------------------------------------------------------------
-		{id = 1741, defS = false,}, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
-		{id = 1740, defS = false,}, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]
-		{id = 1739, defS = false,}, --name = "Вивианна", side = "-", category = "Телохранители из казарм", }, --[faction=1739]
-		{id = 1738, defS = false,}, --name = "Защитница Иллона", side = "-", category = "Телохранители из казарм", }, --[faction=1738]
-		{id = 1737, defS = false,}, --name = "Жрец Когтя Ишааль", side = "-", category = "Телохранители из казарм", }, --[faction=1737]
-		{id = 1736, defS = false,}, --name = "Тормок", side = "-", category = "Телохранители из казарм", }, --[faction=1736]
-		{id = 1733, defS = false,}, --name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", }, --[faction=1733]
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
+		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
+			-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
+			-- ["Warlords of Draenor"] = {
+			{id = 1850, defS = true,}, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
+			{id = 1849, defS = true,}, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
+			{id = 1711, defS = true,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
+			{id = 1515, defS = true,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
+			----------------------------------------------------------------
+			{id = 1708, defS = false,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
+			{id = 1445, defS = false,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
+			{id = 1848, defS = false,}, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
+			----------------------------------------------------------------
+			{id = 1731, defS = false,}, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
+			{id = 1710, defS = false,}, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
+			{id = 1847, defS = false,}, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
+			----------------------------------------------------------------
+			{id = 1741, defS = false,}, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
+			{id = 1740, defS = false,}, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]
+			{id = 1739, defS = false,}, --name = "Вивианна", side = "-", category = "Телохранители из казарм", }, --[faction=1739]
+			{id = 1738, defS = false,}, --name = "Защитница Иллона", side = "-", category = "Телохранители из казарм", }, --[faction=1738]
+			{id = 1737, defS = false,}, --name = "Жрец Когтя Ишааль", side = "-", category = "Телохранители из казарм", }, --[faction=1737]
+			{id = 1736, defS = false,}, --name = "Тормок", side = "-", category = "Телохранители из казарм", }, --[faction=1736]
+			{id = 1733, defS = false,}, --name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", }, --[faction=1733]
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["RAID_INFO_WORLD_BOSS"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			questpools = {
-				{
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion({
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["RAID_INFO_WORLD_BOSS"]
+				end,
+				name_save = "WorldBoss",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				questpools = {
 					{
-						37460, -- Drov the Ruiner (Горгронд)
-						forcedText = {npcID = 81252},
-						addText = {mapID = E.MapID_Gorgrond},
-					},
-				},
-				{
-					{
-						37462, -- Tarlna the Ageless (Горгронд)
-						forcedText = {npcID = 81535},
-						addText = {mapID = E.MapID_Gorgrond},
-					},
-				},
-				{
-					{
-						37464, -- Rukhmar (Пики Аррака)
-						forcedText = {npcID = 87493},
-						addText = {mapID = E.MapID_SpiresOfArak},
-					},
-				},
-				{
-					{
-						39380, -- Supreme Lord Kazzak (Джунгли)
-						forcedText = {npcID = 94015},
-						addText = {mapID = E.MapID_TanaanJungle},
-					},
-				},
-
-
-				{
-					{
-						99999, -- фиктивный questID для теста
-						forcedText = {
-							text = "Тестовый текст",
-							npcID = 81535,
-							achievementID = 7333,
-							itemID = 252415,
-							Icon = "Interface\\Icons\\inv_misc_questionmark"
+						{
+							37460, -- Drov the Ruiner (Горгронд)
+							forcedText = {npcID = 81252},
+							addText = {mapID = E.MapID_Gorgrond},
 						},
-						addText = {
-							align = "CENT",           -- можно LEFT, CENT, RIGHT
-							IconVignette = "Mobile-Blacksmithing",
-							Icon = "Interface\\Icons\\inv_misc_questionmark",
-							notes = "Заметка",
-							mapID = 14,               -- Arathi Highlands
-							spellID = 1262418,
-							text = "Доп. текст",
-							itemID = 250117,
-							timestamp = 3600,
-							mount = 12345,            -- любой mountID
-							expansionText = "|cff00ff00Cataclysm|r",
-							coords = {12345, 67890}
+					},
+					{
+						{
+							37462, -- Tarlna the Ageless (Горгронд)
+							forcedText = {npcID = 81535},
+							addText = {mapID = E.MapID_Gorgrond},
 						},
-						prof = 164,                   -- Mining
-						HEADER = "Заголовок группы",
-						-- FactionOrClass = {
-							-- Horde = true,
-							-- Alliance = true,
-							-- или classFilename = "MAGE"
-						-- }
+					},
+					{
+						{
+							37464, -- Rukhmar (Пики Аррака)
+							forcedText = {npcID = 87493},
+							addText = {mapID = E.MapID_SpiresOfArak},
+						},
+					},
+					{
+						{
+							39380, -- Supreme Lord Kazzak (Джунгли)
+							forcedText = {npcID = 94015},
+							addText = {mapID = E.MapID_TanaanJungle},
+						},
 					},
 				},
-
-
-
-
-
-
-
 			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				-- return E.func_GetName("quest", 38242, false) -- Раскопанная магия
-				return L["Daily Garrison Assault"]
-			end,
-			name_save = "GarrisonAssault",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				-- 16
-				{36649, FactionOrClass = {Alliance = true,},},
-				{36679, FactionOrClass = {Alliance = true,},},
-				{36676, FactionOrClass = {Alliance = true,},},
-				{36681, FactionOrClass = {Alliance = true,},},
-				{36648, FactionOrClass = {Alliance = true,},},
-				{36675, FactionOrClass = {Alliance = true,},},
-				{36680, FactionOrClass = {Alliance = true,},},
-				{36677, FactionOrClass = {Alliance = true,},},
-				{36683, FactionOrClass = {Alliance = true,},},
-				{36678, FactionOrClass = {Alliance = true,},},
-				{36685, FactionOrClass = {Alliance = true,},},
-				{36684, FactionOrClass = {Alliance = true,},},
-				{36686, FactionOrClass = {Alliance = true,},},
-				{36682, FactionOrClass = {Alliance = true,},},
-				{36674, FactionOrClass = {Alliance = true,},},
-				{36687, FactionOrClass = {Alliance = true,},},
-				-- 16
-				{36667, FactionOrClass = {Horde = true,},},
-				{36692, FactionOrClass = {Horde = true,},},
-				{36695, FactionOrClass = {Horde = true,},},
-				{36669, FactionOrClass = {Horde = true,},},
-				{36697, FactionOrClass = {Horde = true,},},
-				{36694, FactionOrClass = {Horde = true,},},
-				{36688, FactionOrClass = {Horde = true,},},
-				{36693, FactionOrClass = {Horde = true,},},
-				{36699, FactionOrClass = {Horde = true,},},
-				{36698, FactionOrClass = {Horde = true,},},
-				{36700, FactionOrClass = {Horde = true,},},
-				{36701, FactionOrClass = {Horde = true,},},
-				{36689, FactionOrClass = {Horde = true,},},
-				{36696, FactionOrClass = {Horde = true,},},
-				{36690, FactionOrClass = {Horde = true,},},
-				{36691, FactionOrClass = {Horde = true,},},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return L["Daily Garrison Assault"]
+				end,
+				name_save = "GarrisonAssault",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = {
+					-- 16
+					{36649, FactionOrClass = {Alliance = true,},},
+					{36679, FactionOrClass = {Alliance = true,},},
+					{36676, FactionOrClass = {Alliance = true,},},
+					{36681, FactionOrClass = {Alliance = true,},},
+					{36648, FactionOrClass = {Alliance = true,},},
+					{36675, FactionOrClass = {Alliance = true,},},
+					{36680, FactionOrClass = {Alliance = true,},},
+					{36677, FactionOrClass = {Alliance = true,},},
+					{36683, FactionOrClass = {Alliance = true,},},
+					{36678, FactionOrClass = {Alliance = true,},},
+					{36685, FactionOrClass = {Alliance = true,},},
+					{36684, FactionOrClass = {Alliance = true,},},
+					{36686, FactionOrClass = {Alliance = true,},},
+					{36682, FactionOrClass = {Alliance = true,},},
+					{36674, FactionOrClass = {Alliance = true,},},
+					{36687, FactionOrClass = {Alliance = true,},},
+					-- 16
+					{36667, FactionOrClass = {Horde = true,},},
+					{36692, FactionOrClass = {Horde = true,},},
+					{36695, FactionOrClass = {Horde = true,},},
+					{36669, FactionOrClass = {Horde = true,},},
+					{36697, FactionOrClass = {Horde = true,},},
+					{36694, FactionOrClass = {Horde = true,},},
+					{36688, FactionOrClass = {Horde = true,},},
+					{36693, FactionOrClass = {Horde = true,},},
+					{36699, FactionOrClass = {Horde = true,},},
+					{36698, FactionOrClass = {Horde = true,},},
+					{36700, FactionOrClass = {Horde = true,},},
+					{36701, FactionOrClass = {Horde = true,},},
+					{36689, FactionOrClass = {Horde = true,},},
+					{36696, FactionOrClass = {Horde = true,},},
+					{36690, FactionOrClass = {Horde = true,},},
+					{36691, FactionOrClass = {Horde = true,},},
+				},
+				rewards = {
+					{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				},
+				forcedMaxQuest = 1,
 			},
-			rewards = {
-				{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["Daily Heroic Dungeons"]
+				end,
+				name_save = "DailyHeroicDungeons",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+					{37228},
+					{37243},
+					{37230},
+					{37235},
+					{37239},
+					{37242},
+					{37241},
+					{37229},
+					{37238},
+					{37232},
+					{37234},
+					{37233},
+					{37240},
+					{37231},
+					{37237},
+					{37236},
+				},
+				rewards = {
+					{rewID = 119037, rewTYPE = "item", rewSIZE = 1,}, -- Supply of Storied Rarities
+				},
+				forcedMaxQuest = 1,
 			},
-			forcedMaxQuest = 1,
-		},
-
-
-
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Daily Heroic Dungeons"] -- https://www.wowhead.com/ru/achievement=9703/
-				-- return E.func_GetName("achievement", 9703)
-			end,
-			name_save = "DailyHeroicDungeons",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
-				{37228},
-				{37243},
-				{37230},
-				{37235},
-				{37239},
-				{37242},
-				{37241},
-				{37229},
-				{37238},
-				{37232},
-				{37234},
-				{37233},
-				{37240},
-				{37231},
-				{37237},
-				{37236},
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["Daily Dungeon"]
+				end,
+				name_save = "DailyDungeons",
+				defS = false,
+				reset = "Daily",
+				desc = categoryKey,
+				quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+					{37145},
+					{37209},
+					{37244},
+					{37146},
+					{37227},
+					{37142},
+					{37147},
+					{37245},
+					{37244},
+				},
+				rewards = {
+					{rewID = 119041, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 119036, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 119042, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 119040, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 119043, rewTYPE = "item", rewSIZE = 1,},
+				},
+				forcedMaxQuest = 1,
 			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				{rewID = 119037, rewTYPE = "item", rewSIZE = 1,}, -- Supply of Storied Rarities
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["Missive"]
+				end,
+				name_save = "Missive",
+				defS = false,
+				reset = "Recurring",
+				desc = categoryKey,
+				quests = {
+					{38187, FactionOrClass = {Horde = true,},},
+					{38185, FactionOrClass = {Horde = true,},},
+					{38179, FactionOrClass = {Horde = true,},},
+					{38183, FactionOrClass = {Horde = true,},},
+					{38184, FactionOrClass = {Horde = true,},},
+					{40943, FactionOrClass = {Horde = true,},},
+					{40941, FactionOrClass = {Horde = true,},},
+					{38180, FactionOrClass = {Horde = true,},},
+					{38186, FactionOrClass = {Horde = true,},},
+					{38177, FactionOrClass = {Horde = true,},},
+					{38181, FactionOrClass = {Horde = true,},},
+					{38182, FactionOrClass = {Horde = true,},},
+					{38176, FactionOrClass = {Horde = true,},},
+					{38178, FactionOrClass = {Horde = true,},},
+					-- {38194, FactionOrClass = {Horde = true,},}, -- NEW
+					{40944, FactionOrClass = {Alliance = true,},},
+					{38197, FactionOrClass = {Alliance = true,},},
+					{38201, FactionOrClass = {Alliance = true,},},
+					{40942, FactionOrClass = {Alliance = true,},},
+					{38200, FactionOrClass = {Alliance = true,},},
+					{38199, FactionOrClass = {Alliance = true,},},
+					{38192, FactionOrClass = {Alliance = true,},},
+					{38193, FactionOrClass = {Alliance = true,},},
+					{38195, FactionOrClass = {Alliance = true,},},
+					{38191, FactionOrClass = {Alliance = true,},},
+					{38196, FactionOrClass = {Alliance = true,},},
+					{38198, FactionOrClass = {Alliance = true,},},
+					{38189, FactionOrClass = {Alliance = true,},},
+					{38190, FactionOrClass = {Alliance = true,},},
+					-- {38202, FactionOrClass = {Alliance = true,},}, -- NEW
+				},
+				rewards = {
+					{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				},
 			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Daily Dungeon"] -- https://www.wowhead.com/ru/achievement=9703/
-				-- return E.func_GetName("achievement", 9703)
-			end,
-			name_save = "DailyDungeons",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
-				{37145},
-				{37209},
-				{37244},
-				{37146},
-				{37227},
-				{37142},
-				{37147},
-				{37245},
-				{37244},
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return GARRISON_LOCATION_TOOLTIP
+				end,
+				name_save = "GarrisonLevel",
+				defS = true,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = {
+					{34378, FactionOrClass = {Horde = true,},},
+					{34586, FactionOrClass = {Alliance = true,},},
+					{36567, FactionOrClass = {Horde = true,},},
+					{36592, FactionOrClass = {Alliance = true,},},
+					{36614, FactionOrClass = {Horde = true,},},
+					{36615, FactionOrClass = {Alliance = true,},},
+				},
+				rewards = {
+					{rewID = 173838, rewTYPE = "spell", rewSIZE = nil,}, -- Book of Garrison Blueprints
+					{rewID = 110560, rewTYPE = "item", rewSIZE = 1,}, -- Garrison Hearthstone
+					{rewID = 244315, rewTYPE = "item", rewSIZE = 1,}, -- Orcish Warlord's Planning Table
+					{rewID = 248800, rewTYPE = "item", rewSIZE = 1,}, -- Architect's Drafting Table
+				},
+				forcedMaxQuest = 3,
 			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				{rewID = 119041, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 119036, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 119042, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 119040, rewTYPE = "item", rewSIZE = 1,}, --
-				{rewID = 119043, rewTYPE = "item", rewSIZE = 1,}, --
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("quest", 39246, false) -- Владычество над морями
+				end,
+				name_save = "Garrison_NavalDomination",
+				defS = false,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = {
+					{39246, FactionOrClass = {Horde = true,},},
+					{39068, FactionOrClass = {Alliance = true,},},
+				},
+				rewards = {
+					{rewID = 187788, rewTYPE = "spell", rewSIZE = nil,}, -- Garrison: Shipyard, Level 3
+					{rewID = 127267, rewTYPE = "item", rewSIZE = 1,}, -- Ship Blueprint: Carrier
+				},
+				forcedMaxQuest = 1,
 			},
-			forcedMaxQuest = 1,
-		},
-
-
-
-
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Missive"]
-			end,
-			name_save = "Missive",
-			defS = false,
-			reset = "Recurring",
-			desc = categoryKey,
-			quests = {
-				{38187, FactionOrClass = {Horde = true,},},
-				{38185, FactionOrClass = {Horde = true,},},
-				{38179, FactionOrClass = {Horde = true,},},
-				{38183, FactionOrClass = {Horde = true,},},
-				{38184, FactionOrClass = {Horde = true,},},
-				{40943, FactionOrClass = {Horde = true,},},
-				{40941, FactionOrClass = {Horde = true,},},
-				{38180, FactionOrClass = {Horde = true,},},
-				{38186, FactionOrClass = {Horde = true,},},
-				{38177, FactionOrClass = {Horde = true,},},
-				{38181, FactionOrClass = {Horde = true,},},
-				{38182, FactionOrClass = {Horde = true,},},
-				{38176, FactionOrClass = {Horde = true,},},
-				{38178, FactionOrClass = {Horde = true,},},
-				-- {38194, FactionOrClass = {Horde = true,},}, -- NEW
-				{40944, FactionOrClass = {Alliance = true,},},
-				{38197, FactionOrClass = {Alliance = true,},},
-				{38201, FactionOrClass = {Alliance = true,},},
-				{40942, FactionOrClass = {Alliance = true,},},
-				{38200, FactionOrClass = {Alliance = true,},},
-				{38199, FactionOrClass = {Alliance = true,},},
-				{38192, FactionOrClass = {Alliance = true,},},
-				{38193, FactionOrClass = {Alliance = true,},},
-				{38195, FactionOrClass = {Alliance = true,},},
-				{38191, FactionOrClass = {Alliance = true,},},
-				{38196, FactionOrClass = {Alliance = true,},},
-				{38198, FactionOrClass = {Alliance = true,},},
-				{38189, FactionOrClass = {Alliance = true,},},
-				{38190, FactionOrClass = {Alliance = true,},},
-				-- {38202, FactionOrClass = {Alliance = true,},}, -- NEW
+			{
+				sorted = false,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("quest", 38242, false) -- Раскопанная магия
+				end,
+				name_save = "Garrison_UnearthedMagic",
+				defS = false,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = {
+					{38242, FactionOrClass = {Horde = true,},},
+					{38241, FactionOrClass = {Alliance = true,},},
+				},
+				rewards = {
+					{rewID = 122457, rewTYPE = "item", rewSIZE = 1,}, -- Ultimate Battle-Training Stone
+				},
+				forcedMaxQuest = 1,
 			},
-			rewards = {
-				{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			{
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("achievement", 9703)
+				end,
+				name_save = "DungeonQuests_VanityRewards",
+				defS = false,
+				reset = "Normal",
+				desc = categoryKey,
+				quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+					{37167, addText_CENT = {itemID = 118924},},
+					{37159, addText_CENT = {itemID = 119093},},
+					{37165, addText_CENT = {itemID = 118935},},
+					{37160, addText_CENT = {itemID = 118937},},
+					{37151, addText_CENT = {itemID = 118918},},
+					{37152, addText_CENT = {itemID = 119083},},
+					{37162, addText_CENT = {itemID = 118927},},
+					{37161, addText_CENT = {itemID = 118926},},
+					{37157, addText_CENT = {itemID = 119092},},
+					{37150, addText_CENT = {itemID = 118921},},
+					{37158, addText_CENT = {itemID = 118928},},
+					{37148, addText_CENT = {itemID = 118922},},
+					{37163, addText_CENT = {itemID = 119003},},
+					{37155, addText_CENT = {itemID = 118925},},
+					{37154, addText_CENT = {itemID = 118931},},
+					{37164, addText_CENT = {itemID = 118923},},
+					{37156, addText_CENT = {itemID = 119039},},
+					{37149, addText_CENT = {itemID = 118936},},
+					{37153, addText_CENT = {itemID = 118929},},
+					{37166, addText_CENT = {itemID = 118930},},
+				},
+				forcedMaxQuest = 1,
 			},
-			-- forcedMaxQuest = 1,
-		},
-
-
-
-
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return GARRISON_LOCATION_TOOLTIP
-			end,
-			name_save = "GarrisonLevel",
-			defS = true,
-			reset = "Normal",
-			desc = categoryKey,
-			quests = {
-				{34378, FactionOrClass = {Horde = true,},},
-				{34586, FactionOrClass = {Alliance = true,},},
-				{36567, FactionOrClass = {Horde = true,},},
-				{36592, FactionOrClass = {Alliance = true,},},
-				{36614, FactionOrClass = {Horde = true,},},
-				{36615, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				{rewID = 173838, rewTYPE = "spell", rewSIZE = nil,}, -- Book of Garrison Blueprints
-				{rewID = 110560, rewTYPE = "item", rewSIZE = 1,}, -- Garrison Hearthstone
-				{rewID = 244315, rewTYPE = "item", rewSIZE = 1,}, -- Orcish Warlord's Planning Table
-				{rewID = 248800, rewTYPE = "item", rewSIZE = 1,}, -- Architect's Drafting Table
-			},
-			forcedMaxQuest = 3,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 39246, false) -- Владычество над морями
-			end,
-			name_save = "Garrison_NavalDomination",
-			defS = false,
-			reset = "Normal",
-			desc = categoryKey,
-			quests = {
-				{39246, FactionOrClass = {Horde = true,},},
-				{39068, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				{rewID = 187788, rewTYPE = "spell", rewSIZE = nil,}, -- Garrison: Shipyard, Level 3
-				{rewID = 127267, rewTYPE = "item", rewSIZE = 1,}, -- Ship Blueprint: Carrier
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 38242, false) -- Раскопанная магия
-			end,
-			name_save = "Garrison_UnearthedMagic",
-			defS = false,
-			reset = "Normal",
-			desc = categoryKey,
-			quests = {
-				{38242, FactionOrClass = {Horde = true,},},
-				{38241, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				{rewID = 122457, rewTYPE = "item", rewSIZE = 1,}, -- Ultimate Battle-Training Stone
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				-- return L["Vanity Rewards"] -- https://www.wowhead.com/ru/achievement=9703/
-				return E.func_GetName("achievement", 9703)
-			end,
-			name_save = "DungeonQuests_VanityRewards",
-			defS = false,
-			reset = "Normal",
-			desc = categoryKey,
-			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
-				{37167, addText_CENT = {itemID = 118924},},
-				{37159, addText_CENT = {itemID = 119093},},
-				{37165, addText_CENT = {itemID = 118935},},
-				{37160, addText_CENT = {itemID = 118937},},
-				{37151, addText_CENT = {itemID = 118918},},
-				{37152, addText_CENT = {itemID = 119083},},
-				{37162, addText_CENT = {itemID = 118927},},
-				{37161, addText_CENT = {itemID = 118926},},
-				{37157, addText_CENT = {itemID = 119092},},
-				{37150, addText_CENT = {itemID = 118921},},
-				{37158, addText_CENT = {itemID = 118928},},
-				{37148, addText_CENT = {itemID = 118922},},
-				{37163, addText_CENT = {itemID = 119003},},
-				{37155, addText_CENT = {itemID = 118925},},
-				{37154, addText_CENT = {itemID = 118931},},
-				{37164, addText_CENT = {itemID = 118923},},
-				{37156, addText_CENT = {itemID = 119039},},
-				{37149, addText_CENT = {itemID = 118936},},
-				{37153, addText_CENT = {itemID = 118929},},
-				{37166, addText_CENT = {itemID = 118930},},
-			},
-			-- rewards = {
-			-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-			-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-			-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-			-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-			-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
-			-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
-			-- },
-			forcedMaxQuest = 1,
-		},
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+		})
+	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

@@ -13,6 +13,12 @@ local function Collect_Items_BANK()
 			E.cm.Items = E.cm.Items or {}
 			E.cm.Items.Bank = {}
 			E.cm.Items.Bank_FULL = {}
+
+
+			E.cm.Items.Bags = E.cm.Items.Bags or {}
+			E.cm.Items.Bags_FULL = E.cm.Items.Bags_FULL or {}
+
+
 			----------------------------------------------------------------
 			-- ПРОВЕРКА
 			----------------------------------------------------------------
@@ -127,10 +133,12 @@ local function Collect_Items_AccountBank()
 end
 ----------------------------------------------------------------
 function E.Collect_Items_BANK()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then return end
 	E.func_SpamBlock(Collect_Items_BANK, true, 1)
 end
 ----------------------------------------------------------------
 function E.Collect_Items_AccountBank()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then return end
 	E.func_SpamBlock(Collect_Items_AccountBank, true, 1)
 end
 ----------------------------------------------------------------

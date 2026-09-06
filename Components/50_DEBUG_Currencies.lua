@@ -6,6 +6,8 @@ if not E.DEBUG then return end
 local categoryKey = 50
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -14,27 +16,6 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = CURRENCY
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
 	----------------------------------------------------------------
 	local sorted = {}
 	for id = 1, 5000 do
@@ -45,8 +26,10 @@ E.Components[categoryKey] = function()
 	end
 	E.func_SortRecords(sorted, true)
 
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {}
 	for i, id in ipairs(sorted) do
 	    tinsert(OctoTables_DataOtrisovka[categoryKey].Currencies, {id = id, defS = true})
 	end
+	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

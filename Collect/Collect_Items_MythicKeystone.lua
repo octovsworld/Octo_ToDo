@@ -16,6 +16,7 @@ local function Collect_Items_MythicKeystone()
 end
 ----------------------------------------------------------------
 function E.Collect_Items_MythicKeystone()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.MYTHICPLUS then return end
 	E.func_SpamBlock(Collect_Items_MythicKeystone, false)
 end
 ----------------------------------------------------------------

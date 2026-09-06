@@ -157,6 +157,7 @@ local function Collect_Reputations()
 end
 ----------------------------------------------------------------
 function E.Collect_Reputations()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then return end
 	E.func_SpamBlock(Collect_Reputations, true)
 end
 ----------------------------------------------------------------
@@ -166,6 +167,7 @@ end
 
 
 function E.Collect_Reputations_TARGET(...)
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then return end
 	----------------------------------------------------------------
 	if not E.func_CanCollectData() then return end
 	-- local E.cm = E.cm

@@ -846,3 +846,13 @@ end
 --     end
 --     return nil
 -- end
+
+
+
+function E.func_GetIconAndName(category, id, forcedQuality, fullDifficultyName)
+	local iconID = E.func_GetIcon(category, id)
+	local name = E.func_GetName(category, id, forcedQuality, fullDifficultyName)
+	local iconTexture = E.func_texturefromIcon(iconID)
+	return iconTexture .. name
+
+end

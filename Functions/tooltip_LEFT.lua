@@ -290,6 +290,7 @@ local function func_CurrenciesTooltipLeft(tbl, visible_GUID, id)
 	for GUID, CharInfo in next, (tbl) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
+		if not cm or not cm.Currency then return end
 		local curquantity = cm.Currency[id] and cm.Currency[id].quantity or 0
 		local curmaxQuantity = cm.Currency[id] and cm.Currency[id].maxQuantity or 0
 		local hasData = curquantity > 0

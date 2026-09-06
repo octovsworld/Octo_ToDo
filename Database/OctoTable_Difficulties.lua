@@ -7,15 +7,15 @@ local L = E.L
 local difficultiesData = {
 	-- 1. Looking For Raid / Story
 	{151, "LFR"},                                  -- Looking For Raid (Timewalking)
-	{17,  "LFR", E.COLOR_GREEN},                  -- Looking For Raid
-	{250, "W",   E.COLOR_GREEN},                  -- "World" (raid)
+	{17,  "LFR", E.COLOR_GREEN},                   -- Looking For Raid
+	{250, "W",   E.COLOR_GREEN},                   -- "World" (raid)
 	{7,   "LFR"},                                  -- Looking For Raid (Legacy)
 	{220, "Solo"},                                 -- Story (solo) raid
 
 	-- 2. Normal
 	{1,   "N"},                                    -- Normal (party)
 	{150, "N"},                                    -- Normal (party)
-	{14,  "N",   E.COLOR_BLUE},                   -- Normal (raid)
+	{14,  "N",   E.COLOR_BLUE},                    -- Normal (raid)
 	{3,   "10N"},                                  -- 10 Player (Normal)
 	{4,   "25N"},                                  -- 25 Player (Normal)
 	{9,   "40N"},                                  -- 40 Player (Normal)
@@ -25,7 +25,7 @@ local difficultiesData = {
 
 	-- 3. Heroic
 	{2,   "H"},                                    -- Heroic (party)
-	{15,  "H",   E.COLOR_PURPLE},                 -- Heroic (raid)
+	{15,  "H",   E.COLOR_PURPLE},                  -- Heroic (raid)
 	{5,   "10H"},                                  -- 10 Player (Heroic)
 	{6,   "25H"},                                  -- 25 Player (Heroic)
 	{11,  "HS"},                                   -- Heroic Scenario
@@ -35,8 +35,8 @@ local difficultiesData = {
 
 	-- 4. Mythic
 	{23,  "M"},                                    -- Mythic (party)
-	{16,  "M",   E.COLOR_ORANGE},                 -- Mythic (raid)
-	{233, "MF",  E.COLOR_ORANGE},                 -- MythFlex
+	{16,  "M",   E.COLOR_ORANGE},                  -- Mythic (raid)
+	{233, "MF",  E.COLOR_ORANGE},                  -- MythFlex
 	{40,  "MS"},                                   -- Mythic Scenario
 
 	-- 5. Mythic Keystone
@@ -86,8 +86,6 @@ local difficultiesData = {
 	{232, "E"},                                    -- "Event" (party)
 }
 
--- Заполняем E.OctoTable_Difficulties
-E.OctoTable_Difficulties = {}
 for i, data in ipairs(difficultiesData) do
 	local entry = { prior = i, abbr = data[2] }
 	if data[3] then entry.color = data[3] end

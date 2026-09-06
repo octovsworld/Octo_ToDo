@@ -29,11 +29,12 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 		TextCenter = TextCenter .. E.COLOR_PURPLE .. " +" .. E.func_CompactFormatNumber(SL_Possible_CatalogedResearch) .. "|r"
 	end
 	if id == 824 then -- GARRISON RESOURCE
+
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600
 		local RESOURCES_PER_INTERVAL = 1
 		local MAX_CACHE_SIZE = 500
-		if cm.GARRISON.lastCacheTime and cm.GARRISON.lastCacheTime ~= 0 then
+		if cm.GARRISON and cm.GARRISON.lastCacheTime and cm.GARRISON.lastCacheTime ~= 0 then
 			local color = E.COLOR_GRAY
 			local cacheSize = cm.GARRISON.cacheSize or MAX_CACHE_SIZE
 			local lastCacheTime = cm.GARRISON.lastCacheTime
@@ -93,42 +94,44 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 	if not categoryKey then return end
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local cm = CharInfo.MASLENGO
-	local JI_ID = tonumber(id)
-	local instanceData = cm.journalInstance[JI_ID]
-	if instanceData then
-		-- Собираем все сложности в массив для сортировки
-		local difficulties = {}
-		for difficultyID, v in next, (instanceData) do
-			difficulties[#difficulties+1] = {
-				difficultyID = difficultyID,
-				defeatedBosses = v.defeatedBosses or 0,
-				totalBosses = v.totalBosses or 0,
-				lastBossDefeated = v.lastBossDefeated or false
-			}
-		end
-		-- Сортировка по приоритету из OctoTable_Difficulties
-		E.func_SortRecords(difficulties, function(a, b)
-				local pa = E.OctoTable_Difficulties[a.difficultyID] and E.OctoTable_Difficulties[a.difficultyID].prior or 999
-				local pb = E.OctoTable_Difficulties[b.difficultyID] and E.OctoTable_Difficulties[b.difficultyID].prior or 999
-				return pa < pb
-		end)
-		-- Формируем текст
-		for _, diff in ipairs(difficulties) do
-			if diff.defeatedBosses > 0 then
-				local color = diff.defeatedBosses == diff.totalBosses and E.COLOR_GREEN or (diff.lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
-				TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
-				-- if diff.defeatedBosses == diff.totalBosses then
-				-- local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
-				-- TextCenter = TextCenter .. color .. diffABBR .. "|r "
-				-- else
-				-- TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
-				-- end
-				-- if diff.defeatedBosses == diff.totalBosses then
-				-- local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
-				-- TextCenter = TextCenter .. E.DONE .. " "
-				-- else
-				-- TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
-				-- end
+	if cm.journalInstance then
+		local JI_ID = tonumber(id)
+		local instanceData = cm.journalInstance[JI_ID]
+		if instanceData then
+			-- Собираем все сложности в массив для сортировки
+			local difficulties = {}
+			for difficultyID, v in next, (instanceData) do
+				difficulties[#difficulties+1] = {
+					difficultyID = difficultyID,
+					defeatedBosses = v.defeatedBosses or 0,
+					totalBosses = v.totalBosses or 0,
+					lastBossDefeated = v.lastBossDefeated or false
+				}
+			end
+			-- Сортировка по приоритету из OctoTable_Difficulties
+			E.func_SortRecords(difficulties, function(a, b)
+					local pa = E.OctoTable_Difficulties[a.difficultyID] and E.OctoTable_Difficulties[a.difficultyID].prior or 999
+					local pb = E.OctoTable_Difficulties[b.difficultyID] and E.OctoTable_Difficulties[b.difficultyID].prior or 999
+					return pa < pb
+			end)
+			-- Формируем текст
+			for _, diff in ipairs(difficulties) do
+				if diff.defeatedBosses > 0 then
+					local color = diff.defeatedBosses == diff.totalBosses and E.COLOR_GREEN or (diff.lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
+					TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+					-- if diff.defeatedBosses == diff.totalBosses then
+					-- local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
+					-- TextCenter = TextCenter .. color .. diffABBR .. "|r "
+					-- else
+					-- TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+					-- end
+					-- if diff.defeatedBosses == diff.totalBosses then
+					-- local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
+					-- TextCenter = TextCenter .. E.DONE .. " "
+					-- else
+					-- TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+					-- end
+				end
 			end
 		end
 	end
@@ -210,17 +213,17 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		-- CONFIG_VALUE ------------------------------------------------
 		----------------------------------------------------------------
 		-- if showValue_OLD then
-		-- 	local TEXT_VALUE = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
-		-- 	if TEXT_VALUE == "1/1" then
-		-- 		-- TEXT_VALUE = L["DONE"]
-		-- 		TEXT_VALUE = L["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"]
-		-- 	elseif TEXT_VALUE == "0/0" then
-		-- 		-- TEXT_VALUE = ""
-		-- 		TEXT_VALUE = nil
-		-- 	end
-		-- 	if TEXT_VALUE then
-		-- 		parts[#parts+1] = TEXT_VALUE
-		-- 	end
+		--     local TEXT_VALUE = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
+		--     if TEXT_VALUE == "1/1" then
+		--         -- TEXT_VALUE = L["DONE"]
+		--         TEXT_VALUE = L["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"]
+		--     elseif TEXT_VALUE == "0/0" then
+		--         -- TEXT_VALUE = ""
+		--         TEXT_VALUE = nil
+		--     end
+		--     if TEXT_VALUE then
+		--         parts[#parts+1] = TEXT_VALUE
+		--     end
 		-- end
 		----------------------------------------------------------------
 		-- ColorCenter -------------------------------------------------
@@ -230,48 +233,48 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		-- CONFIG_PERCENTAGE -------------------------------------------
 		----------------------------------------------------------------
 		-- if showPercentage_OLD then
-		-- 	-- if repType == 2 or repType == 3 then -- 2
-		-- 	-- if FIRST ~= SECOND then
-		-- 	local percent = (SECOND > 0) and math_floor(FIRST / SECOND * 100) or 0
-		-- 	-- local TEXT_PERCENT = (percent > 0 and percent < 100) and (percent .. "%")
-		-- 	local TEXT_PERCENT = (percent > 0) and (percent .. "%")
-		-- 	-- local TEXT_PERCENT = percent .. "%"
-		-- 	if TEXT_PERCENT then
-		-- 		parts[#parts+1] = TEXT_PERCENT
-		-- 	end
-		-- 	-- end
+		--     -- if repType == 2 or repType == 3 then -- 2
+		--     -- if FIRST ~= SECOND then
+		--     local percent = (SECOND > 0) and math_floor(FIRST / SECOND * 100) or 0
+		--     -- local TEXT_PERCENT = (percent > 0 and percent < 100) and (percent .. "%")
+		--     local TEXT_PERCENT = (percent > 0) and (percent .. "%")
+		--     -- local TEXT_PERCENT = percent .. "%"
+		--     if TEXT_PERCENT then
+		--         parts[#parts+1] = TEXT_PERCENT
+		--     end
+		--     -- end
 		-- end
 		----------------------------------------------------------------
 		-- CONFIG_STANDINGS --------------------------------------------
 		----------------------------------------------------------------
 		-- if showStandings_OLD then
-		-- 	local TEXT_STANDINGS
-		-- 	if repType == 2 then -- FRIENDSHIP
-		-- 		if rankInfocurrentLevel and rankInfomaxLevel then
-		-- 			TEXT_STANDINGS = rankInfocurrentLevel .. "/" .. rankInfomaxLevel
-		-- 		end
-		-- 	elseif repType == 3 then
-		-- 		if renownLevel and renownMaxLevel then
-		-- 			TEXT_STANDINGS = renownLevel .. "/" .. renownMaxLevel
-		-- 		end
-		-- 	elseif repType == 1 then
-		-- 		if reaction and reaction > 0 then
-		-- 			local gender = E.cur_gender or 3
-		-- 			standingCache[reaction] = standingCache[reaction] or {}
-		-- 			local cached = standingCache[reaction][gender]
-		-- 			if not cached then
-		-- 				-- cached = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
-		-- 				cached = _G["FACTION_STANDING_LABEL"..reaction]
-		-- 				standingCache[reaction][gender] = cached
-		-- 			end
-		-- 			TEXT_STANDINGS = cached
-		-- 		end
-		-- 	elseif repType == 4 then
-		-- 		TEXT_STANDINGS = L["Paragon"]
-		-- 	end
-		-- 	if TEXT_STANDINGS then
-		-- 		parts[#parts+1] = TEXT_STANDINGS
-		-- 	end
+		--     local TEXT_STANDINGS
+		--     if repType == 2 then -- FRIENDSHIP
+		--         if rankInfocurrentLevel and rankInfomaxLevel then
+		--             TEXT_STANDINGS = rankInfocurrentLevel .. "/" .. rankInfomaxLevel
+		--         end
+		--     elseif repType == 3 then
+		--         if renownLevel and renownMaxLevel then
+		--             TEXT_STANDINGS = renownLevel .. "/" .. renownMaxLevel
+		--         end
+		--     elseif repType == 1 then
+		--         if reaction and reaction > 0 then
+		--             local gender = E.cur_gender or 3
+		--             standingCache[reaction] = standingCache[reaction] or {}
+		--             local cached = standingCache[reaction][gender]
+		--             if not cached then
+		--                 -- cached = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
+		--                 cached = _G["FACTION_STANDING_LABEL"..reaction]
+		--                 standingCache[reaction][gender] = cached
+		--             end
+		--             TEXT_STANDINGS = cached
+		--         end
+		--     elseif repType == 4 then
+		--         TEXT_STANDINGS = L["Paragon"]
+		--     end
+		--     if TEXT_STANDINGS then
+		--         parts[#parts+1] = TEXT_STANDINGS
+		--     end
 		-- end
 		----------------------------------------------------------------
 		-- reaction LOCAL_LANGUAGE >:( ---------------------------------
@@ -389,7 +392,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		local TextCenter = table.concat(parts, " - ")
 		----------------------------------------------------------------
 		local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
-		if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
+		if paragonQuest and cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] then
 			TextCenter = E.COLOR_PURPLE .. ">" .. TextCenter .. "<|r"
 		end
 		return TextCenter, ColorCenter, FIRST, SECOND
@@ -543,54 +546,62 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 		end
 	end
 	if id == "PlayerInventory" then
-		TextCenter = "TextCenter_PlayerInventory"
-		local bags = cm.Items and cm.Items.Bags_FULL
-		local totalPrice = 0
-		if bags then
-			for k, v in next, (bags) do
-				local itemID = v.itemID
-				local count = cm.Items and cm.Items.Bags and cm.Items.Bags[itemID] or 0
-				if count> 0 then
-					local price = E.func_auctionator_price(itemID)
-					if price > 0 then
-						totalPrice = totalPrice + (price * count)
+		if cm.Items and cm.Items.Bags and cm.Items.Bank then
+			TextCenter = "TextCenter_PlayerInventory"
+			local bags = cm.Items and cm.Items.Bags_FULL
+			local totalPrice = 0
+			if bags then
+				for k, v in next, (bags) do
+					local itemID = v.itemID
+					local count = cm.Items and cm.Items.Bags and cm.Items.Bags[itemID] or 0
+					if count> 0 then
+						local price = E.func_auctionator_price(itemID)
+						if price > 0 then
+							totalPrice = totalPrice + (price * count)
+						end
 					end
 				end
 			end
-		end
-		if totalPrice > 0 then
-			TextCenter = E.func_FormatMoney(totalPrice)
+			if totalPrice > 0 then
+				TextCenter = E.func_FormatMoney(totalPrice)
+			end
 		end
 	end
 	if id == "PlayerBANK" then
-		TextCenter = "TextCenter_PlayerBANK"
+		if cm.Items and cm.Items.Bags and cm.Items.Bank then
+			TextCenter = "TextCenter_PlayerBANK"
+		end
 	end
 	if id == "HeartofAzeroth" then
-		local azerite_lvl = pd.azerite_lvl
-		local azerite_xp = pd.azerite_xp
-		local azerite_totalLevelXP = pd.azerite_totalLevelXP
-		if azerite_lvl and azerite_xp and azerite_totalLevelXP then
-			local percent = floor(azerite_xp / azerite_totalLevelXP * 100)
-			local missing = azerite_totalLevelXP - azerite_xp
+		if cm.Items and cm.Items.Bags and cm.Items.Bank then
+			local azerite_lvl = pd.azerite_lvl
+			local azerite_xp = pd.azerite_xp
+			local azerite_totalLevelXP = pd.azerite_totalLevelXP
+			if azerite_lvl and azerite_xp and azerite_totalLevelXP then
+				local percent = floor(azerite_xp / azerite_totalLevelXP * 100)
+				local missing = azerite_totalLevelXP - azerite_xp
 
-			-- local azeriteEXP = ("%d%%, -%s"):format(
-			-- 	floor(azerite_xp / azerite_totalLevelXP * 100),
-			-- 	E.func_CompactFormatNumber(azerite_totalLevelXP - azerite_xp)
-			-- )
-			TextCenter = E.COLOR_GREEN .. azerite_lvl .. "|r" .. E.COLOR_GRAY .. " +" .. E.func_CompactFormatNumber(percent) .. "%, -" .. E.func_CompactFormatNumber(missing) .. "|r"
-		else
-			if cm.Items.Bank[158075] then
-				TextCenter = E.COLOR_ORANGE .. "in bank|r"
+				-- local azeriteEXP = ("%d%%, -%s"):format(
+				--     floor(azerite_xp / azerite_totalLevelXP * 100),
+				--     E.func_CompactFormatNumber(azerite_totalLevelXP - azerite_xp)
+				-- )
+				TextCenter = E.COLOR_GREEN .. azerite_lvl .. "|r" .. E.COLOR_GRAY .. " +" .. E.func_CompactFormatNumber(percent) .. "%, -" .. E.func_CompactFormatNumber(missing) .. "|r"
+			else
+				if cm.Items.Bank[158075] then
+					TextCenter = E.COLOR_ORANGE .. "in bank|r"
+				end
 			end
 		end
 	end
 	if id == "Ashjrakamas" then
-		if pd.cloak_lvl then
-			TextCenter = E.COLOR_CYAN .. L["AZERITE_ESSENCE_RANK"]:format(pd.cloak_lvl) .. "|r"
-		else
-			if cm.Items.Bank[169223] then
-				TextCenter = E.COLOR_ORANGE .. "in bank|r"
-				-- elseif cm.Items.Bags[169223] then
+		if cm.Items and cm.Items.Bags and cm.Items.Bank then
+			if pd.cloak_lvl then
+				TextCenter = E.COLOR_CYAN .. L["AZERITE_ESSENCE_RANK"]:format(pd.cloak_lvl) .. "|r"
+			else
+				if cm.Items.Bank[169223] then
+					TextCenter = E.COLOR_ORANGE .. "in bank|r"
+					-- elseif cm.Items.Bags[169223] then
+				end
 			end
 		end
 	end
@@ -641,8 +652,8 @@ function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataT
 						for questID, v in pairs(Data) do
 							playerQuests[questID] = true
 							table.insert(callings, {
-								isPlayer = true,
-								isCompleted = v.isCompleted,
+									isPlayer = true,
+									isCompleted = v.isCompleted,
 							})
 						end
 					end
@@ -652,8 +663,8 @@ function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataT
 						for questID, v in pairs(cacheData) do
 							if not playerQuests[questID] and #callings < 3 then
 								table.insert(callings, {
-									isPlayer = false,
-									isCompleted = false,
+										isPlayer = false,
+										isCompleted = false,
 								})
 							end
 						end
@@ -662,8 +673,8 @@ function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataT
 					-- Добиваем до 3 фиктивными слотами (если нужно)
 					while #callings < 3 do
 						table.insert(callings, {
-							isPlayer = false,
-							isCompleted = false,
+								isPlayer = false,
+								isCompleted = false,
 						})
 					end
 
@@ -731,9 +742,9 @@ function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataT
 					playerQuests[questID] = true
 					local cacheEntry = cacheData and cacheData[questID]
 					table.insert(callings, {
-						isPlayer = true,
-						isCompleted = v.isCompleted,
-						endTime = cacheEntry and cacheEntry.endTime or 0,   -- для сортировки
+							isPlayer = true,
+							isCompleted = v.isCompleted,
+							endTime = cacheEntry and cacheEntry.endTime or 0,   -- для сортировки
 					})
 				end
 			end
@@ -742,9 +753,9 @@ function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataT
 				for questID, v in pairs(cacheData) do
 					if not playerQuests[questID] and #callings < 10 then   -- ограничение по желанию, можно убрать
 						table.insert(callings, {
-							isPlayer = false,
-							isCompleted = false,
-							endTime = v.endTime or 0,
+								isPlayer = false,
+								isCompleted = false,
+								endTime = v.endTime or 0,
 						})
 					end
 				end
@@ -801,7 +812,7 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
-			if ExpansionToShowTBL[tier] then
+			if ExpansionToShowTBL[tier] and Octo_ToDo_DB_Variables.DATACOLLECTION[tier] then
 				selectedSeasons[tier] = true
 			end
 		end
@@ -858,11 +869,13 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 	end
 	if id == "LFGInstance" then
 		local count = 0
-		for instanceID, v in next, (cm.journalInstance) do
-			if v then
-				for difficultyID, w in next, (v) do
-					if w.instanceReset then
-						count = count+1
+		if cm.journalInstance then
+			for instanceID, v in next, (cm.journalInstance) do
+				if v then
+					for difficultyID, w in next, (v) do
+						if w.instanceReset then
+							count = count+1
+						end
 					end
 				end
 			end
@@ -879,9 +892,11 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		-- end
 		-- end
 		-- end
-		for worldBossID, v in next, (cm.SavedWorldBoss) do
-			if v then
-				count = count+1
+		if cm.SavedWorldBoss then
+			for worldBossID, v in next, (cm.SavedWorldBoss) do
+				if v then
+					count = count+1
+				end
 			end
 		end
 		if count ~= 0 then
@@ -893,7 +908,7 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		for itemID in next, (E.OctoTable_itemID_ALL) do
 			-- if tonumber(itemID) == 249400 then
 			-- end
-			if cm.Items.Bags[itemID] or cm.Items.Bank[itemID] then
+			if cm.Items and ((cm.Items.Bags and cm.Items.Bags[itemID]) or (cm.Items.Bank and cm.Items.Bank[itemID])) then
 				count = count+1
 				break
 			end
@@ -903,13 +918,15 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		end
 	end
 	if id == "Professions" then
-		local charProf = cm.professions
-		for i = 1, 5 do
-			local skillLineID = charProf[i] and charProf[i].skillLine
-			if skillLineID then
-				if i == 1 or i == 2 then
-					local icon = E.func_GetIcon("profession", skillLineID)
-					TextCenter = TextCenter .. E.func_texturefromIcon(icon) -- .. " "
+		if cm.professions then
+			local charProf = cm.professions
+			for i = 1, 5 do
+				local skillLineID = charProf[i] and charProf[i].skillLine
+				if skillLineID then
+					if i == 1 or i == 2 then
+						local icon = E.func_GetIcon("profession", skillLineID)
+						TextCenter = TextCenter .. E.func_texturefromIcon(icon) -- .. " "
+					end
 				end
 			end
 		end
@@ -965,6 +982,7 @@ function E.func_TextCenter_Currency(CharInfo, id, itemID)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local data = cm.Currency
+	if not data then return end
 	if not data[id] then data[id] = {} end
 	local parts = {}
 	local quantity = data[id].quantity or 0

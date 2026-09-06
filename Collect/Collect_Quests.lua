@@ -1,56 +1,13 @@
 local GlobalAddonName, E = ...
-
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 ----------------------------------------------------------------
--- Вспомогательные функции для обработки квестов
+-- Настройки
 ----------------------------------------------------------------
-local DEBUG = false  -- включить/выключить отладку
-
 local DEBUG_TEXT = E.func_Gradient(GlobalAddonName)
-
-local function DebugPrint(...)
-	if DEBUG then
-		print (DEBUG_TEXT, ...)
-	end
-end
-
-local function func_SetQuestProgress(questDataTable, completedCount, totalCount)
-	if totalCount == 0 then
-		questDataTable.TextCenter = nil
-	elseif completedCount >= totalCount then
-		questDataTable.TextCenter = true
-	elseif completedCount > 0 then
-		questDataTable.TextCenter = completedCount .. "/" .. totalCount
-	else
-		questDataTable.TextCenter = nil
-	end
-end
-
-local function func_ProcessQuestEntry(questData, questDataTable)
-	if type(questData[1]) == "number" then
-		local questID = questData[1]
-		local FactionOrClass = questData.FactionOrClass
-		local prof = questData.prof
-		local skipThisQuest = false
-		if prof then
-			if not (E.pd.professions and E.pd.professions[prof]) then
-				skipThisQuest = true
-			end
-		end
-		if not skipThisQuest then
-			if not FactionOrClass or (FactionOrClass[E.pd.FACTION] or FactionOrClass[E.pd.classFilename]) then
-				local isCompleted = E.func_IsQuestFlaggedCompleted(questID)
-				local status = E.func_GetQuestStatus(questID, true)
-				questDataTable[questID] = status
-				return isCompleted
-			end
-		end
-	end
-	return nil
-end
-
-----------------------------------------------------------------
--- Карта для сбора квестов на карте
-----------------------------------------------------------------
+local collectQuestsState = nil
+local collectUniversalState = nil
+local canLoadQuests = LibThingsLoad and LibThingsLoad.QuestsByKey and true or false
+E.failedQUESTS = {}
 local mapTable = {
 	[E.MapID_ZerethMortis] = {
 		65265, 64977, 65445, 65362, 65269, 65256, 65326, 64785, 65244, 65411,
@@ -63,22 +20,121 @@ local mapTable = {
 		64016, 64017, 63936, 63784, 63777, 63954, 63955, 63956, 63961,
 	},
 }
-
+----------------------------------------------------------------
+-- Функции
+----------------------------------------------------------------
+local function DebugPrint(...)
+	if E.DEBUG_QUESTS then
+		print(DEBUG_TEXT, ...)
+	end
+end
+local function func_SetQuestProgress(questDataTable, completedCount, totalCount)
+	if totalCount == 0 then
+		questDataTable.TextCenter = nil
+	elseif completedCount >= totalCount then
+		questDataTable.TextCenter = true
+	elseif completedCount > 0 then
+		questDataTable.TextCenter = completedCount .. "/" .. totalCount
+	else
+		questDataTable.TextCenter = nil
+	end
+end
+local function func_ProcessQuestEntry(questData, questDataTable)
+	if type(questData[1]) == "number" then
+		local questID = questData[1]
+		local FactionOrClass = questData.FactionOrClass
+		local prof = questData.prof
+		local skipThisQuest = false
+		if prof then
+			if not (E.pd.professions and E.pd.professions[prof]) then
+				skipThisQuest = true
+			end
+		end
+		if not skipThisQuest then
+			if not FactionOrClass
+			or (FactionOrClass[E.pd.FACTION] or FactionOrClass[E.pd.classFilename])
+			then
+				local isCompleted = E.func_IsQuestFlaggedCompleted(questID)
+				local status = E.func_GetQuestStatus(questID, true)
+				questDataTable[questID] = status
+				return isCompleted
+			end
+		end
+	end
+	return nil
+end
 ----------------------------------------------------------------
 -- Асинхронный сбор обычных квестов
 ----------------------------------------------------------------
-local QUEST_BATCH_SIZE = 10
-local collectQuestsState = nil
-
+local function ProcessQuestsFromJournal()
+	if not collectQuestsState then
+		return
+	end
+	local state = collectQuestsState
+	if state.phase ~= 2 or state.waiting then
+		return
+	end
+	local startIdx = state.currentIndex + 1
+	local endIdx = math.min(
+		state.currentIndex + E.QUEST_BATCH_SIZE,
+		state.numShownEntries
+	)
+	state.currentIndex = endIdx
+	local batch = {}
+	local totalProcessed = endIdx - startIdx + 1
+	for i = startIdx, endIdx do
+		local info = E.func_GetInfo(i)
+		local questID = info and info.questID or 0
+		if info and info.frequency and questID ~= 0 and not info.isHeader and not info.isHidden then
+			batch[#batch + 1] = {
+				index = i,
+				questID = questID,
+			}
+		end
+	end
+	if totalProcessed == 0 then
+		state.phase = 3
+		state.currentKey = nil
+		state.numQuests_Paragon = 0
+		DebugPrint("Этап 2 завершён, переход к этапу 3")
+		return
+	end
+	if canLoadQuests and #batch > 0 then
+		local idsToLoad = {}
+		for _, entry in ipairs(batch) do
+			idsToLoad[entry.questID] = true
+		end
+		state.waiting = true
+		LibThingsLoad:QuestsByKey(idsToLoad):Then(function()
+				-- Если старый сбор уже был заменён новым,
+				-- этот callback больше ничего не должен менять.
+				if collectQuestsState ~= state then
+					return
+				end
+				for _, entry in ipairs(batch) do
+					state.numQuests = state.numQuests + 1
+					E.cm.ListOfQuests[entry.questID] = E.func_GetQuestStatus(entry.questID)
+				end
+				state.processedCount = state.processedCount + totalProcessed
+				state.waiting = false
+		end)
+	else
+		for _, entry in ipairs(batch) do
+			state.numQuests = state.numQuests + 1
+			E.cm.ListOfQuests[entry.questID] = E.func_GetQuestStatus(entry.questID)
+		end
+		state.processedCount = state.processedCount + totalProcessed
+	end
+end
 local function CollectQuests_OnTick()
 	local state = collectQuestsState
-	if not state then return end
-
-	local processed = 0
-
+	if not state or state.waiting then
+		return
+	end
 	if state.phase == 1 then
 		local questID = next(E.OctoTable_QuestID, state.currentKey)
-		while questID and processed < QUEST_BATCH_SIZE do
+		local processed = 0
+		while questID and processed < E.QUEST_BATCH_SIZE do
 			if E.func_IsQuestFlaggedCompleted(questID) then
 				E.cm.OctoTable_QuestID[questID] = true
 			end
@@ -94,34 +150,13 @@ local function CollectQuests_OnTick()
 			state.numQuests = 0
 			DebugPrint("Этап 1 завершён, переход к этапу 2")
 		end
-		return
-	end
-
-	if state.phase == 2 then
-		while state.currentIndex < state.numShownEntries and processed < QUEST_BATCH_SIZE do
-			state.currentIndex = state.currentIndex + 1
-			local i = state.currentIndex
-			local info = E.func_GetInfo(i)
-			local questID = info and info.questID or 0
-			if info and info.frequency and questID ~= 0 and not info.isHeader and not info.isHidden then
-				state.numQuests = state.numQuests + 1
-				E.cm.ListOfQuests[questID] = E.func_GetQuestStatus(questID)
-			end
-			state.processedCount = state.processedCount + 1
-			processed = processed + 1
-		end
-		if state.currentIndex >= state.numShownEntries then
-			state.phase = 3
-			state.currentKey = nil
-			state.numQuests_Paragon = 0
-			DebugPrint("Этап 2 завершён, переход к этапу 3")
-		end
-		return
-	end
-
-	if state.phase == 3 then
-		local questID = next(E.OctoTable_Reputations_Paragon_Data, state.currentKey)
-		while questID and processed < QUEST_BATCH_SIZE do
+	elseif state.phase == 2 then
+		ProcessQuestsFromJournal()
+	elseif state.phase == 3 then
+		local questID =
+		next(E.OctoTable_Reputations_Paragon_Data, state.currentKey)
+		local processed = 0
+		while questID and processed < E.QUEST_BATCH_SIZE do
 			if E.func_IsOnQuest(questID) then
 				state.numQuests_Paragon = state.numQuests_Paragon + 1
 				E.cm.ListOfParagonQuests[questID] = true
@@ -147,14 +182,13 @@ local function CollectQuests_OnTick()
 		end
 	end
 end
-
 local function StartCollectQuestsAsync()
-	if collectQuestsState then return end
-
+	if collectQuestsState then
+		return
+	end
 	E.cm.ListOfQuests = {}
 	E.cm.ListOfParagonQuests = {}
 	E.cm.OctoTable_QuestID = {}
-
 	collectQuestsState = {
 		phase = 1,
 		currentKey = nil,
@@ -163,141 +197,347 @@ local function StartCollectQuestsAsync()
 		numQuests = 0,
 		numQuests_Paragon = 0,
 		processedCount = 0,
+		waiting = false,
 	}
 	collectQuestsState.ticker = C_Timer.NewTicker(0, CollectQuests_OnTick)
 	DebugPrint("Начат сбор обычных квестов")
 end
-
 ----------------------------------------------------------------
--- Асинхронный сбор универсальных квестов
+-- Универсальные квесты
+--
+-- ВАЖНО:
+--
+-- E.ALL_UniversalQuests может изменяться во время сбора.
+-- Поэтому здесь НЕЛЬЗЯ использовать next() по самой
+-- E.ALL_UniversalQuests между тиками.
+--
+-- При старте создаётся snapshot.
+-- Текущий сбор работает ТОЛЬКО со snapshot.
+--
+-- Это гарантирует:
+--
+-- 1. удаление элементов из E.ALL_UniversalQuests
+--    не сбросит итерацию;
+--
+-- 2. очистка E.ALL_UniversalQuests не остановит
+--    текущий сбор;
+--
+-- 3. добавление новых элементов не создаст
+--    повторный проход;
+--
+-- 4. currentIndex всегда только увеличивается;
+--
+-- 5. текущий сбор всегда сможет завершиться.
 ----------------------------------------------------------------
-local UNIVERSAL_BATCH_SIZE = 10
-local collectUniversalState = nil
-
+local function BuildUniversalSnapshot()
+	local snapshot = {}
+	for questKey, data in pairs(E.ALL_UniversalQuests) do
+		-- Сохраняем сам объект data.
+		--
+		-- Даже если questKey потом будет удалён из
+		-- E.ALL_UniversalQuests, ссылка на data останется
+		-- доступной текущему сбору.
+		--
+		-- В текущем коде data используется только для чтения.
+		-- Вложенные таблицы намеренно не копируются:
+		-- это позволяет не создавать лишнюю глубокую копию
+		-- потенциально больших структур.
+		snapshot[#snapshot + 1] = {
+			questKey = questKey,
+			data = data,
+		}
+	end
+	return snapshot
+end
+----------------------------------------------------------------
+-- Подготовка одного universal entry
+----------------------------------------------------------------
+local function PrepareUniversalElement(elem)
+	local data = elem.data
+	local questKey = elem.questKey
+	if not data or not questKey then
+		return nil
+	end
+	local questIDs = {}
+	if data.questpools then
+		for _, pool in ipairs(data.questpools) do
+			for _, questData in ipairs(pool) do
+				if type(questData[1]) == "number" then
+					questIDs[#questIDs + 1] = questData[1]
+				end
+			end
+		end
+	end
+	if data.quests then
+		for _, questData in ipairs(data.quests) do
+			if type(questData[1]) == "number" then
+				questIDs[#questIDs + 1] = questData[1]
+			end
+		end
+	end
+	return {
+		data = data,
+		questKey = questKey,
+		questIDs = questIDs,
+	}
+end
+----------------------------------------------------------------
+-- Обработка одного universal entry
+----------------------------------------------------------------
+local function ProcessUniversalElement(state, elem)
+	local data = elem.data
+	local questKey = elem.questKey
+	if not data or not questKey then
+		return
+	end
+	local questDataTable = {}
+	if data.questpools and #data.questpools > 0 then
+		local totalPools = #data.questpools
+		local completedPools = 0
+		for _, pool in ipairs(data.questpools) do
+			local poolCompleted = false
+			for _, questData in ipairs(pool) do
+				local done = func_ProcessQuestEntry(questData, questDataTable)
+				if done ~= nil and done then
+					poolCompleted = true
+				end
+			end
+			if poolCompleted then
+				completedPools = completedPools + 1
+			end
+		end
+		func_SetQuestProgress(questDataTable, completedPools, totalPools)
+	elseif data.quests then
+		local forcedMaxQuest = data.forcedMaxQuest
+		local count = 0
+		local totalQUEST = 0
+		local hasSingleQuestOutput = false
+		for _, questData in ipairs(data.quests) do
+			local done = func_ProcessQuestEntry(questData, questDataTable)
+			if done ~= nil then
+				totalQUEST = totalQUEST + 1
+				if done then
+					count = count + 1
+				end
+				if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questData[1]) then
+					questDataTable.TextCenter = questDataTable[questData[1]]
+					hasSingleQuestOutput = true
+				end
+			end
+		end
+		if not hasSingleQuestOutput then
+			local maxToShow = forcedMaxQuest ~= nil and forcedMaxQuest or totalQUEST
+			func_SetQuestProgress(questDataTable, count, maxToShow)
+		end
+	end
+	if data.isAccount then
+		state.tempUniversalAccount[questKey] = questDataTable
+	else
+		state.tempUniversalChar[questKey] = questDataTable
+	end
+end
+----------------------------------------------------------------
+-- Финализация универсального сбора
+----------------------------------------------------------------
+local function FinishCollectUniversal(state)
+	-- Защита от повторного завершения.
+	if collectUniversalState ~= state then
+		return
+	end
+	local elapsed = GetTime() - state.startTime
+	if E.DEBUG_QUESTS then
+		print(DEBUG_TEXT, string.format("Сбор универсальных квестов занял %.2f секунд", elapsed))
+	end
+	DebugPrint("Сбор универсальных квестов завершён, обработано:", state.processedCount, "из", state.totalUniversal)
+	-- Записываем собранные данные в DB.
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
+		if pd and cm then
+			if cm.UniversalQuest == nil then
+				cm.UniversalQuest = {}
+			end
+			-- Данные текущего персонажа.
+			if GUID == E.curGUID then
+				for questKey, v in pairs(state.tempUniversalChar) do
+					cm.UniversalQuest[questKey] = v
+				end
+			end
+			-- Account-wide данные.
+			if E.func_IsSameAccount(pd) then
+				for questKey, v in pairs(state.tempUniversalAccount) do
+					cm.UniversalQuest[questKey] = v
+				end
+			end
+		end
+	end
+	collectUniversalState = nil
+	if state.ticker then
+		state.ticker:Cancel()
+		state.ticker = nil
+	end
+end
+----------------------------------------------------------------
+-- Основной ticker универсальных квестов
+----------------------------------------------------------------
 local function CollectUniversal_OnTick()
 	local state = collectUniversalState
-	if not state then return end
-
-	local processed = 0
-	local key = state.currentKey
-	local totalUniversal = state.totalUniversal
-
-	while key ~= nil and processed < UNIVERSAL_BATCH_SIZE do
-		local data = E.ALL_UniversalQuests[key]
-		state.currentKey = next(E.ALL_UniversalQuests, key)
-		key = state.currentKey
-
-		local questKey = data.questKey
-		local questDataTable = {}
-
-		if questKey then
-			if data.questpools and #data.questpools > 0 then
-				local totalPools = #data.questpools
-				local completedPools = 0
-				for _, pool in ipairs(data.questpools) do
-					local poolCompleted = false
-					for _, questData in ipairs(pool) do
-						local done = func_ProcessQuestEntry(questData, questDataTable)
-						if done ~= nil and done then
-							poolCompleted = true
-						end
-					end
-					if poolCompleted then
-						completedPools = completedPools + 1
-					end
-				end
-				func_SetQuestProgress(questDataTable, completedPools, totalPools)
-			elseif data.quests then
-				local forcedMaxQuest = data.forcedMaxQuest
-				local count = 0
-				local totalQUEST = 0
-				local hasSingleQuestOutput = false
-				for _, questData in ipairs(data.quests) do
-					local done = func_ProcessQuestEntry(questData, questDataTable)
-					if done ~= nil then
-						totalQUEST = totalQUEST + 1
-						if done then count = count + 1 end
-						if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questData[1]) then
-							questDataTable.TextCenter = questDataTable[questData[1]]
-							hasSingleQuestOutput = true
-						end
-					end
-				end
-				if not hasSingleQuestOutput then
-					local maxToShow = forcedMaxQuest ~= nil and forcedMaxQuest or totalQUEST
-					func_SetQuestProgress(questDataTable, count, maxToShow)
-				end
-			end
-
-			if data.isAccount then
-				state.tempUniversalAccount[questKey] = questDataTable
-			else
-				state.tempUniversalChar[questKey] = questDataTable
-			end
-		end
-
-		state.processedCount = state.processedCount + 1
-		processed = processed + 1
+	if not state then
+		return
 	end
-
-	-- Выводим прогресс каждые 10 записей или при завершении
-	if state.processedCount % 10 == 0 or key == nil then
-		DebugPrint(string.format("Универсальные квесты: %d/%d обработано", state.processedCount, totalUniversal))
+	if state.waiting then
+		return
 	end
-
-	if key == nil then
-		DebugPrint("Сбор универсальных квестов завершён, обработано:", state.processedCount)
-		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-			local pd = CharInfo.PlayerData
-			local cm = CharInfo.MASLENGO
-			if pd and cm then
-				if cm.UniversalQuest == nil then
-					cm.UniversalQuest = {}
-				end
-				if GUID == E.curGUID then
-					for questKey, v in pairs(state.tempUniversalChar) do
-						cm.UniversalQuest[questKey] = v
-					end
-				end
-				if E.func_IsSameAccount(pd) then
-					for questKey, v in pairs(state.tempUniversalAccount) do
-						cm.UniversalQuest[questKey] = v
-					end
+	----------------------------------------------------------------
+	-- Если snapshot уже полностью обработан — завершаем.
+	--
+	-- Это единственное условие окончания итерации.
+	--
+	-- Никаких next() по E.ALL_UniversalQuests здесь нет.
+	----------------------------------------------------------------
+	if state.currentIndex >= state.totalUniversal then
+		FinishCollectUniversal(state)
+		return
+	end
+	----------------------------------------------------------------
+	-- Формируем batch по snapshot.
+	----------------------------------------------------------------
+	local batchElements = {}
+	local batchQuests = {}
+	local startIndex = state.currentIndex + 1
+	local endIndex = math.min(
+		state.currentIndex + E.UNIVERSAL_BATCH_SIZE,
+		state.totalUniversal
+	)
+	for i = startIndex, endIndex do
+		local snapshotElement = state.snapshot[i]
+		-- currentIndex изменяется монотонно.
+		-- Он никогда не сбрасывается назад.
+		state.currentIndex = i
+		if snapshotElement then
+			local elem = PrepareUniversalElement(snapshotElement)
+			if elem then
+				batchElements[#batchElements + 1] = elem
+				for _, questID in ipairs(elem.questIDs) do
+					batchQuests[questID] = true
 				end
 			end
 		end
-		collectUniversalState = nil
-		if state.ticker then
-			state.ticker:Cancel()
+	end
+	----------------------------------------------------------------
+	-- На этом этапе весь batch уже зафиксирован.
+	--
+	-- Поэтому дальнейшие изменения:
+	--
+	-- E.ALL_UniversalQuests
+	--
+	-- вообще не имеют значения для этого batch.
+	----------------------------------------------------------------
+	if #batchElements == 0 then
+		-- Может случиться, если snapshot содержит некорректные
+		-- entries. Но currentIndex всё равно продвигается.
+		state.processedCount = state.processedCount + (endIndex - startIndex + 1)
+		DebugPrint(string.format(E.COLOR_YELLOW .. "Универсальные|r: %d/%d", state.processedCount, state.totalUniversal))
+		if state.currentIndex >= state.totalUniversal then
+			FinishCollectUniversal(state)
+		end
+		return
+	end
+	----------------------------------------------------------------
+	-- Есть quest IDs для предварительной загрузки.
+	----------------------------------------------------------------
+	if canLoadQuests and next(batchQuests) ~= nil then
+		state.waiting = true
+		local promise = LibThingsLoad:QuestsByKey(batchQuests)
+		promise:Then(function()
+				----------------------------------------------------------------
+				-- Критически важная защита:
+				--
+				-- Пока LibThingsLoad работал, старый state мог быть
+				-- отменён/заменён новым сбором.
+				--
+				-- В таком случае старый callback ничего не делает.
+				----------------------------------------------------------------
+				if collectUniversalState ~= state then
+					return
+				end
+				for _, elem in ipairs(batchElements) do
+					ProcessUniversalElement(state, elem)
+				end
+				state.processedCount = state.processedCount + #batchElements
+				DebugPrint(string.format(E.COLOR_YELLOW .. "Универсальные|r: %d/%d", state.processedCount, state.totalUniversal))
+				state.waiting = false
+				----------------------------------------------------------------
+				-- Теоретически ticker может быть вызван только следующим
+				-- тиком, но проверка здесь делает завершение явно безопасным.
+				----------------------------------------------------------------
+				if state.currentIndex >= state.totalUniversal then
+					FinishCollectUniversal(state)
+				end
+		end)
+		if E.DEBUG_QUESTS then
+			promise:ThenForAll(function()
+				print(promise.quest.count, promise.quest.total)
+			end)
+			promise:Fail(function(promise, ID, TYPE)
+				if TYPE == "quest" then
+					print (E.COLOR_RED, ID, "|r")
+					E.failedQUESTS[ID] = true
+				end
+			end)
+		end
+	else
+		----------------------------------------------------------------
+		-- LibThingsLoad недоступна или batch не содержит quest IDs.
+		-- Обрабатываем сразу.
+		----------------------------------------------------------------
+		for _, elem in ipairs(batchElements) do
+			ProcessUniversalElement(state, elem)
+		end
+		state.processedCount = state.processedCount + #batchElements
+		DebugPrint(string.format(E.COLOR_LIME .. "Универсальные|r: %d/%d", state.processedCount, state.totalUniversal))
+		if state.currentIndex >= state.totalUniversal then
+			FinishCollectUniversal(state)
 		end
 	end
 end
-
+----------------------------------------------------------------
+-- Запуск универсального сбора
+----------------------------------------------------------------
 local function StartCollectUniversalAsync()
-	if collectUniversalState then return end
-
-	local firstKey = next(E.ALL_UniversalQuests)
-	if firstKey == nil then
+	if collectUniversalState then
+		return
+	end
+	----------------------------------------------------------------
+	-- Создаём snapshot ДО запуска ticker.
+	--
+	-- После этой точки E.ALL_UniversalQuests может:
+	--
+	-- * полностью очиститься;
+	-- * удалить отдельные entries;
+	-- * добавить новые entries;
+	-- * заменить entries;
+	--
+	-- и текущий проход всё равно будет работать по snapshot.
+	----------------------------------------------------------------
+	local snapshot = BuildUniversalSnapshot()
+	if #snapshot == 0 then
 		DebugPrint("E.ALL_UniversalQuests пуста!")
 		return
 	end
-
-	local totalUniversal = 0
-	for _ in pairs(E.ALL_UniversalQuests) do
-		totalUniversal = totalUniversal + 1
-	end
-
 	collectUniversalState = {
-		currentKey = firstKey,
+		snapshot = snapshot,
+		currentIndex = 0,
 		tempUniversalChar = {},
 		tempUniversalAccount = {},
 		processedCount = 0,
-		totalUniversal = totalUniversal,
+		totalUniversal = #snapshot,
+		waiting = false,
+		startTime = GetTime(),
 	}
 	collectUniversalState.ticker = C_Timer.NewTicker(0, CollectUniversal_OnTick)
-	DebugPrint("Начат сбор универсальных квестов, всего записей:", totalUniversal)
+	DebugPrint("Начат сбор универсальных квестов, всего записей:", #snapshot)
 end
-
 ----------------------------------------------------------------
 -- Синхронный сбор квестов на карте
 ----------------------------------------------------------------
@@ -317,7 +557,7 @@ local function Collect_QuestsOnMap()
 			local qID = staticQuests[i]
 			if not exists[qID] then
 				exists[qID] = true
-				saved[#saved + 1] = { qID }
+				saved[#saved + 1] = {qID, }
 			end
 		end
 		local info = E.func_GetQuestsOnMap_INFO(uiMapID)
@@ -330,22 +570,24 @@ local function Collect_QuestsOnMap()
 					exists[questID] = true
 					saved[#saved + 1] = {
 						questID,
-						addText = {timestamp = timestamp,},
+						addText = {
+							timestamp = timestamp,
+						},
 					}
 				end
 			end
 		end
 	end
 end
-
 ----------------------------------------------------------------
--- Публичные обёртки
+-- Public API
 ----------------------------------------------------------------
 function E.Collect_Quests()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	E.func_SpamBlock(StartCollectQuestsAsync, true)
 	E.func_SpamBlock(StartCollectUniversalAsync, true)
 end
-
 function E.Collect_QuestsOnMap()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	E.func_SpamBlock(Collect_QuestsOnMap, true)
 end

@@ -13,6 +13,42 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 E.translations = {
+	["Clear data"] = {
+	    ["ruRU"] = "Очистить данные",
+	    ["deDE"] = "Daten löschen",
+	    ["esES"] = "Borrar datos",
+	    ["esMX"] = "Borrar datos",
+	    ["frFR"] = "Effacer les données",
+	    ["itIT"] = "Cancella dati",
+	    ["ptBR"] = "Limpar dados",
+	    ["koKR"] = "데이터 삭제",
+	    ["zhCN"] = "清除数据",
+	    ["zhTW"] = "清除資料",
+	},
+	["Deletes collected data for disabled categories across all characters. Frees memory and removes unnecessary information"] = {
+	    ["ruRU"] = "Удаляет собранные данные по отключённым категориям у всех персонажей. Освобождает память и убирает лишнюю информацию",
+	    ["deDE"] = "Löscht gesammelte Daten für deaktivierte Kategorien bei allen Charakteren. Gibt Speicher frei und entfernt unnötige Informationen",
+	    ["esES"] = "Elimina los datos recopilados de las categorías desactivadas en todos los personajes. Libera memoria y elimina información innecesaria",
+	    ["esMX"] = "Elimina los datos recopilados de las categorías desactivadas en todos los personajes. Libera memoria y elimina información innecesaria",
+	    ["frFR"] = "Supprime les données collectées pour les catégories désactivées sur tous les personnages. Libère de la mémoire et supprime les informations inutiles",
+	    ["itIT"] = "Elimina i dati raccolti per le categorie disattivate su tutti i personaggi. Libera memoria e rimuove le informazioni non necessarie",
+	    ["ptBR"] = "Exclui os dados coletados para categorias desativadas em todos os personagens. Libera memória e remove informações desnecessárias",
+	    ["koKR"] = "모든 캐릭터에 대해 비활성화된 카테고리의 수집된 데이터를 삭제합니다. 메모리를 확보하고 불필요한 정보를 제거합니다",
+	    ["zhCN"] = "删除所有角色中已禁用类别的已收集数据。释放内存并删除不必要的信息",
+	    ["zhTW"] = "刪除所有角色中已停用類別的已收集資料。釋放記憶體並刪除不必要的資訊",
+	},
+	["Data Collection"] = {
+		["ruRU"] = "Сбор данных",
+		["deDE"] = "Datensammlung",
+		["esES"] = "Recopilación de datos",
+		["esMX"] = "Recopilación de datos",
+		["frFR"] = "Collecte de données",
+		["itIT"] = "Raccolta dati",
+		["ptBR"] = "Coleta de dados",
+		["koKR"] = "데이터 수집",
+		["zhCN"] = "数据收集",
+		["zhTW"] = "資料收集",
+	},
 	["Weekly total"] = {
 		["ruRU"] = "Всего за неделю",
 		["deDE"] = "Wöchentliche Gesamtsumme",
@@ -451,6 +487,10 @@ E.translations = {
 		["zhTW"] = "按鈕",
 	},
 	----------------------------------------------------------------
+	["MISCELLANEOUS"] = MISCELLANEOUS, -- Разное
+	["MINIMUM"] = MINIMUM,
+	["MAXIMUM"] = MAXIMUM, -- ("Maximum")
+	["HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING"] = HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING,
 	["DELVES_NEW_CURIO"] = DELVES_NEW_CURIO, -- НОВОЕ
 	["NEW_CAPS"] = NEW_CAPS, -- НОВОЕ
 	["EVENTS_LABEL"] = EVENTS_LABEL, -- Собития
@@ -656,7 +696,6 @@ E.translations = {
 	["LARGE"] = LARGE,
 	["JOURNEYS_RENOWN_LABEL"] = JOURNEYS_RENOWN_LABEL, -- Renown
 	["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"] = AUCTION_HOUSE_MAX_QUANTITY_BUTTON, -- CURRENCY_TRANSFER_MAX_QUANTITY_BUTTON ("Макс.", "Max")
-	["MAXIMUM"] = MAXIMUM, -- ("Maximum")
 	["COMBAT_LOG_MENU_EVERYTHING"] = COMBAT_LOG_MENU_EVERYTHING, -- BLIZZARD_COMBAT_LOG_MENU_EVERYTHING
 	["CLOSE"] = CLOSE,
 	["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] = WEEKLY_REWARDS_MYTHIC_KEYSTONE,

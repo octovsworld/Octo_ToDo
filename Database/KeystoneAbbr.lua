@@ -4,8 +4,6 @@ E.OctoTable_KeystoneAbbr = {
 	-- https://www.wowhead.com/ru/spells/uncategorized/name:%D0%9F%D1%83%D1%82%D1%8C?filter=28;1;9#50
 	-- https://www.wowhead.com/spells/uncategorized/name:Path?filter=28;1;9#50
 	-- https://www.wowhead.com/ptr-2/spells/uncategorized/name:Path?filter=28;1;9#50
-
-
 	-- 1239155 Manaforge Omega
 	-- 467546 Cinderbrew Meadery
 	-- 1226482 Liberation of Undermine
@@ -16,8 +14,7 @@ E.OctoTable_KeystoneAbbr = {
 	-- 432254 Vault of the Incarnates
 	-- 373192 Sepulcher of the First Ones
 	-- 432258 Amirdrassil, the Dream's Hope
-
-
+	-- AATDH - raid
 	-- Wrath of the Lich King
 	[556] = {abbreviation = "POS", portal = 1254555}, -- Pit of Saron
 	-- Cataclysm
@@ -45,15 +42,15 @@ E.OctoTable_KeystoneAbbr = {
 	[227] = {abbreviation = "RtKL", portal = 373262}, -- Return to Karazhan: Lower
 	[233] = {abbreviation = "CoEN", portal = 0}, -- Cathedral of Eternal Night
 	[234] = {abbreviation = "RtKU", portal = 373262}, -- Return to Karazhan: Upper
-	[239] = {abbreviation = "SotT", portal = 1254551}, -- (SEAT) Seat of the Triumvirate
+	[239] = {abbreviation = "SEAT", portal = 1254551}, -- (SotT) Seat of the Triumvirate
 	-- Battle for Azeroth
 	[244] = {abbreviation = "AD", portal = 424187}, -- Atal'Dazar
 	[245] = {abbreviation = "FH", portal = 410071}, -- Freehold
 	[246] = {abbreviation = "TD", portal = 0}, -- Tol Dagor
 	[247] = {abbreviation = "ML", Horde = 467555, Alliance = 467553,}, -- The MOTHERLODE!!
 	[248] = {abbreviation = "WM", portal = 424167}, -- Waycrest Manor
-	[249] = {abbreviation = "KR", portal = 0}, -- Kings' Rest
-	[250] = {abbreviation = "TOS", portal = 0}, -- Temple of Sethraliss
+	[249] = {abbreviation = "KR", portal = 1286831}, -- Kings' Rest
+	[250] = {abbreviation = "TOS", portal = 1286828}, -- Temple of Sethraliss
 	[251] = {abbreviation = "UNDR", portal = 410074}, -- The Underrot
 	[252] = {abbreviation = "SOTS", portal = 0}, -- Shrine of the Storm
 	[353] = {abbreviation = "SIEGE", Horde = 464256, Alliance = 445418,}, -- Siege of Boralus
@@ -104,92 +101,111 @@ E.OctoTable_KeystoneAbbr = {
 	[163] = {abbreviation = "BSM", portal = 159895}, -- Bloodmaul Slag Mines
 	[164] = {abbreviation = "Auch", portal = 159897}, -- Auchindoun
 	[167] = {abbreviation = "UBS", portal = 159902}, -- Upper Blackrock Spire
-	-- 1216786
-	-- AATDH - raid
 	-- Midnight
 	[557] = {abbreviation = "WS", portal = 1254400}, -- Windrunner Spire
 	[558] = {abbreviation = "MT", portal = 1254572}, -- Magisters' Terrace
 	[559] = {abbreviation = "NPX", portal = 1254563}, -- Nexus-Point Xenas
 	[560] = {abbreviation = "MC", portal = 1254559}, -- Maisara Caverns
-
-	[583] = {abbreviation = "SotT", portal = 0}, -- "Seat of the Triumvirate"
-	[541] = {abbreviation = "TS", portal = 0}, -- "The Stonecore" ??????????
-
-	[586] = {abbreviation = "DON", portal = 0,}, -- "Den of Nalorakk" "Берлога Налоракка"
-	[588] = {abbreviation = "AOF", portal = 0,}, -- "Altar of Fangs" "Алтарь Клыков"
-	[585] = {abbreviation = "VSA", portal = 0,}, -- "Voidscar Arena" "Арена Шрама Бездны"
-	[587] = {abbreviation = "MR", portal = 0,}, -- "Murder Row" "Закоулок душегубов"
-	[584] = {abbreviation = "BV", portal = 0,}, -- "The Blinding Vale" "Слепящая долина"
-
+	[583] = {abbreviation = "SEAT", portal = 1254551}, -- "Seat of the Triumvirate" -> 1254551 ???
+	[541] = {abbreviation = "TS", portal = 0}, -- "The Stonecore"
+	[586] = {abbreviation = "DON", portal = 1286807,}, -- "Den of Nalorakk"
+	[588] = {abbreviation = "AOF", portal = 1286812,}, -- "Altar of Fangs"
+	[585] = {abbreviation = "VSA", portal = 1286804,}, -- "Voidscar Arena"
+	[587] = {abbreviation = "MR", portal = 1286809,}, -- "Murder Row"
+	[584] = {abbreviation = "BV", portal = 1286801,}, -- "The Blinding Vale"
 	-- RAIDS:
 	-- MN Tier 1 (VS / DR / MQD)
 }
-
--- if E.DEBUG then
--- 	function E.ValidateMplusDatabase()
--- 		local currentSeasonMaps = {}
--- 		local allExistingMaps = {}
--- 		local mapNameById = {}
--- 		for mapId = 1, 2000 do
--- 			local name, id, timeLimit = C_ChallengeMode.GetMapUIInfo(mapId)
--- 			if name then
--- 				allExistingMaps[id] = true
--- 				mapNameById[id] = name
--- 				if timeLimit then
--- 					currentSeasonMaps[id] = true
--- 				end
--- 			end
--- 		end
--- 		local totalCurrent = 0
--- 		for _ in next,(currentSeasonMaps) do
--- 			totalCurrent = totalCurrent + 1
--- 		end
--- 		local totalMine = 0
--- 		for mapId in next,(E.OctoTable_KeystoneAbbr) do
--- 			if currentSeasonMaps[mapId] then
--- 				totalMine = totalMine + 1
--- 			end
--- 		end
--- 		-- Недостающие ID
--- 		local missingIds = {}
--- 		for mapId in next,(currentSeasonMaps) do
--- 			if not E.OctoTable_KeystoneAbbr[mapId] then
--- 				missingIds[mapId] = mapNameById[mapId]
--- 			end
--- 		end
--- 		-- Несуществующие ID
--- 		local invalidIds = {}
--- 		local invalidCount = 0
--- 		for mapId in next,(E.OctoTable_KeystoneAbbr) do
--- 			if not allExistingMaps[mapId] then
--- 				invalidIds[mapId] = true
--- 				invalidCount = invalidCount + 1
--- 			end
--- 		end
--- 		local missingCount = 0
--- 		for _ in next,(missingIds) do
--- 			missingCount = missingCount + 1
--- 		end
--- 		print("TOTAL M+:", totalCurrent)
--- 		print("In my table:", totalMine)
--- 		print("missing:", missingCount)
--- 		print("MUST TO DELETE:", invalidCount)
--- 		if next(missingIds) then
--- 			print("\n--- NEED TO ADD ---")
--- 			for mapId, name in next,(missingIds) do
--- 				print(string.format("[%d] = \"%s\",", mapId, name))
--- 			end
--- 		end
--- 		if next(invalidIds) then
--- 			print("\n--- MUST TO DELETE ---")
--- 			for mapId in next,(invalidIds) do
--- 				print(mapId)
--- 			end
--- 		end
--- 		opde(mapNameById)
--- 		return missingIds, invalidIds
--- 	end
--- 	C_Timer.After(1, function()
--- 		E.ValidateMplusDatabase()
--- 	end)
+local seasonalTeleports = {
+	-- Midnight S1
+	[1] = {
+		[161] = 159898, -- Skyreach XXX 1254557 seems incorrect
+		[402] = 393273, -- Algeth'ar Academy
+		[556] = 1254555, -- Pit of Saron
+		[557] = 1254400, -- Windrunner Spire
+		[558] = 1254572, -- Magisters' Terrace
+		[559] = 1254563, -- Nexus-Point Xenas
+		[560] = 1254559, -- Maisara Caverns
+		[239] = 1254551, -- Seat of the Triumvirate
+	},
+	-- Midnight S2
+	[2] = {
+		[249] = 1286831, -- King's Rest
+		[250] = 1286828, -- Temple of Sethraliss
+		[399] = 393256, -- Ruby Life Pools
+		[584] = 1286801, -- The Blinding Vale
+		[585] = 1286804, -- Voidscar Arena
+		[586] = 1286807, -- Den of Nalorakk
+		[587] = 1286809, -- Murder Row
+		[588] = 1286812, -- Altar of Fangs
+	},
+}
+-- for _, mapId in ipairs(C_ChallengeMode.GetMapTable()) do
+-- local spellID = seasonalTeleports[tpm.settings.current_season][mapId]
+-- if spellID and IsSpellKnown(spellID) then
+-- table.insert(availableSeasonalTeleports, spellID)
 -- end
+-- end
+function E.ValidateMplusDatabase()
+	local currentSeasonMaps = {}
+	local allExistingMaps = {}
+	local mapNameById = {}
+	for mapId = 1, 2000 do
+		local name, id, timeLimit = C_ChallengeMode.GetMapUIInfo(mapId)
+		if name then
+			allExistingMaps[id] = true
+			mapNameById[id] = name
+			if timeLimit then
+				currentSeasonMaps[id] = true
+			end
+		end
+	end
+	local totalCurrent = 0
+	for _ in next,(currentSeasonMaps) do
+		totalCurrent = totalCurrent + 1
+	end
+	local totalMine = 0
+	for mapId in next,(E.OctoTable_KeystoneAbbr) do
+		if currentSeasonMaps[mapId] then
+			totalMine = totalMine + 1
+		end
+	end
+	-- Недостающие ID
+	local missingIds = {}
+	for mapId in next,(currentSeasonMaps) do
+		if not E.OctoTable_KeystoneAbbr[mapId] then
+			missingIds[mapId] = mapNameById[mapId]
+		end
+	end
+	-- Несуществующие ID
+	local invalidIds = {}
+	local invalidCount = 0
+	for mapId in next,(E.OctoTable_KeystoneAbbr) do
+		if not allExistingMaps[mapId] then
+			invalidIds[mapId] = true
+			invalidCount = invalidCount + 1
+		end
+	end
+	local missingCount = 0
+	for _ in next,(missingIds) do
+		missingCount = missingCount + 1
+	end
+	print("TOTAL M+:", totalCurrent)
+	print("In my table:", totalMine)
+	print("missing:", missingCount)
+	print("MUST TO DELETE:", invalidCount)
+	if next(missingIds) then
+		print("\n--- NEED TO ADD ---")
+		for mapId, name in next,(missingIds) do
+			print(string.format("[%d] = \"%s\",", mapId, name))
+		end
+	end
+	if next(invalidIds) then
+		print("\n--- MUST TO DELETE ---")
+		for mapId in next,(invalidIds) do
+			print(mapId)
+		end
+	end
+	opde(mapNameById)
+	return missingIds, invalidIds
+end

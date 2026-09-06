@@ -4,6 +4,7 @@ local CURRENT_REGION_NAME = E.CURRENT_REGION_NAME
 local FACTION_CURRENT = E.FACTION_CURRENT
 ----------------------------------------------------------------
 function E.Collect_Callings(...)
+    if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	if not E.func_CanCollectData() then return end
 	local calling = ...
 	if not calling then return end

@@ -49,16 +49,17 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 
 	if dataType == "Items" then
+		if not cm.Items then return end
 		local itemID = id
 		local result = ""
 		local total = 0
 		local itemCount_Bags = 0
 		local itemCount_Bank = 0
 		if type(itemID) == "number" then
-			if cm.Items.Bags[itemID] then
+			if cm.Items and cm.Items.Bags[itemID] then
 				itemCount_Bags = itemCount_Bags+cm.Items.Bags[itemID]
 			end
-			if cm.Items.Bank[itemID] then
+			if cm.Items and cm.Items.Bank[itemID] then
 				itemCount_Bank = itemCount_Bank+cm.Items.Bank[itemID]
 			end
 			total = itemCount_Bags+itemCount_Bank
@@ -76,6 +77,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
 		local data = cm.Currency
+		if not data then return end
 		if not data[id] then
 			tooltip[#tooltip+1] = {{L["TOTAL"] .. ": 0", "LEFT"}}
 		else
@@ -192,7 +194,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local RESOURCE_GENERATION_INTERVAL = 600
 		local RESOURCES_PER_INTERVAL = 1
 		local MAX_CACHE_SIZE = 500
-		if cm.GARRISON.lastCacheTime and cm.GARRISON.lastCacheTime ~= 0 then
+		if cm.GARRISON and cm.GARRISON.lastCacheTime and cm.GARRISON.lastCacheTime ~= 0 then
 			local color = E.COLOR_GRAY
 			local cacheSize = cm.GARRISON.cacheSize or MAX_CACHE_SIZE
 			local lastCacheTime = cm.GARRISON.lastCacheTime
@@ -253,7 +255,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 		if settingsProfile and settingsProfile.CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE then
 
-
+			if not cm.RunHistory then return end
 			local runHistory = cm.RunHistory
 			if runHistory then
 				local totalRuns = #runHistory
@@ -318,6 +320,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			-- L["REWARD"]
 			tooltip[#tooltip+1] = {E.COLOR_BLUE .. ">" .. L["REWARD"] .."<|r"} -- L["WEEKLY_REWARDS_RETURN_TO_CLAIM"]
 		end
+		if not cm.GreatVault then return end
 		for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
 			local ID = E.Enum_Activities_table[i]
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
@@ -359,6 +362,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 	-- Новый блок для GreatVault1, GreatVault2, GreatVault3
 	for i = 1, 3 do -- for i = 1, #E.Enum_Activities_table do
+	if not cm.GreatVault then return end
 		if id == "GreatVault" .. i then
 
 			local ID = E.Enum_Activities_table[i]
@@ -540,6 +544,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 
 	if id == "PlayerInventory" then
+		if not cm.Items or not cm.Items.Bags or not cm.Items.Bags_FULL then return end
 		local bags = cm.Items and cm.Items.Bags_FULL
 		if bags then
 			local inventoryData = {}
@@ -610,9 +615,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if id == "PlayerBANK" then
+		if not cm.Items or not cm.Items.Bank or not cm.Items.Bank_FULL then return end
 		local bank = cm.Items and cm.Items.Bank_FULL
-
-
 	end
 	if dataType == "Currencies" and settingsProfile.Config_MountsInTooltip then
 		for currencyID, dataTBL in next, (E.OctoTable_ALL_Mounts) do
@@ -654,7 +658,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		tooltip = E.func_BuildItemTooltip(CharInfo, E.OctoTable_itemID_MECHAGON, true)
 	end
 	if dataType == "Reputations" then
-		if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "table" then
+		if not cm.Reputation then return end
+		if cm.Reputation[id] and type(cm.Reputation[id]) == "table" then
 			local FIRST = cm.Reputation[id].FIRST or 0
 			local SECOND = cm.Reputation[id].SECOND or 0
 			local ParagonCount = cm.Reputation[id].ParagonCount
@@ -724,7 +729,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			local thirdTEXT = E.func_translit(TEXT_STANDINGS)
 			local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
-			if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
+			if paragonQuest and cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] then
 				secondTEXT = E.COLOR_PURPLE .. ">" .. FIRST .. "/" .. SECOND .. "<" .. "|r"
 			end
 			if secondTEXT ~= "0/0" then
@@ -762,6 +767,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		tooltip = E.func_BuildItemTooltip(CharInfo, E.OctoTable_itemID_ALL, false)
 	end
 	if SettingsType == "AdditionallyBOTTOM#Professions" then
+		if not cm.professions then return end
 		local charProf = cm.professions
 		local profData = {}
 		for i = 1, 5 do
@@ -885,7 +891,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
-			if ExpansionToShowTBL[tier] then
+			if ExpansionToShowTBL[tier] and Octo_ToDo_DB_Variables.DATACOLLECTION[tier] then
 				selectedSeasons[tier] = true
 			end
 		end
@@ -927,7 +933,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				end
 				local bossProgress = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
 				local tier = v.tier
-				local CurrentExpansion = E.func_GetCurrentExpansion()
+				-- local CurrentExpansion = E.func_GetCurrentExpansion()
 				local source = E.func_FormatExpansion(tier, "LEFT")
 				-- Сохраняем данные вместе с tier для сортировки
 				table.insert(tempData, {
@@ -982,70 +988,76 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if SettingsType == "AdditionallyBOTTOM#LFGInstance" then
 		local combinedTooltip = {}
-		for SI_ID, v in next, (cm.journalInstance) do
-			for difficultyID, w in next, (v) do
-				local instanceReset = w.instanceReset
-				if instanceReset then
-					local defeatedBosses = w.defeatedBosses or 0
-					local totalBosses = w.totalBosses or 1
-					local lastBossDefeated = w.lastBossDefeated or false
-					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
-					local difficultyName = E.func_GetName("difficulty", difficultyID)
-					-- local name = w.name
-					local LeftText = E.func_GetName("dungeon", SI_ID)
-					local Image = E.func_GetIcon("dungeon", SI_ID)
-					local icon
-					local isRaid = E.func_DungeonOrRaid(SI_ID)
-					if isRaid == true then
-						icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_RAID)
-					elseif isRaid == false then
-						icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_DUNGEON)
+		if cm.journalInstance then
+			for SI_ID, v in next, (cm.journalInstance) do
+				for difficultyID, w in next, (v) do
+					local instanceReset = w.instanceReset
+					if instanceReset then
+						local defeatedBosses = w.defeatedBosses or 0
+						local totalBosses = w.totalBosses or 1
+						local lastBossDefeated = w.lastBossDefeated or false
+						local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
+						local difficultyName = E.func_GetName("difficulty", difficultyID)
+						-- local name = w.name
+						local LeftText = E.func_GetName("dungeon", SI_ID)
+						local Image = E.func_GetIcon("dungeon", SI_ID)
+						local icon
+						local isRaid = E.func_DungeonOrRaid(SI_ID)
+						if isRaid == true then
+							icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_RAID)
+						elseif isRaid == false then
+							icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_DUNGEON)
+						end
+						if icon then
+							LeftText = icon .. LeftText
+						end
+						local status = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
+						table.insert(combinedTooltip, {
+								LeftText = LeftText,
+								difficultyID = difficultyID,
+								status = status,
+								time = E.func_SecondsToClock(instanceReset-ServerTime)
+						})
 					end
-					if icon then
-						LeftText = icon .. LeftText
-					end
-					local status = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
-					table.insert(combinedTooltip, {
-							LeftText = LeftText,
-							difficultyID = difficultyID,
-							status = status,
-							time = E.func_SecondsToClock(instanceReset-ServerTime)
-					})
 				end
 			end
 		end
-		for dungeonID, v in next, (cm.LFGInstance) do
-			if cm.LFGInstance[dungeonID] then
+		if cm.LFGInstance then
+			for dungeonID, v in next, (cm.LFGInstance) do
+				if cm.LFGInstance[dungeonID] then
+					local instanceReset = v.instanceReset
+					if instanceReset then
+						local name = cm.LFGInstance[dungeonID].name .. E.debugInfo(dungeonID)
+						local icon = E.func_texturefromIcon(E.ATLAS_DUNGEON)
+						local textureFilename = v.textureFilename
+						if textureFilename then
+							icon = E.func_texturefromIcon(textureFilename) .. icon
+						end
+						local LeftText = icon .. name
+						table.insert(combinedTooltip, {
+								LeftText = LeftText,
+								difficultyID = v.difficultyID,
+								status = " ",
+								time = E.func_SecondsToClock(instanceReset-ServerTime),
+						})
+					end
+				end
+			end
+		end
+		if cm.SavedWorldBoss then
+			for worldBossID, v in next, (cm.SavedWorldBoss) do
 				local instanceReset = v.instanceReset
 				if instanceReset then
-					local name = cm.LFGInstance[dungeonID].name .. E.debugInfo(dungeonID)
-					local icon = E.func_texturefromIcon(E.ATLAS_DUNGEON)
-					local textureFilename = v.textureFilename
-					if textureFilename then
-						icon = E.func_texturefromIcon(textureFilename) .. icon
-					end
+					local name = v.name .. E.debugInfo(worldBossID)
+					local icon = E.func_texturefromIcon(E.ATLAS_WORLDBOSS)
 					local LeftText = icon .. name
 					table.insert(combinedTooltip, {
 							LeftText = LeftText,
-							difficultyID = v.difficultyID,
+							difficultyID = 172, -- L["RAID_INFO_WORLD_BOSS"], -- L["World Boss"]
 							status = " ",
 							time = E.func_SecondsToClock(instanceReset-ServerTime),
 					})
 				end
-			end
-		end
-		for worldBossID, v in next, (cm.SavedWorldBoss) do
-			local instanceReset = v.instanceReset
-			if instanceReset then
-				local name = v.name .. E.debugInfo(worldBossID)
-				local icon = E.func_texturefromIcon(E.ATLAS_WORLDBOSS)
-				local LeftText = icon .. name
-				table.insert(combinedTooltip, {
-						LeftText = LeftText,
-						difficultyID = 172, -- L["RAID_INFO_WORLD_BOSS"], -- L["World Boss"]
-						status = " ",
-						time = E.func_SecondsToClock(instanceReset-ServerTime),
-				})
 			end
 		end
 		E.func_SortRecords(combinedTooltip, function(a, b)
@@ -1640,6 +1652,7 @@ end
 function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
+	if not cm.Items or not cm.Items.Bags or not cm.Items.Bank then return end
 	local tooltip = {}
 	local sorted_itemList = {}
 	local Items_BAGS = cm.Items.Bags

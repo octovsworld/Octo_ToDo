@@ -10,6 +10,8 @@ local L = E.L
 local categoryKey = 5
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
+
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -19,204 +21,208 @@ E.Components[categoryKey] = function()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[categoryKey] and E.OctoTable_Expansions[categoryKey].color or E.COLOR_BLACK
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 738, defS = true,}, -- Lesser Charm of Good Fortune
-		{id = 697, defS = true,}, -- (697 MONETKA)
-		{id = 752, defS = true,}, -- Mogu Rune of Fate
-		{id = 777, defS = true,},
-		{id = 789, defS = true,},
-		{id = 776, defS = true,}, -- Warforged Seal
-		{id = 402, defS = true,}, -- Ironpaw Token
-		{id = 2778, defS = false,}, -- Bronze (remix) -- https://www.wowhead.com/currency=2778/bronze#items;0-19+20
-		-- {id = 3251, defS = false,}, -- REMIX PANDA?
-		-- {id = 3293, defS = false,}, -- REMIX PANDA?
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
+		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
+			{id = 738, defS = true,}, -- Lesser Charm of Good Fortune
+			{id = 697, defS = true,}, -- (697 MONETKA)
+			{id = 752, defS = true,}, -- Mogu Rune of Fate
+			{id = 777, defS = true,},
+			{id = 789, defS = true,},
+			{id = 776, defS = true,}, -- Warforged Seal
+			{id = 402, defS = true,}, -- Ironpaw Token
+			{id = 2778, defS = false,}, -- Bronze (remix) -- https://www.wowhead.com/currency=2778/bronze#items;0-19+20
+			-- {id = 3251, defS = false,}, -- REMIX PANDA?
+			-- {id = 3293, defS = false,}, -- REMIX PANDA?
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-		{id = 101529, defS = false,},
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then
+		OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion({
+			{id = 101529, defS = false,},
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		-- Raid
-		-- {id = 870, defS = true,}, -- Pandaria
-		{id = 1136, defS = true,}, -- Siege of Orgrimmar
-		{id = 1098, defS = true,}, -- Throne of Thunder
-		{id = 996, defS = true,}, -- Terrace of Endless Spring
-		{id = 1009, defS = true,}, -- Heart of Fear
-		{id = 1008, defS = true,}, -- Mogu'shan Vaults
-		-- Dungeon
-		-- {id = 1004, defS = true,}, -- Scarlet Monastery
-		-- {id = 961, defS = true,}, -- Stormstout Brewery
-		-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
-		-- {id = 1001, defS = true,}, -- Scarlet Halls
-		-- {id = 959, defS = true,}, -- Shado-Pan Monastery
-		-- {id = 960, defS = true,}, -- Temple of the Jade Serpent
-		-- {id = 962, defS = true,}, -- Gate of the Setting Sun
-		-- {id = 994, defS = true,}, -- Mogu'shan Palace
-		-- {id = 1011, defS = true,}, -- Siege of Niuzao Temple
-		-- {id = 1007, defS = true,}, -- Scholomance
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.RAIDSORDUNGEONS then
+		OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion({
+			-- Raid
+			-- {id = 870, defS = true,}, -- Pandaria
+			{id = 1136, defS = true,}, -- Siege of Orgrimmar
+			{id = 1098, defS = true,}, -- Throne of Thunder
+			{id = 996, defS = true,}, -- Terrace of Endless Spring
+			{id = 1009, defS = true,}, -- Heart of Fear
+			{id = 1008, defS = true,}, -- Mogu'shan Vaults
+			-- Dungeon
+			-- {id = 1004, defS = true,}, -- Scarlet Monastery
+			-- {id = 961, defS = true,}, -- Stormstout Brewery
+			-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
+			-- {id = 1001, defS = true,}, -- Scarlet Halls
+			-- {id = 959, defS = true,}, -- Shado-Pan Monastery
+			-- {id = 960, defS = true,}, -- Temple of the Jade Serpent
+			-- {id = 962, defS = true,}, -- Gate of the Setting Sun
+			-- {id = 994, defS = true,}, -- Mogu'shan Palace
+			-- {id = 1011, defS = true,}, -- Siege of Niuzao Temple
+			-- {id = 1007, defS = true,}, -- Scholomance
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1492, defS = true,}, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
-		{id = 1435, defS = true,}, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
-		{id = 1359, defS = true,}, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
-		{id = 1345, defS = true,}, --name = "Хранители истории", side = "-", category = "Mists of Pandaria", }, --[faction=1345]
-		{id = 1341, defS = true,}, --name = "Небожители", side = "-", category = "Mists of Pandaria", }, --[faction=1341]
-		{id = 1337, defS = true,}, --name = "Клакси", side = "-", category = "Mists of Pandaria", }, --[faction=1337]
-		{id = 1271, defS = true,}, --name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", }, --[faction=1271]
-		{id = 1270, defS = true,}, --name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1270]
-		{id = 1269, defS = true,}, --name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", }, --[faction=1269]
-		----------------------------------------------------------------
-		{id = 1388, defS = false,}, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
-		{id = 1375, defS = false,}, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375] -- ОРДА
-		{id = 1228, defS = false,}, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228] -- ОРДА
-		----------------------------------------------------------------
-		{id = 1387, defS = false,}, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
-		{id = 1376, defS = false,}, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376] -- АЛЬЯНС
-		{id = 1242, defS = false,}, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242] -- АЛЬЯНС
-		----------------------------------------------------------------
-		{id = 1272, defS = false,}, --name = "Земледельцы", side = "-", category = "Mists of Pandaria", }, --[faction=1272]
-		{id = 1283, defS = false,}, --name = "Фермер Фун", side = "-", category = "Земледельцы", }, --[faction=1283]
-		{id = 1282, defS = false,}, --name = "Рыба Тростниковая Шкура", side = "-", category = "Земледельцы", }, --[faction=1282]
-		{id = 1281, defS = false,}, --name = "Джина Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1281]
-		{id = 1280, defS = false,}, --name = "Тина Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1280]
-		{id = 1279, defS = false,}, --name = "Хаохань Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1279]
-		{id = 1278, defS = false,}, --name = "Шо", side = "-", category = "Земледельцы", }, --[faction=1278]
-		{id = 1277, defS = false,}, --name = "Чи-Чи", side = "-", category = "Земледельцы", }, --[faction=1277]
-		{id = 1276, defS = false,}, --name = "Старик Горная Лапа", side = "-", category = "Земледельцы", }, --[faction=1276]
-		{id = 1275, defS = false,}, --name = "Элла", side = "-", category = "Земледельцы", }, --[faction=1275]
-		{id = 1273, defS = false,}, --name = "Йогу Пьяный", side = "-", category = "Земледельцы", }, --[faction=1273]
-		----------------------------------------------------------------
-		{id = 1302, defS = false,}, --name = "Рыболовы", side = "-", category = "Mists of Pandaria", }, --[faction=1302]
-		{id = 1358, defS = false,}, --name = "Нат Пэгл", side = "-", category = "Рыболовы", }, --[faction=1358]
-		----------------------------------------------------------------
-		{id = 1357, defS = false,}, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
-		-- {id = 1216, defS = false,}, -- Shang Xi's Academy
-	}
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
+		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
+			{id = 1492, defS = true,}, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
+			{id = 1435, defS = true,}, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
+			{id = 1359, defS = true,}, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
+			{id = 1345, defS = true,}, --name = "Хранители истории", side = "-", category = "Mists of Pandaria", }, --[faction=1345]
+			{id = 1341, defS = true,}, --name = "Небожители", side = "-", category = "Mists of Pandaria", }, --[faction=1341]
+			{id = 1337, defS = true,}, --name = "Клакси", side = "-", category = "Mists of Pandaria", }, --[faction=1337]
+			{id = 1271, defS = true,}, --name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", }, --[faction=1271]
+			{id = 1270, defS = true,}, --name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1270]
+			{id = 1269, defS = true,}, --name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", }, --[faction=1269]
+			----------------------------------------------------------------
+			{id = 1388, defS = false,}, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
+			{id = 1375, defS = false,}, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375] -- ОРДА
+			{id = 1228, defS = false,}, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228] -- ОРДА
+			----------------------------------------------------------------
+			{id = 1387, defS = false,}, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
+			{id = 1376, defS = false,}, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376] -- АЛЬЯНС
+			{id = 1242, defS = false,}, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242] -- АЛЬЯНС
+			----------------------------------------------------------------
+			{id = 1272, defS = false,}, --name = "Земледельцы", side = "-", category = "Mists of Pandaria", }, --[faction=1272]
+			{id = 1283, defS = false,}, --name = "Фермер Фун", side = "-", category = "Земледельцы", }, --[faction=1283]
+			{id = 1282, defS = false,}, --name = "Рыба Тростниковая Шкура", side = "-", category = "Земледельцы", }, --[faction=1282]
+			{id = 1281, defS = false,}, --name = "Джина Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1281]
+			{id = 1280, defS = false,}, --name = "Тина Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1280]
+			{id = 1279, defS = false,}, --name = "Хаохань Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1279]
+			{id = 1278, defS = false,}, --name = "Шо", side = "-", category = "Земледельцы", }, --[faction=1278]
+			{id = 1277, defS = false,}, --name = "Чи-Чи", side = "-", category = "Земледельцы", }, --[faction=1277]
+			{id = 1276, defS = false,}, --name = "Старик Горная Лапа", side = "-", category = "Земледельцы", }, --[faction=1276]
+			{id = 1275, defS = false,}, --name = "Элла", side = "-", category = "Земледельцы", }, --[faction=1275]
+			{id = 1273, defS = false,}, --name = "Йогу Пьяный", side = "-", category = "Земледельцы", }, --[faction=1273]
+			----------------------------------------------------------------
+			{id = 1302, defS = false,}, --name = "Рыболовы", side = "-", category = "Mists of Pandaria", }, --[faction=1302]
+			{id = 1358, defS = false,}, --name = "Нат Пэгл", side = "-", category = "Рыболовы", }, --[faction=1358]
+			----------------------------------------------------------------
+			{id = 1357, defS = false,}, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
+			-- {id = 1216, defS = false,}, -- Shang Xi's Academy
+		})
+	end
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-	{
-		sorted = true,
-		showTooltip = true,
-		TextLeft = function()
-			return L["RAID_INFO_WORLD_BOSS"]
-		end,
-		name_save = "WorldBoss",
-		defS = true,
-		reset = "Weekly",
-		desc = categoryKey,
-		questpools = {
-			{
-				{
-					33118, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
-					forcedText = {npcID = 72057},
-					addText = {mapID = E.MapID_TimelessIsle},
-				},
-			},
-			{
-				{
-					33117, -- Celestrials (Вневременный остров)
-					forcedText = {achievementID = 7333},
-					addText = {mapID = E.MapID_TimelessIsle},
-				},
-			},
-			{
-				{
-					32519, -- "Oondasta" (Остров Великанов)
-					forcedText = {npcID = 69161},
-					addText = {mapID = E.MapID_IsleofGiants},
-				},
-			},
-			{
-				-- {33109}, -- Nalak HIDDEN
-				{
-					32518, -- "Nalak, The Storm Lord" (Остров Грома)
-					forcedText = {npcID = 69099},
-					addText = {mapID = E.MapID_IsleofThunder},
-				},
-			},
-			{
-				{
-					32098, -- "Salyis's Warband" (Долина Четырех Ветров)
-					forcedText = {npcID = 62346},
-					addText = {mapID = E.MapID_ValleyOfFourWinds},
-				},
-			},
-			{
-				{
-					32099, -- "Sha of Anger" (Вершина Кунь-Лай)
-					forcedText = {npcID = 60491},
-					addText = {mapID = E.MapID_KunLaiSummit},
-				},
-			},
-		},
-	},
+	if Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then
+		OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion({
 		{
+			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_IsleofThunder)..": "..E.func_GetName("quest", 32641, false)
+				return L["RAID_INFO_WORLD_BOSS"]
 			end,
-			name_save = "ChampionsoftheThunderKing",
+			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
-			quests = {
-				{32641, FactionOrClass = {Horde = true,}},
-				{32640, FactionOrClass = {Alliance = true,}},
+			questpools = {
+				{
+					{
+						33118, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
+						forcedText = {npcID = 72057},
+						addText = {mapID = E.MapID_TimelessIsle},
+					},
+				},
+				{
+					{
+						33117, -- Celestrials (Вневременный остров)
+						forcedText = {achievementID = 7333},
+						addText = {mapID = E.MapID_TimelessIsle},
+					},
+				},
+				{
+					{
+						32519, -- "Oondasta" (Остров Великанов)
+						forcedText = {npcID = 69161},
+						addText = {mapID = E.MapID_IsleofGiants},
+					},
+				},
+				{
+					-- {33109}, -- Nalak HIDDEN
+					{
+						32518, -- "Nalak, The Storm Lord" (Остров Грома)
+						forcedText = {npcID = 69099},
+						addText = {mapID = E.MapID_IsleofThunder},
+					},
+				},
+				{
+					{
+						32098, -- "Salyis's Warband" (Долина Четырех Ветров)
+						forcedText = {npcID = 62346},
+						addText = {mapID = E.MapID_ValleyOfFourWinds},
+					},
+				},
+				{
+					{
+						32099, -- "Sha of Anger" (Вершина Кунь-Лай)
+						forcedText = {npcID = 60491},
+						addText = {mapID = E.MapID_KunLaiSummit},
+					},
+				},
 			},
-			-- forcedMaxQuest = 1,
 		},
-		-- { -- no longer weekly
-		--     showTooltip = true,
-		--     TextLeft = function()
-		--         return E.func_GetName("map", E.MapID_ValeofEternalBlossoms)..": "..E.func_GetName("quest", 32641, false)
-		--     end,
-		--     name_save = "WarforgedSeals",
-		--     defS = true,
-		--     reset = "Weekly",
-		--     desc = categoryKey,
-		--     quests = {
-		--         {33133, FactionOrClass = {Horde = true,}},
-		--         {33134, FactionOrClass = {Alliance = true,}},
-		--     },
-		--     -- forcedMaxQuest = 1,
-		-- },
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33338, false)
-			end,
-			name_save = "EmpoweringtheHourglass",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{33338},
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_IsleofThunder)..": "..E.func_GetName("quest", 32641, false)
+				end,
+				name_save = "ChampionsoftheThunderKing",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{32641, FactionOrClass = {Horde = true,}},
+					{32640, FactionOrClass = {Alliance = true,}},
+				},
+				-- forcedMaxQuest = 1,
 			},
-			-- forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33334, false)
-			end,
-			name_save = "StrongEnoughToSurvive",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{33334},
+			-- { -- no longer weekly
+			--     showTooltip = true,
+			--     TextLeft = function()
+			--         return E.func_GetName("map", E.MapID_ValeofEternalBlossoms)..": "..E.func_GetName("quest", 32641, false)
+			--     end,
+			--     name_save = "WarforgedSeals",
+			--     defS = true,
+			--     reset = "Weekly",
+			--     desc = categoryKey,
+			--     quests = {
+			--         {33133, FactionOrClass = {Horde = true,}},
+			--         {33134, FactionOrClass = {Alliance = true,}},
+			--     },
+			--     -- forcedMaxQuest = 1,
+			-- },
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33338, false)
+				end,
+				name_save = "EmpoweringtheHourglass",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{33338},
+				},
+				-- forcedMaxQuest = 1,
 			},
-			-- forcedMaxQuest = 1,
-		},
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+			{
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33334, false)
+				end,
+				name_save = "StrongEnoughToSurvive",
+				defS = true,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{33334},
+				},
+				-- forcedMaxQuest = 1,
+			},
+		})
+	end
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

@@ -99,7 +99,7 @@ function E.func_CreateColumnHeaders(frame, sortedCharacters, columnWidthsCenter)
 					local PlayerName = E.func_CharInfo_NickName(CharInfo, nil, true)
 					local PlayerServer = E.func_CharInfo_Server(CharInfo, true, false)
 					Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].GUIDS[GUID] = false
-					E.func_UPDATE_MAINFRAME(frame)
+					E.func_UPDATE_MAINFRAME(frame, true)
 				end
 		end)
 		HeaderFrameCenter:SetScript("OnShow", function()

@@ -7,7 +7,6 @@ local function func_Collect_All()
 		{func = E.Collect_ChromieTime, name = "Collect_ChromieTime",},
 		{func = E.Collect_Covenants, name = "Collect_Covenants",},
 		{func = E.Collect_Currencies, name = "Collect_Currencies",},
-		{func = E.Collect_Delves, name = "Collect_Delves",},
 		{func = E.Collect_Garrison, name = "Collect_Garrison",},
 		{func = E.Collect_GreatVault, name = "Collect_GreatVault",},
 		{func = E.Collect_Holidays, name = "Collect_Holidays",},
