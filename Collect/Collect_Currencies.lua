@@ -1,11 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
--- Вспомогательная функция проверки принадлежности персонажа к текущему аккаунту
-function E.func_IsSameAccount(pd)
-	return pd and pd.REGION_NAME == E.CURRENT_REGION_NAME and pd.BattleTag == E.BattleTag
-end
-----------------------------------------------------------------
 local function Collect_Currencies()
 	if not E.func_CanCollectData() then return end
 	local currencyCache = {}

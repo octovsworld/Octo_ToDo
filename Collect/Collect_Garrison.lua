@@ -18,11 +18,13 @@ local function Collect_lastCacheTime(...)
 end
 ----------------------------------------------------------------
 function E.Collect_Garrison()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[6] then return end -- WARLORDS OF DRAENOR
 	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	E.func_SpamBlock(Collect_Garrison, true)
 end
 ----------------------------------------------------------------
 function E.Collect_lastCacheTime(...)
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[6] then return end -- WARLORDS OF DRAENOR
 	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	local key = (""):join(tostringall(...))
 	E.func_SpamBlock(Collect_lastCacheTime(...), true, ...)

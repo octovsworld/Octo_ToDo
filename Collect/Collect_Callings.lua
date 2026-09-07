@@ -4,10 +4,13 @@ local CURRENT_REGION_NAME = E.CURRENT_REGION_NAME
 local FACTION_CURRENT = E.FACTION_CURRENT
 ----------------------------------------------------------------
 function E.Collect_Callings(...)
-    if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[9] then return end -- SHADOWLANDS
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	if not E.func_CanCollectData() then return end
 	local calling = ...
 	if not calling then return end
+	if type(calling) ~= "table" then return end
+	if #calling == 0 then return end
 	local COVENANT_CURRENT = C_Covenants and C_Covenants.GetActiveCovenantID()
 	if not COVENANT_CURRENT or COVENANT_CURRENT == 0 then return end
 
@@ -26,27 +29,31 @@ function E.Collect_Callings(...)
 
 	for i = 1, #calling do
 		local d = calling[i]
-		local questID = d.questID
-		currentCallingIDs[questID] = true   -- запоминаем, что квест был в этом обновлении
+		if d then
+			local questID = d.questID
+			if questID then
+				currentCallingIDs[questID] = true   -- запоминаем, что квест был в этом обновлении
 
-		collectCACHE[questID] = collectCACHE[questID] or {}
-		collectCACHE[questID].icon = d.icon
-		collectCACHE[questID].lastUpdate = ServerTime
+				collectCACHE[questID] = collectCACHE[questID] or {}
+				collectCACHE[questID].icon = d.icon
+				collectCACHE[questID].lastUpdate = ServerTime
 
-		local _, objectiveType = GetQuestObjectiveInfo(questID, d.numObjectives, false)
-		local bountyStr = E.COLOR_GRAY .. "0/1|r"
-		if objectiveType == "progressbar" then
-			bountyStr = E.COLOR_GRAY .. "0%|r"
-		end
-		collectCACHE[questID].bountyStr = bountyStr
+				local _, objectiveType = GetQuestObjectiveInfo(questID, d.numObjectives or 1, false)
+				local bountyStr = E.COLOR_GRAY .. "0/1|r"
+				if objectiveType == "progressbar" then
+					bountyStr = E.COLOR_GRAY .. "0%|r"
+				end
+				collectCACHE[questID].bountyStr = bountyStr
 
-		local diff = E.func_GetQuestTimeLeftSeconds(questID)
-		if diff then
-			collectCACHE[questID].endTime = ServerTime + diff
-			collectCACHE[questID].haveTime = true
-		else
-			collectCACHE[questID].endTime = ServerTime + (3 * 24 * 60 * 60)
-			collectCACHE[questID].haveTime = false
+				local diff = E.func_GetQuestTimeLeftSeconds(questID)
+				if diff then
+					collectCACHE[questID].endTime = ServerTime + diff
+					collectCACHE[questID].haveTime = true
+				else
+					collectCACHE[questID].endTime = ServerTime + (3 * 24 * 60 * 60)
+					collectCACHE[questID].haveTime = false
+				end
+			end
 		end
 	end
 

@@ -9,6 +9,7 @@ local collectUniversalState = nil
 local canLoadQuests = LibThingsLoad and LibThingsLoad.QuestsByKey and true or false
 E.failedQUESTS = {}
 local mapTable = {
+	-- SHADOWLANDS
 	[E.MapID_ZerethMortis] = {
 		65265, 64977, 65445, 65362, 65269, 65256, 65326, 64785, 65244, 65411,
 		65252, 65268, 65089, 65416, 65262, 65255, 65115,
@@ -19,6 +20,9 @@ local mapTable = {
 		63789, 63788, 63787, 63785, 64103, 64101, 64089, 64430, 64065, 63989,
 		64016, 64017, 63936, 63784, 63777, 63954, 63955, 63956, 63961,
 	},
+	-- MIDNIGHT
+	-- [E.MapID_TheCoiledIsle] = {
+	-- },
 }
 ----------------------------------------------------------------
 -- Функции
@@ -561,7 +565,7 @@ local function Collect_QuestsOnMap()
 			end
 		end
 		local info = E.func_GetQuestsOnMap_INFO(uiMapID)
-		if #info > 0 then
+		if info and #info > 0 then
 			for i = 1, #info do
 				local quest = info[i]
 				local questID = quest.questID
@@ -588,6 +592,7 @@ function E.Collect_Quests()
 	E.func_SpamBlock(StartCollectUniversalAsync, true)
 end
 function E.Collect_QuestsOnMap()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[9] then return end -- SHADOWLANDS
 	if not Octo_ToDo_DB_Variables.DATACOLLECTION.QUESTS then return end
 	E.func_SpamBlock(Collect_QuestsOnMap, true)
 end

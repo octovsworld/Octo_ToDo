@@ -23,6 +23,7 @@ local function Collect_BFA_HeartOfAzeroth()
 end
 ----------------------------------------------------------------
 function E.Collect_BFA_HeartOfAzeroth()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[8] then return end -- BATTLE FOR AZEROTH
 	if not Octo_ToDo_DB_Variables.DATACOLLECTION.ITEMS then return end
 	E.func_SpamBlock(Collect_BFA_HeartOfAzeroth, true)
 end

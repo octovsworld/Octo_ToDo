@@ -11,13 +11,9 @@ local categoryKey = 12
 ----------------------------------------------------------------
 E.Components[categoryKey] = function()
 	if not Octo_ToDo_DB_Variables.DATACOLLECTION[categoryKey] then return end
-
 	local OctoTables_Vibor = {}
 	local OctoTables_DataOtrisovka = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
-
-
-
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[categoryKey].icon
@@ -28,18 +24,13 @@ E.Components[categoryKey] = function()
 		local Currencies = {
 			-- {id = 3513, defS = false, AddedInPatch = "12.1.0", }, -- Nebulous Voidcore (Season 2) USELESS??
 			{id = 3418, defS = true, AddedInPatch = "12.0.5.67088", }, -- Nebulous Voidcore (Season 1) -- RemovedInPatch = "12.1.0",
-
 			{id = 3465, defS = true, AddedInPatch = "12.1.0.69189", }, -- Venomblight Manaflux (CATALYST Season 2)
 			{id = 3378, defS = false, AddedInPatch = "12.0.0.65390", }, -- Dawnlight Manaflux ---------> (CATALYST Season 1)
-
-
-
 			{id = 3446, defS = true, AddedInPatch = "12.1.0.68209", }, -- Myth Mistcrest
 			{id = 3445, defS = true, AddedInPatch = "12.1.0.68209", }, -- Hero Mistcrest
 			{id = 3444, defS = true, AddedInPatch = "12.1.0.68209", }, -- Champion Mistcrest
 			{id = 3443, defS = true, AddedInPatch = "12.1.0.68209", }, -- Veteran Mistcrest
 			{id = 3442, defS = true, AddedInPatch = "12.1.0.68209", }, -- Adventurer Mistcrest
-
 			--[[
 				-- https://www.wowhead.com/currencies/season-1#0+1+3
 				{id = 3347, defS = false, AddedInPatch = "12.0.0.65390", }, -- Myth Dawncrest (Midnight Season 1 up to item levels 276-289)
@@ -49,25 +40,15 @@ E.Components[categoryKey] = function()
 				{id = 3383, defS = false, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (Midnight Season 1 up to item levels 224-237)
 				-- {id = 3391, defS = false, AddedInPatch = "12.0.0.65390", }, -- Adventurer Dawncrest (UNUSED)
 			]]
-
-
-
 			-- {id = 3310, defs = true,}, -- "delve"
 			-- {id = 3356, defs = true,}, --  "delve"
-
-
-
 			-- SPARK
 			{id = 3509, defS = false, AddedInPatch = "12.1.0.69189", }, -- Tidal Spark Dust (spark Season 2)
 			{id = 3212, defS = false, AddedInPatch = "12.0.0.65390", }, -- Radiant Spark Dust (Midnight Season 1)
-
 			-- DELVE
 			{id = 3028, defS = false, AddedInPatch = "12.0.0.65390", }, -- Restored Coffer Key (Midnight Season 1) (delve)
 			{id = 3310, defS = false, AddedInPatch = "11.2.0.62253", }, -- Coffer Key Shards
 			{id = 3356, defS = false, AddedInPatch = "11.2.0.62253", }, -- Untainted Mana-Crystals
-
-
-
 			-- фиол
 			{id = 3405, defS = true, AddedInPatch = "12.0.5.67088", }, -- Field Accolade
 			{id = 3400, defS = false, AddedInPatch = "12.0.0.65390", }, -- Uncontaminated Void Sample
@@ -77,7 +58,6 @@ E.Components[categoryKey] = function()
 			{id = 3376, defS = false, AddedInPatch = "12.0.0.65390", }, -- Shard of Dundun
 			{id = 3352, defS = false, AddedInPatch = "12.0.0.65390", }, -- Party Favor
 			-- зелень
-
 			{id = 3448, defS = false, }, -- Corrosive Coin
 			{id = 3546, defS = false, }, -- Coiled Filament
 			{id = 3385, defS = false, AddedInPatch = "12.0.0.65390", }, -- Luminous Dust
@@ -120,13 +100,10 @@ E.Components[categoryKey] = function()
 			-- Raid
 			{id = 3004, defS = true, AddedInPatch = "12.1.0",}, -- The Venomous Abyss
 			{id = 2987, defS = true, AddedInPatch = "12.1.0",}, -- The Tidebound Grotto
-
-
 			{id = 1592, defS = false, AddedInPatch = "12.0.7",}, -- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
 			{id = 2913, defS = false, AddedInPatch = "12.0.0.65390",}, -- March on Quel'Danas
 			{id = 2912, defS = false, AddedInPatch = "12.0.0.65390",}, -- The Voidspire
 			{id = 2939, defS = false, AddedInPatch = "12.0.0.65390",}, -- The Dreamrift
-
 			-- {id = 2805, defS = true,}, -- Windrunner Spire
 			-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
 			-- {id = 2811, defS = true,}, -- Magisters' Terrace
@@ -145,7 +122,6 @@ E.Components[categoryKey] = function()
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Variables.DATACOLLECTION.REPUTATION then
 		local Reputations = {
-
 			-- {id = 2776, defS = false,},
 			-- {id = 2771, defS = false,},
 			-- {id = 2808, defS = false,},
@@ -154,8 +130,6 @@ E.Components[categoryKey] = function()
 			-- {id = 2839, defS = false,},
 			{id = 2772, defS = false,},
 			{id = 2773, defS = false,},
-
-
 			{id = 2792, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2792].AddedInPatch}, -- Места првоедения Ритуалов
 			{id = 2710, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2710].AddedInPatch}, -- Silvermoon Court (Двор Луносвета)
 			{id = 2696, defS = false, AddedInPatch = E.OctoTable_Reputations_DB[2696].AddedInPatch}, -- Amani Tribe (Племя Амани)
@@ -201,6 +175,14 @@ E.Components[categoryKey] = function()
 				questpools = {
 					{
 						{
+							97128,
+							AddedInPatch = "12.1.0.69273",
+							forcedText = {npcID = 252959},
+							addText = {mapID = E.MapID_TheCoiledIsle},
+						},
+					},
+					{
+						{
 							96522,
 							AddedInPatch = "12.0.7.67669",
 							forcedText = {npcID = 260833},
@@ -236,7 +218,7 @@ E.Components[categoryKey] = function()
 				},
 			},
 			----------------------------------------------------------------
-			-- Луносвет: Событие выходного дня ------------------------------
+			-- Луносвет: Событие выходного дня -----------------------------
 			----------------------------------------------------------------
 			{
 				AddedInPatch = "12.0.1.66431",
@@ -269,7 +251,7 @@ E.Components[categoryKey] = function()
 				forcedMaxQuest = 1,
 			},
 			----------------------------------------------------------------
-			-- Луносвет: Кошмарное дело -------------------------------------
+			-- Луносвет: Кошмарное дело ------------------------------------
 			----------------------------------------------------------------
 			{
 				AddedInPatch = "12.0.1.66431",
@@ -295,7 +277,7 @@ E.Components[categoryKey] = function()
 				forcedMaxQuest = 1,
 			},
 			----------------------------------------------------------------
-			-- Луносвет: Добыча: предпочтительная жертва ---------------------
+			-- Луносвет: Добыча: предпочтительная жертва -------------------
 			----------------------------------------------------------------
 			{
 				AddedInPatch = "12.0.1.66431",
@@ -321,6 +303,33 @@ E.Components[categoryKey] = function()
 				-- {rewID = 3383, rewTYPE = "currency", rewSIZE = 10,}, -- Adventurer Dawncrest
 				-- },
 				-- forcedMaxQuest = 1,
+			},
+			----------------------------------------------------------------
+			-- Луносвет: Надежда в темнейший час ---------------------------
+			----------------------------------------------------------------
+			{
+				AddedInPatch = "12.0.1",
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_Silvermoon) .. ": " .. E.func_GetName("quest", 95468)
+				end,
+				name_save = "HopeintheDarkestCorners",
+				defS = false,
+				reset = "Weekly", -- Meta Quest
+				desc = categoryKey,
+				quests = {
+					{95468, AddedInPatch = "12.0.1.66220"}, -- Midnight: Vaults of Atal'Utek
+				},
+				rewards = {
+					-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+					-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+					-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+					-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+					{rewID = 265995, rewTYPE = "item", rewSIZE = 1,}, -- Quel'Thalas Adventurer's Cache
+					-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+				},
+				forcedMaxQuest = 1,
 			},
 			----------------------------------------------------------------
 			--Буря Бездны: Туманный сердечник Бездны -----------------------
@@ -367,6 +376,7 @@ E.Components[categoryKey] = function()
 				desc = categoryKey,
 				quests = {
 					-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6072&page = 1
+					{98232, AddedInPatch = "12.1.0.69273"}, -- Midnight: Vaults of Atal'Utek
 					{93766, AddedInPatch = "12.0.1.66220"}, -- Midnight: World Quests
 					{93767, AddedInPatch = "12.0.1.66220"}, -- Midnight: Arcantina
 					{93769, AddedInPatch = "12.0.1.66220"}, -- Midnight: Housing
@@ -392,6 +402,100 @@ E.Components[categoryKey] = function()
 					{rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
 					-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
 				},
+				forcedMaxQuest = 1,
+			},
+			----------------------------------------------------------------
+			-- Очищение хранилищ -------------------------------------------
+			----------------------------------------------------------------
+			{
+				AddedInPatch = "12.1.0.69273",
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_TheCoiledIsle) .. ": " .. E.func_GetName("quest", 95520)
+				end,
+				name_save = "PurgingtheVaults",
+				defS = false,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{95520, AddedInPatch = "12.0.1.69273", forcedText = {itemID = 274374}, addText = {text = E.COLOR_GREEN .. " (" .. format(L["EXPANSION_SEASON_NAME"], "Midnight", 2) .. ")|r"} },
+				},
+				rewards = {
+					-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+					-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+					-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+					{rewID = 1312393, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+					{rewID = 273000, rewTYPE = "item", rewSIZE = 1,}, -- Разъедающая душа
+					{rewID = 274374, rewTYPE = "item", rewSIZE = 1,}, -- Venom-Covered Chest
+					{rewID = 279382, rewTYPE = "item", rewSIZE = 1,},
+					{rewID = 3310, rewTYPE = "currency", rewSIZE = 125+187,},
+					{rewID = 3316, rewTYPE = "currency", rewSIZE = 150,},
+					{rewID = 3448, rewTYPE = "currency", rewSIZE = 1500,},
+					-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+				},
+				forcedMaxQuest = 1,
+			},
+			----------------------------------------------------------------
+			-- Противостояние потоку ---------------------------------------
+			----------------------------------------------------------------
+			{
+				AddedInPatch = "12.1.0.69273",
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_TheCoiledIsle) .. ": " .. E.func_GetName("quest", 96995)
+				end,
+				name_save = "TurnBacktheSurge",
+				defS = false,
+				reset = "Weekly", -- Meta Quest
+				desc = categoryKey,
+				quests = {
+					{96995, AddedInPatch = "12.0.1.69273"}, -- Turn Back the Surge
+				},
+				rewards = {
+					-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+					-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+					-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+					-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+					{rewID = 274476, rewTYPE = "item", rewSIZE = 1,}, --
+					{rewID = 275911, rewTYPE = "item", rewSIZE = 1,}, --
+					{rewID = 3316, rewTYPE = "currency", rewSIZE = 100,}, --
+					{rewID = 3504, rewTYPE = "currency", rewSIZE = 1000,}, --
+					-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+				},
+				forcedMaxQuest = 1,
+			},
+			----------------------------------------------------------------
+			-- Special Assignment ------------------------------------------
+			----------------------------------------------------------------
+			{
+				AddedInPatch = "12.1.0.69273",
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return E.func_GetName("map", E.MapID_TheCoiledIsle) .. ": " .. L["Special Assignment"]
+				end,
+				name_save = "TheCoiledIsleSpecialAssignment",
+				defS = false,
+				reset = "Weekly", -- Emissary Quest
+				desc = categoryKey,
+				quests = {
+					{95918, AddedInPatch = "12.0.1.69273"}, -- unlockQuest = 96307 }, -- Special Assignment: Wraith Wrath
+					{95921, AddedInPatch = "12.0.1.69273"}, -- unlockQuest = 96492 }, -- Special Assignment: Demand and Supply
+					{95922, AddedInPatch = "12.0.1.69273"}, -- unlockQuest = 96029 }, -- Special Assignment: Face the Swarm
+				},
+				-- rewards = {
+				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				-- {rewID = 274476, rewTYPE = "item", rewSIZE = 1,}, -- Spark of Tides
+				-- {rewID = 275911, rewTYPE = "item", rewSIZE = 1,}, -- Venom-Covered Chest
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 100,}, -- Voidlight Marl
+				-- {rewID = 3504, rewTYPE = "currency", rewSIZE = 1000,}, -- Undercoin
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+				-- },
 				forcedMaxQuest = 1,
 			},
 			----------------------------------------------------------------
@@ -574,10 +678,10 @@ E.Components[categoryKey] = function()
 				reset = "Weekly",
 				desc = categoryKey,
 				-- questpools = {
-				-- 	{
-				-- 		{96717, AddedInPatch = "12.0.7.67360",},
-				-- 		{96718, AddedInPatch = "12.0.7.67360",}, -- (HEROIC)
-				-- 	},
+				--     {
+				--         {96717, AddedInPatch = "12.0.7.67360",},
+				--         {96718, AddedInPatch = "12.0.7.67360",}, -- (HEROIC)
+				--     },
 				-- },
 				quests = {
 					-- {96720, AddedInPatch = "12.0.7.67669",},
@@ -881,9 +985,7 @@ E.Components[categoryKey] = function()
 				desc = categoryKey,
 				quests = {
 					{90962, AddedInPatch = "12.0.1.66102",}, -- StormarionAssault
-
 					{94581, AddedInPatch = "12.0.1.66102",}, -- StandYourGround
-
 					{91700, AddedInPatch = "12.0.1.66102",}, -- DarknessUnmade (L["REWARD"]: item=246951)
 					{86810, AddedInPatch = "12.0.1.66102",}, -- HarvestingtheVoid (L["REWARD"]: item=246951)
 					{92407, AddedInPatch = "12.0.1.66220",}, -- HideyHole (L["REWARD"]: item=246951)
@@ -1353,6 +1455,34 @@ E.Components[categoryKey] = function()
 				rewards = {
 					{rewID = 3348, rewTYPE = "currency", rewSIZE = 15,}, -- Myth Dawncrest
 					{rewID = 3346, rewTYPE = "currency", rewSIZE = 15,}, -- Hero Dawncrest
+				},
+				forcedMaxQuest = 1,
+			},
+			----------------------------------------------------------------
+			-- Timewalking Weekend Event -----------------------------------
+			----------------------------------------------------------------
+			{
+				AddedInPatch = "12.0.7",
+				sorted = true,
+				showTooltip = true,
+				TextLeft = function()
+					return L["PLAYER_DIFFICULTY_TIMEWALKER"]
+				end,
+				name_save = "12TimewalkingWeekendEvent",
+				defS = false,
+				reset = "Weekly",
+				desc = categoryKey,
+				quests = {
+					{93607, AddedInPatch = "12.0.7.68453"}, -- An Original Path Through Time - CLA Timewalking
+					{93608, AddedInPatch = "12.0.7.68887"}, -- A Burning Path Through Time - TBC Timewalking
+					{93610, AddedInPatch = "12.1.0.69497"}, -- A Frozen Path Through Time - WLK Timewalking
+					{93611, AddedInPatch = "12.0.1.66709"}, -- A Shattered Path Through Time - CTM Timewalking
+					{93612, AddedInPatch = "12.0.5.67088"}, -- A Shrouded Path Through Time - MOP Timewalking
+					{93613, AddedInPatch = "12.0.7.67451"}, -- A Savage Path Through Time - WOD Timewalking
+					{93614, AddedInPatch = "12.0.7.68182"}, -- A Fel Path Through Time - LEG Timewalking
+					{93627, AddedInPatch = "12.0.7.68453"}, -- A Scarred Path Through Time - BFA Timewalking
+					{93628, AddedInPatch = "12.0.7.68453"}, -- A Shadowed Path Through Time - SL Timewalking
+					{93497, AddedInPatch = "12.0.7.68275"}, -- A Soaring Path Through Time - DF Timewalking
 				},
 				forcedMaxQuest = 1,
 			},

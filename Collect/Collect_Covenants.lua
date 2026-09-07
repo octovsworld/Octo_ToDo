@@ -32,6 +32,7 @@ local function Collect_Covenants()
 end
 ----------------------------------------------------------------
 function E.Collect_Covenants()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION[9] then return end -- SHADOWLANDS
 	E.func_SpamBlock(Collect_Covenants, true)
 end
 ----------------------------------------------------------------

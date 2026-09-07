@@ -487,6 +487,7 @@ E.translations = {
 		["zhTW"] = "按鈕",
 	},
 	----------------------------------------------------------------
+	["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER,-- Путешествие во времени
 	["MISCELLANEOUS"] = MISCELLANEOUS, -- Разное
 	["MINIMUM"] = MINIMUM,
 	["MAXIMUM"] = MAXIMUM, -- ("Maximum")

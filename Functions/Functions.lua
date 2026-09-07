@@ -1746,13 +1746,6 @@ function E.func_auctionator_price(itemID)
 	return price or 0
 end
 ----------------------------------------------------------------
-function E.func_SetFlattensRenderLayers_OnAllFrames()
-	-- SetFlattensRenderLayers()
-	for k, frame in next, (E.OctoTable_ColoredFrames) do
-		frame:SetFlattensRenderLayers(true)
-	end
-end
-----------------------------------------------------------------
 function E.func_CountCharacters()
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	local count = 0
@@ -2347,6 +2340,11 @@ end
 function E.func_GetCurrentDay()
 	return tonumber(date("%d"))  -- возвращает число от 1 до 31
 end
+
+----------------------------------------------------------------
+function E.func_Safe(v)
+	return v or 0
+end
 ----------------------------------------------------------------
 function E.func_ToggleGreatVault()
 					if InCombatLockdown() then
@@ -2358,6 +2356,182 @@ function E.func_ToggleGreatVault()
 					if WeeklyRewards_ShowUI then
 						WeeklyRewards_ShowUI()
 					end
+end
+----------------------------------------------------------------
+function EventFrame:func_SetFlattensRenderLayers_OnAllFrames()
+	-- SetFlattensRenderLayers()
+	for k, frame in next, (E.OctoTable_ColoredFrames) do
+		frame:SetFlattensRenderLayers(true)
+	end
+end
+
+function EventFrame:func_SetupDevFrame()
+	E.DEV_FRAMES = E.DEV_FRAMES or {}
+	C_Timer.After(1, function()
+		local prevFrame = nil
+		for index, v in next, (E.DEV_FRAMES) do
+			local frame = v.frame
+			-- Сбрасываем старые привязки, чтобы избежать конфликтов
+			frame:ClearAllPoints()
+			if index == 1 then
+				frame:SetPoint("TOPLEFT", 0, 0) -- Первый фрейм — в верхнем левом углу родителя
+			else
+				frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT", 0, -1) -- Каждый следующий — под предыдущим с отступом 10 пикселей
+			end
+			prevFrame = frame
+			frame:Show()
+		end
+	end)
+end
+function E.func_CreateDevToggleButton(text, func_OnClick, updateFunc)
+	local text = type(text) == "string" and text or L["UNKNOWN"]
+	local frame = E.func_CreateSimpleButton(UIParent, text, 200, 20)
+	if func_OnClick then
+		frame:SetScript("OnClick", func_OnClick)
+	end
+	table.insert(E.DEV_FRAMES, {
+		frame = frame,
+		text = text,
+		updateFunc = updateFunc,
+	})
+	local newWidth = E.func_MeasureTextWidth(text, 100, 40)
+	-- local oldWidth = frame:GetWidth()
+	-- frame:SetWidth(math.max(oldWidth, newWidth))
+	frame:SetWidth(newWidth)
+	return frame
+end
+function E.func_Register_DRAG(frame)
+	if not frame or frame._octoDragRegistered then return end
+	frame._octoDragRegistered = true
+	frame:SetMovable(true)
+	frame:RegisterForDrag("LeftButton")
+	frame:HookScript("OnMouseDown", function(self, button)
+		if button == "LeftButton" then
+			-- frame:SetAlpha(.8) -- ТУТ
+			self:StartMoving()
+		end
+	end)
+	frame:HookScript("OnMouseUp", function(self, button)
+		if button == "LeftButton" then
+			-- frame:SetAlpha(1) -- ТУТ
+			self:StopMovingOrSizing()
+		end
+	end)
+end
+function E.func_Register_CLOSE(frame)
+	if not frame or frame._octoCloseRegistered then return end
+	frame._octoCloseRegistered = true
+	frame:HookScript("OnMouseDown", function(self, button)
+		if button == "RightButton" then
+			self:Hide()
+		end
+	end)
+	local frameName = frame:GetName()
+	if frameName then
+		table.insert(UISpecialFrames, frameName)
+	-- else
+		-- E.func_PrintMessage("func_Register_CLOSE: frame has no name, ESC close not added")
+	end
+end
+function E.func_Register_COLOR(frame)
+	if not frame or frame._octoColorRegistered then return end
+	frame._octoColorRegistered = true
+	E.OctoTable_ColoredFrames = E.OctoTable_ColoredFrames or {}
+	table.insert(E.OctoTable_ColoredFrames, frame)
+end
+function E.func_Register_ICONS(frame)
+	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+	E.OctoTable_Frames_ICONS = E.OctoTable_Frames_ICONS or {}
+	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
+	frame.insertIn_SecuredFrames_SequredFrames = true
+	table.insert(E.OctoTable_Frames_ICONS, frame)
+	C_Timer.After(0, function()
+		frame:HookScript("OnShow", function()
+			for i, other in ipairs(E.OctoTable_Frames_ICONS) do
+				if frame ~= other and other:IsShown() then
+					other:Hide()
+				end
+			end
+		end)
+		frame:HookScript("OnHide", function()
+			for i, other in ipairs(E.OctoTable_Frames_SIMPLE) do
+				if other:IsShown() then
+					other:Hide()
+				end
+			end
+		end)
+	end)
+end
+function E.func_RegisterFrame_SIMPLE(frame)
+	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
+	frame.insertIn_SecuredFrames_SequredFrames = true
+	table.insert(E.OctoTable_Frames_SIMPLE, frame)
+end
+
+function E.func_CreateSimpleButton(parent, text, width, height)
+	local btn = CreateFrame("BUTTON", nil, parent, "OctoBackdropTemplate")
+	table.insert(E.OctoTable_ColoredFrames, btn)
+	btn:SetSize(width or 100, height or 20)
+	btn.text = btn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	btn.text:SetFontObject(E.OctoFont12_MT)
+	btn.text:SetAllPoints()
+	btn.text:SetJustifyV("MIDDLE")
+	btn.text:SetJustifyH("CENTER")
+	btn.text:SetText(text)
+	btn:RegisterForClicks("LeftButtonUp")
+	-- btn:SetScript("OnClick", function() end)
+	btn.highlight = btn:CreateTexture(nil, "BACKGROUND", nil, -2)
+	btn.highlight:SetAllPoints()
+	btn.highlight:SetColorTexture(1, 1, 1, 1) -- 130783
+	btn.highlight:SetBlendMode("ADD")
+	btn.highlight:Hide()
+	btn:SetScript("OnEnter", function(self) self.highlight:Show() end)
+	btn:SetScript("OnLeave", function(self) self.highlight:Hide() end)
+	btn:SetScript("OnMouseDown", function(self) self.text:AdjustPointsOffset(1, -1) end)
+	btn:SetScript("OnMouseUp", function(self) self.text:AdjustPointsOffset(-1, 1) end)
+	return btn
+end
+
+----------------------------------------------------------------
+local function RefreshAllDataProviders()
+	-- E.DEBUG_START()
+	-- E.func_PrintMessage("RefreshAllDataProviders called from:\n" .. debugstack(2, 2, 2))
+	for _, entry in ipairs(E.ALL_DATAPROVIDERS) do
+		local frame = entry.frame
+		if frame and frame:IsVisible() then
+			local name = entry.name or L["UNKNOWN"]
+			if printDEBUG then
+				E.func_PrintMessage("UPDATE", E.COLOR_GREEN .. name .. "|r")
+			end
+			if entry.updateFunc then
+				entry.updateFunc(frame)
+			end
+		else
+			if printDEBUG then
+				E.func_PrintMessage("UPDATE", E.COLOR_RED .. (entry.name or L["UNKNOWN"]) .. "|r")
+			end
+		end
+	end
+	-- E.DEBUG_STOP()
+end
+function E.RefreshAllDataProviders()
+	-- RunNextFrame(RefreshAllDataProviders)
+	RefreshAllDataProviders()
+end
+
+----------------------------------------------------------------
+function E.func_GetVaultProgress(vaultMin, max3)
+	if max3 == 0 then
+		return E.COLOR_GRAY, vaultMin .. "/" .. max3
+	end
+	if vaultMin >= max3 then
+		return E.COLOR_GREEN, vaultMin .. "/" .. max3
+	end
+	if vaultMin > 0 then
+		return E.COLOR_YELLOW, vaultMin .. "/" .. max3
+	end
+	return E.COLOR_GRAY, vaultMin .. "/" .. max3
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2409,6 +2583,7 @@ end
 local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_LOGIN",
+	"PLAYER_REGEN_DISABLED",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
@@ -2417,6 +2592,17 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 end
 ----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
-	E.func_SetFlattensRenderLayers_OnAllFrames()
+	C_Timer.After(1, function()
+		self:func_SetupDevFrame()
+		self:func_SetFlattensRenderLayers_OnAllFrames()
+	end)
+end
+----------------------------------------------------------------
+function EventFrame:PLAYER_REGEN_DISABLED()
+	for _, entry in ipairs(E.ALL_DATAPROVIDERS) do
+		if entry.frame:IsVisible() then
+			entry.frame:Hide()
+		end
+	end
 end
 ----------------------------------------------------------------

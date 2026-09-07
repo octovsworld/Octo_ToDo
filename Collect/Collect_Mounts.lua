@@ -60,6 +60,7 @@ local function Collect_Mounts()
 end
 ----------------------------------------------------------------
 function E.Collect_Mounts()
+	if not Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then return end
 	E.func_SpamBlock(Collect_Mounts, false)
 end
 ----------------------------------------------------------------

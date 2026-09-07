@@ -12,7 +12,7 @@ E.DEBUG_CURRENCY_TOOLTIP = false
 E.REFRESH_CACHE = true
 E.SPAM_TIME = 3
 E.QUEST_BATCH_SIZE = 10
-E.UNIVERSAL_BATCH_SIZE = 3
+E.UNIVERSAL_BATCH_SIZE = 1
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
@@ -53,6 +53,8 @@ E.ENABLE_EXPANSIONCOLOR = true
 ----------------------------------------------------------------
 E.REVERSE = true -- по убыванию (E.DESCENDING = true) (E.ASCENDING  = false   -- по возрастанию)
 ----------------------------------------------------------------
+E.DEV_FRAMES = {}
+E.ALL_DATAPROVIDERS = {}
 E.OctoTable_Difficulties = {}
 E.Components = {}
 E.Enum_Activities_table = {}

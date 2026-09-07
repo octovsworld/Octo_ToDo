@@ -24,13 +24,13 @@ E.Components[categoryKey] = function()
 	if Octo_ToDo_DB_Variables.DATACOLLECTION.CURRENCY then
 		OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion({
 			{id = 1560, defS = true,},
-			{id = 1721, defS = true,},
+			{id = 1721, defS = false,},
 			{id = 1803, defS = true,},
 			{id = 1755, defS = true,},
-			{id = 1719, defS = true,},
-			{id = 1710, defS = true,},
-			{id = 1716, defS = true,},
-			{id = 1717, defS = true,},
+			{id = 1719, defS = false,},
+			{id = 1710, defS = false,},
+			{id = 1716, defS = false,},
+			{id = 1717, defS = false,},
 			{id = 1718, defS = false,},
 			{id = 1580, defS = false,},
 		})
@@ -68,12 +68,12 @@ E.Components[categoryKey] = function()
 		OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion({
 			-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 			-- ["Battle for Azeroth"] = {
-			{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-			{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-			{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-			{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-			{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-			{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+			{id = 2164, defS = false,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+			{id = 2415, defS = false,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+			{id = 2391, defS = false,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+			{id = 2163, defS = false,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+			{id = 2417, defS = false,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+			{id = 2427, defS = false,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
 			{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
 			{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 			{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
@@ -621,52 +621,52 @@ E.Components[categoryKey] = function()
 			-- },
 			-- -- forcedMaxQuest = "all",
 			-- },
-			{
-				showTooltip = true,
-				TextLeft = function()
-					return E.func_GetName("map", E.MapID_Mechagon)..": Dailies Visitor Quests"
-				end,
-				name_save = "DAILY_VISITOR_QUESTS",
-				defS = false,
-				reset = "Daily",
-				desc = categoryKey,
-				quests = {
-					{55463},
-					{55658},
-					{55688}, -- https://www.wowhead.com/ru/quest=55658/
-					{55718},
-					{55765},
-					{55885},
-					{56053},
-					{55813},
-					{56301},
-					{56142},
-					{55528},
-					{56365},
-					{56552, FactionOrClass = {Horde = true,},},
-					{56558, FactionOrClass = {Alliance = true,}},
-					{56572},
-					{56501},
-					{56493},
-					{55575},
-					{55672}, -- https://www.wowhead.com/ru/quest=55658/
-					{55717}, -- https://www.wowhead.com/ru/quest=55658/
-					{56049}, -- https://www.wowhead.com/ru/quest=55658/
-					{56469},
-					{55816},
-					{55905},
-					{56184},
-					{56306},
-					{54090},
-					{56355},
-					{56523},
-					{56410},
-					{56508},
-					{56471},
-					{56405},
-				},
-				-- forcedMaxQuest = 32,
-			},
+			-- {
+			-- 	showTooltip = true,
+			-- 	TextLeft = function()
+			-- 		return E.func_GetName("map", E.MapID_Mechagon)..": Dailies Visitor Quests"
+			-- 	end,
+			-- 	name_save = "DAILY_VISITOR_QUESTS",
+			-- 	defS = false,
+			-- 	reset = "Daily",
+			-- 	desc = categoryKey,
+			-- 	quests = {
+			-- 		{55463},
+			-- 		{55658},
+			-- 		{55688}, -- https://www.wowhead.com/ru/quest=55658/
+			-- 		{55718},
+			-- 		{55765},
+			-- 		{55885},
+			-- 		{56053},
+			-- 		{55813},
+			-- 		{56301},
+			-- 		{56142},
+			-- 		{55528},
+			-- 		{56365},
+			-- 		{56552, FactionOrClass = {Horde = true,},},
+			-- 		{56558, FactionOrClass = {Alliance = true,}},
+			-- 		{56572},
+			-- 		{56501},
+			-- 		{56493},
+			-- 		{55575},
+			-- 		{55672}, -- https://www.wowhead.com/ru/quest=55658/
+			-- 		{55717}, -- https://www.wowhead.com/ru/quest=55658/
+			-- 		{56049}, -- https://www.wowhead.com/ru/quest=55658/
+			-- 		{56469},
+			-- 		{55816},
+			-- 		{55905},
+			-- 		{56184},
+			-- 		{56306},
+			-- 		{54090},
+			-- 		{56355},
+			-- 		{56523},
+			-- 		{56410},
+			-- 		{56508},
+			-- 		{56471},
+			-- 		{56405},
+			-- 	},
+			-- 	-- forcedMaxQuest = 32,
+			-- },
 			{
 				sorted = false,
 				showTooltip = true,
@@ -684,55 +684,55 @@ E.Components[categoryKey] = function()
 				},
 				forcedMaxQuest = 1,
 			},
-			{
-				showTooltip = true,
-				TextLeft = function()
-					return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13489)
-				end,
-				name_save = "MechagonSecretFish",
-				defS = false,
-				reset = "Daily",
-				desc = categoryKey,
-				quests = {
-					{55309},
-					{55299},
-					{55310},
-					{55306},
-					{55307},
-					{55313},
-					{55308},
-					{55312},
-					{55305},
-					{55311},
-				},
-				forcedMaxQuest = 10,
-			},
-			{
-				sorted = false,
-				showTooltip = true,
-				TextLeft = function()
-					return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13791)
-				end,
-				name_save = "MechagonMakingAMount",
-				defS = false,
-				reset = "Normal",
-				desc = categoryKey,
-				quests = {
-					{55608},
-					{54086},
-					{54929},
-					{55373},
-					{55697},
-					{54922},
-					{56168},
-					{54083},
-					{56175},
-					{55696},
-					{55753},
-					{55622},
-				},
-				-- forcedMaxQuest = 10,
-			},
+			-- {
+			-- 	showTooltip = true,
+			-- 	TextLeft = function()
+			-- 		return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13489)
+			-- 	end,
+			-- 	name_save = "MechagonSecretFish",
+			-- 	defS = false,
+			-- 	reset = "Daily",
+			-- 	desc = categoryKey,
+			-- 	quests = {
+			-- 		{55309},
+			-- 		{55299},
+			-- 		{55310},
+			-- 		{55306},
+			-- 		{55307},
+			-- 		{55313},
+			-- 		{55308},
+			-- 		{55312},
+			-- 		{55305},
+			-- 		{55311},
+			-- 	},
+			-- 	forcedMaxQuest = 10,
+			-- },
+			-- {
+			-- 	sorted = false,
+			-- 	showTooltip = true,
+			-- 	TextLeft = function()
+			-- 		return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13791)
+			-- 	end,
+			-- 	name_save = "MechagonMakingAMount",
+			-- 	defS = false,
+			-- 	reset = "Normal",
+			-- 	desc = categoryKey,
+			-- 	quests = {
+			-- 		{55608},
+			-- 		{54086},
+			-- 		{54929},
+			-- 		{55373},
+			-- 		{55697},
+			-- 		{54922},
+			-- 		{56168},
+			-- 		{54083},
+			-- 		{56175},
+			-- 		{55696},
+			-- 		{55753},
+			-- 		{55622},
+			-- 	},
+			-- 	-- forcedMaxQuest = 10,
+			-- },
 		})
 	end
 	----------------------------------------------------------------
