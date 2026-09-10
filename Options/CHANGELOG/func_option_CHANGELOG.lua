@@ -37,6 +37,15 @@ local func_DataProviderData do
 				date = formatterstr("10.09.2026"),
 				wowVersion = Version_120100,
 				text = {
+					"Убрана библиотека: " .. NAME_COLOR .. "LibThingsLoad" .. "|r",
+					"Ассинхронный сбор универсальных квесов",
+				}
+			},
+			{
+				addonVersion = 116.6,
+				date = formatterstr("10.09.2026"),
+				wowVersion = Version_120100,
+				text = {
 					"переделал BuildUniversalSnapshot",
 				}
 			},

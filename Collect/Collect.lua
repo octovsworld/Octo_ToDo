@@ -134,6 +134,10 @@ local MyEventsTable = {
 	-- "QUEST_DATA_LOAD_RESULT",
 	-- "ITEM_DATA_LOAD_RESULT",
 	"FACTION_STANDING_CHANGED",
+	-- "QUEST_TURNED_IN",
+	-- "QUEST_REMOVED",
+	-- "QUEST_ACCEPTED",
+	-- "QUEST_WATCH_UPDATE",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -145,6 +149,35 @@ function EventFrame:PLAYER_LOGIN()
 		E.Collect_Mounts()
 	end)
 end
+
+
+
+
+-- function EventFrame:QUEST_TURNED_IN(...)
+-- 	-- local questID, w, e = ...
+-- 	-- print ("QUEST_TURNED_IN", questID, w, e)
+-- 	E.func_Collect_QuestsFast(...)
+-- end
+
+-- function EventFrame:QUEST_REMOVED(...)
+-- 	-- local questID, w = ...
+-- 	-- print ("QUEST_REMOVED", questID, w)
+-- 	E.func_Collect_QuestsFast(...)
+-- end
+
+-- function EventFrame:QUEST_ACCEPTED(...)
+-- 	-- local questID = ...
+-- 	-- print ("QUEST_ACCEPTED", questID)
+-- 	E.func_Collect_QuestsFast(...)
+-- end
+
+-- function EventFrame:QUEST_WATCH_UPDATE(...)
+-- 	-- local questID = ...
+-- 	-- print ("QUEST_WATCH_UPDATE", questID)
+-- 	E.func_Collect_QuestsFast(...)
+-- end
+
+
 function EventFrame:SKILL_LINES_CHANGED()
 	E.Collect_Professions()
 	E.func_RequestUIUpdate("SKILL_LINES_CHANGED")
