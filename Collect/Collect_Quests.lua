@@ -235,21 +235,13 @@ end
 ----------------------------------------------------------------
 local function BuildUniversalSnapshot()
 	local snapshot = {}
-	for questKey, data in pairs(E.ALL_UniversalQuests) do
-		-- Сохраняем сам объект data.
-		--
-		-- Даже если questKey потом будет удалён из
-		-- E.ALL_UniversalQuests, ссылка на data останется
-		-- доступной текущему сбору.
-		--
-		-- В текущем коде data используется только для чтения.
-		-- Вложенные таблицы намеренно не копируются:
-		-- это позволяет не создавать лишнюю глубокую копию
-		-- потенциально больших структур.
-		snapshot[#snapshot + 1] = {
-			questKey = questKey,
-			data = data,
-		}
+	for key, data in next, (E.ALL_UniversalQuests) do
+		if data.questKey then
+			snapshot[#snapshot + 1] = {
+				questKey = data.questKey,
+				data = data,
+			}
+		end
 	end
 	return snapshot
 end

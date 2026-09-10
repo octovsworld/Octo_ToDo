@@ -12,7 +12,7 @@ E.DEBUG_CURRENCY_TOOLTIP = false
 E.REFRESH_CACHE = true
 E.SPAM_TIME = 3
 E.QUEST_BATCH_SIZE = 10
-E.UNIVERSAL_BATCH_SIZE = 1
+E.UNIVERSAL_BATCH_SIZE = 2
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
